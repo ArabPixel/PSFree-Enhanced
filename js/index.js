@@ -1,25 +1,518 @@
-const ckbaj = document.getElementById('ckbaj');
-const ckbdc = document.getElementById('ckbdc');
-const visibleDiv = localStorage.getItem('visibleDiv') || 'jailbreak-page';
-const savedaj = localStorage.getItem('autojbstate');
-const savedc = localStorage.getItem('dbugc');
-const menuBtns = document.querySelectorAll('.menu-btn');
-const psBtns = document.querySelectorAll('.ps-btn');
-const plsbtn = document.querySelectorAll('.button-container button');
+// @ts-nocheck
+let currentLanguage = localStorage.getItem('language') || 'en';
+let currentJbFlavor = localStorage.getItem('jailbreakFlavor') || 'GoldHEN';
+let isAutoJailbreakEnabled = localStorage.getItem('autoJailbreak');
+let selectedSecondaryPayload;
+let ps4fw = null;
+let platform = "Unknown";
+let lastScrollY = 0;
+let lastSection = localStorage.getItem('lastSection') || "initial";
+const ui = {
+  mainContainer: document.querySelector('.mainContainer'),
 
-var ps4fw
+  // Sections
+  initialScreen: document.getElementById('initial-screen'),
+  exploitScreen: document.getElementById('exploit-main-screen'),
 
-var ps4FwVersion
-let platform
+  // Initial screen elements
+  settingsBtn: document.getElementById("settings-btn"),
+  aboutBtn: document.getElementById("about-btn"),
+  psLogoContainer: document.getElementById('ps-logo-container'),
+  clickToStartText: document.getElementById('click-to-start-text'),
+  ps4FwStatus: document.getElementById('PS4FW'),
 
-window.addEventListener('DOMContentLoaded', loadsettings);
+  // Exploit screen elements
+  statusMessage: document.getElementById('statusMessage'),
+  consoleElement: document.getElementById('console'),
+  toolsSection: document.getElementById('tools'),
+  toolsTab: document.getElementById('tools-tab'),
+  gamesSection: document.getElementById('games'),
+  gamesTab: document.getElementById('games-tab'),
+  linuxSection: document.getElementById('linux'),
+  linuxTab: document.getElementById('linux-tab'),
+  payloadsSectionTitle: document.getElementById('payloads-section-title'),
+  exploitRunBtn: document.getElementById('exploitRun'),
+  backToInitialBtn: document.getElementById('backToInitialBtn'),
+  // Popups
+  aboutPopupOverlay: document.getElementById('about-popup-overlay'),
+  aboutPopup: document.getElementById('about-popup'),
+  settingsPopupOverlay: document.getElementById('settings-popup-overlay'),
+  settingsPopup: document.getElementById('settings-popup'),
 
-document.getElementById('jailbreak').addEventListener('click', () => {
+  // Settings elements
+  autoJbCheckbox: document.getElementById('autoJbBox'),
+  langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
+};
+const languages = {
+  "en": {
+    "title": "PSFree Enhanced",
+    "ps4FwCompatible": `PS4 FW: {ps4fw} | Compatible`,
+    "ps4FwIncompatible": `PS4 FW: {ps4fw} | Incompatible`,
+    "notPs4": "You are not on a PS4, platform: ",
+    "clickToStart": "Click to start",
+    "chooseHEN": "Choose your HEN flavor",
+    "exploitStatusHeader": "Exploit status",
+    "payloadsHeader": "Payloads",
+    "settingsBtnTitle": "Settings",
+    "aboutMenu": "About",
+    "payloadsToolsHeader": "Tools",
+    "payloadsGameHeader": "Game",
+    "payloadsLinuxHeader": "Linux",
+    "aboutPsfreeHeader": "About PSFree Enhanced",
+    "aboutVersion": "Version: 1.5.2",
+    "aboutDescription": "A web interface to jailbreak your PS4 using PSFree chained with Lapse kernel exploit.",
+    "closeButton": "Close",
+    "settingsPsfreeHeader": "Settings",
+    "ps4FirmwareSupportedHeader": "Supported PS4 firmware",
+    "autoJailbreakText": "Jailbreak automatically",
+    "languageHeader": "Language",
+    "englishOption": "English",
+    "arabicOption": "Arabic",
+    "warnings": {
+      "note1": "• Make sure to close all apps before running the exploit",
+      "note2": "• Make sure to delete cache data before running the exploit for the first time",
+      "note3": "• It might take you more than one time",
+    },
+    "backToInitialBtn": "Back",
+    "alert": "Important notice",
+    "waitingUserInput": "Waiting for user action",
+    "jailbreakNow": "Jailbreak process will start with ",
+    "cache": "Installing Cache: ",
+  },
+  "ar": {
+    "title": "PSFree محسن",
+    "ps4FwCompatible": `بلايستايشن 4 إصدار {ps4fw} | مدعوم`,
+    "ps4FwIncompatible": `بلايستايشن 4 إصدار {ps4fw} | غير مدعوم`,
+    "notPs4": "انت لست على جهاز بلايستايشن 4, المنصة: ",
+    "clickToStart": "انقر للبدء",
+    "chooseHEN": "اختر نكهتك",
+    "exploitStatusHeader": "حالة الثغرة",
+    "payloadsHeader": "الإضافات",
+    "settingsBtnTitle": "الإعدادات",
+    "aboutMenu": "حول",
+    "payloadsToolsHeader": "الأدوات",
+    "payloadsGameHeader": "الألعاب",
+    "payloadsLinuxHeader": "لينكس",
+    "aboutPsfreeHeader": "حول PSFree المحسن",
+    "aboutVersion": "الإصدار: 1.5.2",
+    "aboutDescription": "واجهة ويب لتهكير البلايستايشن 4 بإستخدام ثغرة PSFree المربوطة مع ثغرة النواة Lapse",
+    "closeButton": "إغلاق",
+    "settingsPsfreeHeader": "الإعدادات",
+    "ps4FirmwareSupportedHeader": "إصدارات PS4 المدعومة",
+    "autoJailbreakText": "تهكير تلقائي",
+    "languageHeader": "اللغة",
+    "arabicOption": "العربية",
+    "englishOption": "الإنجليزية",
+    "warnings": {
+      "note1": "• تأكد من إغلاق كل التطبيقات قبل تنفيذ الثغرة",
+      "note2": "• تأكد من ان تقوم بمسح الملفات المؤقته قبل تنفيذ الثغرة لأول مرة",
+      "note3": "• قم يتطلب الأمر المحاولة اكثر من مرة",
+    },
+    "backToInitialBtn": "الرجوع",
+    "alert": "ملاحظات هامة",
+    "waitingUserInput": "في انتظار التنفيذ من المستخدم",
+    "jailbreakNow": "عملية تحميل الثغرة ستبدأ بإستحدام ",
+    "cache": "جاري تحميل الموقع في الذاكرة المحلية:  "
+  }
+}
+const payloads = [
+  {
+    id: "App2USB",
+    name: "App2USB",
+    version: "1.0",
+    description: "Moves installed applications to a USB drive.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_App2USB"
+  },
+  {
+    id: "FTP",
+    name: "FTP",
+    version: "1.0",
+    description: "Enables FTP server access for file transfers.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_FTP"
+  },
+  {
+    id: "DisableUpdates",
+    name: "Disable-Updates",
+    version: "1.0",
+    description: "Disables automatic system software updates.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_DisableUpdates"
+  },
+  {
+    id: "Linux1GB",
+    name: "Linux-1GB",
+    version: "1.0",
+    description: "Loads a 1GB Linux payload for dual-booting.",
+    author: "Various",
+    category: "linux",
+    funcName: "load_Linux"
+  },
+  {
+    id: "Linux2GB",
+    name: "Linux-2GB",
+    version: "1.0",
+    description: "Loads a 2GB Linux payload for dual-booting.",
+    author: "Various",
+    category: "linux",
+    funcName: "load_Linux2gb"
+  },
+  {
+    id: "KernelDumper",
+    name: "Kernel-Dumper",
+    version: "1.0",
+    description: "Dumps the PS4 kernel.",
+    author: "Team",
+    category: "tools",
+    funcName: "load_KernelDumper"
+  },
+  {
+    id: "PS4DumperVTX",
+    name: "PS4-Dumper-VTX",
+    version: "1.0",
+    description: "Dumps PS4 system data.",
+    author: "VTX",
+    category: "tools",
+    funcName: "load_VTXDumper"
+  },
+  {
+    id: "HistoryBlocker",
+    name: "History-Blocker",
+    version: "1.0",
+    description: "Blocks browser history recording.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_HistoryBlocker"
+  },
+  {
+    id: "KernelClock",
+    name: "Kernel-Clock",
+    version: "1.0",
+    description: "Adjusts the kernel clock.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_KernelClock"
+  },
+  {
+    id: "OrbisToolbox",
+    name: "Orbis-Toolbox",
+    version: "1.0",
+    description: "Collection of useful PS4 tools.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_Orbis"
+  },
+  {
+    id: "PS4Debug",
+    name: "PS4-Debug",
+    version: "1.0",
+    description: "Debugging tools for PS4.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_PS4Debug"
+  },
+  {
+    id: "ToDex",
+    name: "ToDex",
+    version: "1.0",
+    description: "Converts console to DEX mode.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_ToDex"
+  },
+  {
+    id: "ToDev",
+    name: "ToDev",
+    version: "1.0",
+    description: "Converts console to DEV mode.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_ToDev"
+  },
+  {
+    id: "ToKratos",
+    name: "ToKratos",
+    version: "1.0",
+    description: "Custom firmware conversion tool.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_ToKratos"
+  },
+  {
+    id: "ToCex",
+    name: "ToCex",
+    version: "1.0",
+    description: "Converts console to CEX mode.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_ToCex"
+  },
+  {
+    id: "BackupDB",
+    name: "Backup-DB",
+    version: "1.0",
+    description: "Backs up the console database.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_BackupDB"
+  },
+  {
+    id: "RestoreDB",
+    name: "Restore-DB",
+    version: "1.0",
+    description: "Restores the console database.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_RestoreDB"
+  },
+  {
+    id: "RIFRenamer",
+    name: "RIF-Renamer",
+    version: "1.0",
+    description: "Renames RIF files.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_RIFRenamer"
+  },
+  {
+    id: "ExitIDU",
+    name: "ExitIDU",
+    version: "1.0",
+    description: "Exits IDU mode.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_ExitIDU"
+  },
+  {
+    id: "DisableASLR",
+    name: "Disable-ASLR",
+    version: "1.0",
+    description: "Disables ASLR.",
+    author: "Various",
+    category: "tools",
+    funcName: "load_DisableASLR"
+  },
+  {
+    id: "ModuleDumper",
+    name: "Module-Dumper",
+    version: "1.0",
+    description: "Dumps system modules.",
+    author: "Al-Azif",
+    category: "tools",
+    funcName: "load_ModuleDumper"
+  },
+  {
+    id: "WebRTE",
+    name: "WebRTE",
+    version: "1.0",
+    description: "Web Real-Time Editing.",
+    author: "golden",
+    category: "tools",
+    funcName: "load_WebrRTE"
+  },
+  {
+    id: "PermanentUART",
+    name: "Permanent-UART",
+    version: "1.0",
+    description: "Enables permanent UART access.",
+    author: "JTAG7371",
+    category: "tools",
+    funcName: "load_PermanentUART"
+  },
+  {
+    id: "PUPDecrypt",
+    name: "PUP-Decrypt",
+    version: "1.0",
+    description: "Decrypts PUP files.",
+    author: "andy-man",
+    category: "tools",
+    funcName: "load_PUPDecrypt"
+  },
+  {
+    id: "GTAVArabicGuy127",
+    name: "GTAV-ArabicGuy-1.27",
+    version: "1.27",
+    description: "GTA V mod menu by ArabicGuy.",
+    author: "ArabicGuy",
+    category: "games",
+    funcName: "load_GTAArbic"
+  },
+  {
+    id: "GTAVArabicGuy132",
+    name: "GTAV-ArabicGuy-1.32",
+    version: "1.32",
+    description: "GTA V mod menu by ArabicGuy.",
+    author: "ArabicGuy",
+    category: "games",
+    funcName: "load_GTAArbic3"
+  },
+  {
+    id: "GTAVArabicGuy133",
+    name: "GTAV-ArabicGuy-1.33",
+    version: "1.33",
+    description: "GTA V mod menu by ArabicGuy.",
+    author: "ArabicGuy",
+    category: "games",
+    funcName: "load_GTAArbic33"
+  },
+  {
+    id: "GTAVBeefQueefMod133",
+    name: "GTAV-BeefQueefMod-1.33",
+    version: "1.33",
+    description: "GTA V mod menu by BeefQueef.",
+    author: "BeefQueef",
+    category: "games",
+    funcName: "load_GTABQ133"
+  },
+  {
+    id: "GTAVBeefQueefMod134",
+    name: "GTAV-BeefQueefMod-1.34",
+    version: "1.34",
+    description: "GTA V mod menu by BeefQueef.",
+    author: "BeefQueef",
+    category: "games",
+    funcName: "load_GTABQ134"
+  },
+  {
+    id: "GTAVBeefQueefMod138",
+    name: "GTAV-BeefQueefMod-1.38",
+    version: "1.38",
+    description: "GTA V mod menu by BeefQueef.",
+    author: "BeefQueef",
+    category: "games",
+    funcName: "load_GTABQ138"
+  },
+  {
+    id: "GTAVWildeModz132",
+    name: "GTAV-WildeModz-1.32",
+    version: "1.32",
+    description: "GTA V mod menu by WildeModz.",
+    author: "WildeModz",
+    category: "games",
+    funcName: "load_GTAWM132"
+  },
+  {
+    id: "GTAVWildeModz133",
+    name: "GTAV-WildeModz-1.33",
+    version: "1.33",
+    description: "GTA V mod menu by WildeModz.",
+    author: "WildeModz",
+    category: "games",
+    funcName: "load_GTAWM133"
+  },
+  {
+    id: "GTAVWildeModz138",
+    name: "GTAV-WildeModz-1.38",
+    version: "1.38",
+    description: "GTA V mod menu by WildeModz.",
+    author: "WildeModz",
+    category: "games",
+    funcName: "load_GTAWM138"
+  },
+  {
+    id: "RDR2OystersMenu100",
+    name: "RDR2-OystersMenu-1.00",
+    version: "1.00",
+    description: "RDR2 mod menu by Oysters.",
+    author: "Oysters",
+    category: "games",
+    funcName: "load_Oysters100"
+  },
+  {
+    id: "RDR2OystersMenu113",
+    name: "RDR2-OystersMenu-1.13",
+    version: "1.13",
+    description: "RDR2 mod menu by Oysters.",
+    author: "Oysters",
+    category: "games",
+    funcName: "load_Oysters113"
+  },
+  {
+    id: "RDR2OystersMenu119",
+    name: "RDR2-OystersMenu-1.19",
+    version: "1.19",
+    description: "RDR2 mod menu by Oysters.",
+    author: "Oysters",
+    category: "games",
+    funcName: "load_Oysters119"
+  },
+  {
+    id: "RDR2OystersMenu124",
+    name: "RDR2-OystersMenu-1.24",
+    version: "1.24",
+    description: "RDR2 mod menu by Oysters.",
+    author: "Oysters",
+    category: "games",
+    funcName: "load_Oysters124"
+  },
+  {
+    id: "RDR2OystersMenu129",
+    name: "RDR2-OystersMenu-1.29",
+    version: "1.29",
+    description: "RDR2 mod menu by Oysters.",
+    author: "Oysters",
+    category: "games",
+    funcName: "load_Oysters129"
+  },
+  {
+    id: "Linux3GB",
+    name: "Linux-3GB",
+    version: "1.0",
+    description: "Loads a 3GB Linux payload for dual-booting.",
+    author: "Various",
+    category: "linux",
+    funcName: "load_Linux3gb"
+  },
+  {
+    id: "Linux4GB",
+    name: "Linux-4GB",
+    version: "1.0",
+    description: "Loads a 4GB Linux payload for dual-booting.",
+    author: "Various",
+    category: "linux",
+    funcName: "load_Linux4gb"
+  },
+  {
+    id: "Linux5GB",
+    name: "Linux-5GB",
+    version: "1.0",
+    description: "Loads a 5GB Linux payload for dual-booting.",
+    author: "Various",
+    category: "linux",
+    funcName: "load_Linux5gb"
+  },
+];
+
+// Scroll snap for the PS4
+ui.mainContainer.addEventListener('scroll', () => {
+  if (ui.mainContainer.scrollTop > lastScrollY) {
+    // scrolling down
+    if (lastSection !== "exploit") {
+      ui.exploitScreen.scrollIntoView({ block: "end" });
+      lastSection = "exploit";
+    }
+  } else if (ui.mainContainer.scrollTop < lastScrollY) {
+    // scrolling up
+    if (lastSection !== "initial") {
+      ui.initialScreen.scrollIntoView({ block: "end" });
+      lastSection = "initial";
+    }
+  }
+  lastScrollY = ui.mainContainer.scrollTop;
+});
+
+// Launch jailbreak
+ui.exploitRunBtn.addEventListener('click', () => {
   jailbreak();
 });
 
-document.getElementById('binloader').addEventListener('click', () => {
-  binloader();
+ui.psLogoContainer.addEventListener('click', () => {
+  jailbreak()
+  ui.exploitScreen.scrollIntoView({ block: "end" })
 });
 
 document.querySelectorAll('button[data-func]').forEach(button => {
@@ -29,46 +522,54 @@ document.querySelectorAll('button[data-func]').forEach(button => {
   });
 });
 
-document.getElementById('generate-cache-btn').addEventListener('click', () => {
-  fetch('/generate_manifest', { method: 'POST' })
-    .then(response => response.json())
-    .then(data => {
-      alert(data.message);
-    })
-    .catch(error => {
-      alert('Error: ' + error + "\nThis option only work on local server !\nPlease make sure you'r server is up.");
-    });
-});
-
-document.getElementById('update-exploit').addEventListener('click', () => {
-  fetch('/update_exploit', { method: 'POST' })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('console').textContent = data.results.join('\n') + "\nPlease don't forget to update the cache !";
-    })
-    .catch(err => {
-      alert('Error: ' + err + "\nThis option only work on local server !\nPlease make sure you'r server is up.");
-    });
-});
-
-ckbaj.addEventListener('change', (e) => {
-  //alert("WARNING :\nThis option make the jailbreak unstable and this option is not recommended please use the jailbreak button instead !");
-  localStorage.setItem('autojbstate', e.target.checked);
-  onCheckboxChange(e.target.checked);
-});
-
-ckbdc.addEventListener('change', (e) => {
-  localStorage.setItem('dbugc', e.target.checked);
-  onCheckboxChange(e.target.checked);
-  if (ckbdc.checked) {
-    document.getElementById('DebugConsole').style.display  = 'flex';
-  } else {
-    document.getElementById('DebugConsole').style.display = 'none';
+ui.autoJbCheckbox.addEventListener('change', (e) => {
+  isAutoJailbreakEnabled = e.target.checked;
+  localStorage.setItem('autoJailbreak', e.target.checked);
+  if (e.target.checked) {
+    if (confirm(languages[currentLanguage].jailbreakNow + currentJbFlavor)) {
+      settingsPopup()
+      ui.exploitScreen.scrollIntoView({ block: "end" })
+      jailbreak();
+    }
   }
 });
 
-function isHttps() {
-  return window.location.protocol === 'https:';
+// popups
+function aboutPopup() {
+  ui.aboutPopupOverlay.classList.toggle('hidden');
+}
+
+function settingsPopup() {
+  ui.settingsPopupOverlay.classList.toggle('hidden');
+}
+
+
+// Jailbreak-related functions
+async function jailbreak() {
+  try {
+    const modules = await loadMultipleModules([
+      '../payloads/Jailbreak.js',
+      '../psfree/alert.mjs'
+    ]);
+    console.log("All modules are loaded!");
+    const JailbreakModule = modules[0];
+
+    if (localStorage.getItem('jailbreakFlavor') == 'GoldHEN') {
+      if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
+        JailbreakModule.GoldHEN();
+      } else {
+        console.error("GoldHEN function not found in Jailbreak.js module");
+      }
+    } else {
+      if (JailbreakModule && typeof JailbreakModule.HEN === 'function') {
+        JailbreakModule.HEN(ps4fw.replace('.', ''));
+      } else {
+        console.error("HEN function not found in Jailbreak.js module");
+      }
+    }
+  } catch (e) {
+    console.error("Failed to jailbreak:", e);
+  }
 }
 
 async function loadMultipleModules(files) {
@@ -79,328 +580,6 @@ async function loadMultipleModules(files) {
   } catch (error) {
     console.error("Error loading modules:", error);
     throw error;
-  }
-}
-
-function showabout() {
-  document.getElementById('about-popup').style.display = 'flex'; // Show popup
-  document.getElementById('overlay-popup').style.display = 'block'; // Show overlay
-}
-
-function closeabout() {
-  document.getElementById('about-popup').style.display = 'none'; // Hide popup
-  document.getElementById('overlay-popup').style.display = 'none'; // Hide overlay
-}
-
-function showsettings() {
-  document.getElementById('settings-popup').style.display = 'flex'; // Show popup
-  document.getElementById('overlay-popup').style.display = 'block'; // Show overlay
-}
-
-function closesettings() {
-  document.getElementById('settings-popup').style.display = 'none'; // Hide popup
-  document.getElementById('overlay-popup').style.display = 'none'; // Hide overlay
-}
-
-function CheckFW() {
-  const userAgent = navigator.userAgent;
-  const ps4Regex = /PlayStation 4/;
-  const elementsToHide = [
-    'jailbreak-page', 'jailbreak', 'autojbchkb', 'agtext', 
-    'payloadsbtn', 'generate-cache-btn', 'update-exploit', 'settings-btn'
-  ];
-
-  if (ps4Regex.test(userAgent)) {
-    const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
-    const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
-    ps4FwVersion = fwVersion;
-    if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
-      document.getElementById('PS4FW').textContent = `PS4 FW: ${fwVersion} | Compatible`;
-      document.getElementById('PS4FW').style.color = 'green';
-      ps4fw = fwVersion.replace('.','');
-    } else {
-      document.getElementById('PS4FW').textContent = `PS4 FW: ${fwVersion || 'Unknown'} | Incompatible`;
-      document.getElementById('PS4FW').style.color = 'red';
-
-      elementsToHide.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
-    }
-
-    document.title = "PSFree | " + fwVersion
-  } else {
-    platform = 'Unknown platform';
-
-    if (/Android/.test(userAgent)) platform = 'Android';
-    else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
-    else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
-    else if (/Windows/.test(userAgent)) platform = 'Windows';
-    else if (/Linux/.test(userAgent)) platform = 'Linux';
-
-    document.getElementById('PS4FW').textContent = `You're not on a PS4, platform: ${platform}`;
-    document.getElementById('PS4FW').style.color = 'red';
-
-    elementsToHide.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-  }
-}
-
-function checksettings() {
-  if (localStorage.getItem('HEN')) {
-    menuBtns.forEach(el => {
-      el.onmouseover = () => el.style.backgroundColor = '#00F0FF';
-      el.onmouseout = () => el.style.backgroundColor = '';
-    });
-
-    psBtns.forEach(el => {
-      el.onmouseover = () => {
-      el.style.boxShadow = '0 0px 48px #00F0FF, 0 0px 10px #000c';
-        const svg = el.querySelector('svg');
-        if (svg) svg.style.fill = '#00F0FF';
-      };
-      el.onmouseout = () => {
-        el.style.boxShadow = '';
-        const svg = el.querySelector('svg');
-        if (svg) svg.style.fill = '';
-      };
-    });
-
-    plsbtn.forEach(btn => {
-      btn.style.borderColor = '#00F0FF';
-      btn.addEventListener('mouseenter', () => {
-        btn.style.backgroundColor = '#00F0FF';
-      });
-
-      btn.addEventListener('mouseleave', () => {
-        btn.style.backgroundColor = ''; 
-      });
-    });
-
-    document.getElementById('console').style.borderColor = '#00F0FF';
-    document.getElementById('header-title').style.borderColor = '#00F0FF';
-    document.getElementById('header-title').style.textShadow = '0px 0px 15px #00F0FF';
-    
-    const containers = document.querySelectorAll('.button-container');
-    containers.forEach(container => {
-      container.style.borderColor = '#00F0FF';
-    });
-  } else {
-    menuBtns.forEach(el => {
-      el.onmouseover = () => el.style.backgroundColor = '#FFB84D';
-      el.onmouseout = () => el.style.backgroundColor = '';
-    });
-
-    psBtns.forEach(el => {
-      el.onmouseover = () => {
-        el.style.boxShadow = '0 0px 48px #FFB84D, 0 0px 10px #000c';
-        const svg = el.querySelector('svg');
-        if (svg) svg.style.fill = '#FFB84D';
-      };
-      el.onmouseout = () => {
-        el.style.boxShadow = '';
-        const svg = el.querySelector('svg');
-        if (svg) svg.style.fill = '';
-      };
-    });
-
-    plsbtn.forEach(btn => {
-      btn.style.borderColor = '#FFB84D';
-      btn.addEventListener('mouseenter', () => {
-        btn.style.backgroundColor = '#FFB84D';
-      });
-
-      btn.addEventListener('mouseleave', () => {
-        btn.style.backgroundColor = '';
-      });
-    });
-
-    document.getElementById('console').style.borderColor = '#FFB84D';
-    document.getElementById('header-title').style.borderColor = '#FFB84D';
-    document.getElementById('header-title').style.textShadow = '0px 0px 15px #FFB84D';
-    document.getElementById('button-container').style.borderColor = '#FFB84D';
-
-    const containers = document.querySelectorAll('.button-container');
-    containers.forEach(container => {
-      container.style.borderColor = '#FFB84D';
-    });
-  }
-}
-
-function choosejb(hen) {
-  if (hen === 'HEN') {
-    localStorage.removeItem('GoldHEN');
-    localStorage.setItem('HEN', 1);
-  } else if (hen === 'GoldHEN') {
-    localStorage.removeItem('HEN');
-    localStorage.setItem('GoldHEN', 1);
-  }
-  checksettings();
-}
-
-function showpayloads() {
-  let payloadsBtn = document.getElementById('payloadsbtn');
-  let payloadsPage = document.getElementById('payloads-page');
-  let jailbreakPage = document.getElementById('jailbreak-page');
-  let PS4FW = document.getElementById('PS4FW');
-  let storageLang = localStorage.getItem('language');
-  
-  if (!payloadsBtn.classList.contains('active')){
-    jailbreakPage.style.display = 'none';
-    PS4FW.style.display = 'none';
-    payloadsPage.style.display = 'block';
-    if (storageLang == 'en') payloadsBtn.textContent = 'Jailbreak';
-    if (storageLang == 'ar') payloadsBtn.textContent = 'التهكير';
-    localStorage.setItem('visibleDiv', 'payloads-page');
-    payloadsBtn.classList.add('active');
-  }else{
-    jailbreakPage.style.display = 'block';
-    PS4FW.style.display = 'flex';
-    payloadsPage.style.display = 'none';
-    if (storageLang == 'en') payloadsBtn.textContent = 'Payloads';
-    if (storageLang == 'ar') payloadsBtn.textContent = 'الإضافات';
-    localStorage.setItem('visibleDiv', 'jailbreak-page');
-    payloadsBtn.classList.remove('active');
-  }
-  CheckFW();
-}
-
-function showtoolspayloads() {
-  document.getElementById('payloads-linux').style.display = 'none';
-  document.getElementById('payloads-game').style.display = 'none';
-  document.getElementById('payloads-tools').style.display = 'block';
-}
-
-function showgamepayloads() {
-  document.getElementById('payloads-linux').style.display = 'none';
-  document.getElementById('payloads-game').style.display = 'block';
-  document.getElementById('payloads-tools').style.display = 'none';
-}
-
-function showlinuxpayloads() {
-  document.getElementById('payloads-linux').style.display = 'block';
-  document.getElementById('payloads-game').style.display = 'none';
-  document.getElementById('payloads-tools').style.display = 'none';
-}
-
-function loadjbflavor() {
-  const savedValue = localStorage.getItem('selectedHEN');
-  if (savedValue) {
-    const radio = document.querySelector(`input[name="hen"][value="${savedValue}"]`);
-    if (radio) {
-      radio.checked = true;
-    }
-  }
-}
-
-function savejbflavor() {
-  const radios = document.querySelectorAll('input[name="hen"]');
-  radios.forEach(radio => {
-    if (radio.checked) {
-      localStorage.setItem('selectedHEN', radio.value);
-    }
-  });
-}
-
-function savelanguage() {
-  const radios = document.querySelectorAll('input[name="language"]');
-  radios.forEach(radio => {
-    if (radio.checked) {
-      localStorage.setItem('language', radio.value);
-    }
-  });
-}
-
-function loadlanguage(){
-  var language = localStorage.getItem('language');
-  if (language == null) document.querySelector('input[name=language][value="en"]').checked = true;
-  document.querySelector('input[name="language"][value="' + language + '"').checked = true;
-}
-
-function loadajbsettings(){
-  if (savedaj !== null) {
-    ckbaj.checked = savedaj === 'true';
-    onCheckboxChange(ckbaj.checked);
-  }
-
-  if (savedc !== null){
-    ckbdc.checked = savedc === 'true';
-    onCheckboxChange(ckbdc.checked);
-  }
-
-  if (ckbaj.checked) {
-    if (sessionStorage.getItem('jbsuccess')) {
-      console.log('Aleardy jailbroken !');
-    } else {
-      document.getElementById('jailbreak').style.display = 'none';
-      document.getElementById('loader').style.display = 'flex';
-      setTimeout(() => {
-        jailbreak();
-      }, 3000);
-    }
-  }
-
-  if (ckbdc.checked) {
-    document.getElementById('DebugConsole').style.display  = 'flex';
-  } else {
-    document.getElementById('DebugConsole').style.display = 'none';
-  }
-
-  if (isHttps()) {
-    const btn1 = document.getElementById('generate-cache-btn');
-    const btn2 = document.getElementById('update-exploit');
-    if (btn1) btn1.style.display = 'none';
-    if (btn2) btn2.style.display = 'none';
-  }
-
-  if (visibleDiv === 'jailbreak-page') {
-    document.getElementById('jailbreak-page').style.display = 'block';
-    document.getElementById('PS4FW').style.display = 'flex';
-    document.getElementById('payloads-page').style.display = 'none';
-    document.getElementById('payloadsbtn').textContent = 'Payloads';
-  } else {
-    document.getElementById('jailbreak-page').style.display = 'none';
-    document.getElementById('PS4FW').style.display = 'none';
-    document.getElementById('payloads-page').style.display = 'block';
-    document.getElementById('payloadsbtn').textContent = 'Jailbreak';
-    localStorage.setItem('visibleDiv', 'payloads-page');
-  }
-}
-
-async function jailbreak() {
-  try {
-    document.getElementById('jailbreak').style.display = 'none';
-    document.getElementById('loader').style.display = 'flex';
-    const modules = await loadMultipleModules([
-      '../payloads/Jailbreak.js',
-      '../psfree/alert.mjs'
-    ]);
-    console.log("All modules are loaded!");
-    const JailbreakModule = modules[0];
-
-    if (localStorage.getItem('HEN')) {
-      if (JailbreakModule && typeof JailbreakModule.HEN === 'function') {
-          JailbreakModule.HEN(ps4fw);
-      } else {
-          console.error("HEN function not found in Jailbreak.js module");
-      }
-    } else if (localStorage.getItem('GoldHEN')) {
-      if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
-          JailbreakModule.GoldHEN();
-      } else {
-          console.error("GoldHEN function not found in Jailbreak.js module");
-      }
-    } else {
-      if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
-          JailbreakModule.GoldHEN();
-      } else {
-          console.error("GoldHEN function not found in Jailbreak.js module");
-      }
-    }
-  } catch (e) {
-    console.error("Failed to jailbreak:", e);
   }
 }
 
@@ -421,6 +600,9 @@ async function binloader() {
   } catch (e) {
     console.error("Failed to jailbreak:", e);
   }
+}
+function isHttps() {
+  return window.location.protocol === 'https:';
 }
 
 async function Loadpayloads(payload) {
@@ -451,283 +633,229 @@ async function Loadpayloads(payload) {
   }
 }
 
-function loadsettings() {
-  loadajbsettings();
-  loadjbflavor();
-  checksettings();
-  CheckFW();
-  setLanguage(localStorage.getItem('language'))
-  loadlanguage();
+function loadAutoJb() {
+  ui.autoJbCheckbox.checked = isAutoJailbreakEnabled == 'true' ? true : false;
+  if (isAutoJailbreakEnabled == 'true') {
+    if (confirm(languages[currentLanguage].jailbreakNow + currentJbFlavor)) {
+      ui.exploitScreen.scrollIntoView({ block: "end" })
+      jailbreak();
+    }
+  }
 }
 
-function onCheckboxChange(checked) {
-  if (checked) {
-    console.log('Checkbox is checked!');
+
+function loadLanguage() {
+  var language = localStorage.getItem("language");
+  if (language == null) {
+    document.querySelector('input[name=language][value="en"]').checked = true;
+  } else document.querySelector(`input[name="language"][value="${language}`).checked = true;
+}
+
+// Update UI langauge
+function applyLanguage(lang) {
+  currentLanguage = lang;
+  const strings = languages[currentLanguage];
+
+  if (!strings) {
+    console.error(`Language list ${lang} is not available`);
+    return;
+  }
+
+  document.title = strings.title || "PSFree Enhanced";
+  document.dir = (currentLanguage === 'ar') ? 'rtl' : 'ltr';
+  document.lang = currentLanguage;
+
+
+  // Check if ps4 is supported
+  if (ps4fw === null) {
+    ui.ps4FwStatus.textContent = strings.notPs4 + platform;
+    ui.ps4FwStatus.style.color = 'red';
+  } else if (ps4fw <= 960) {
+    ui.ps4FwStatus.textContent = strings.ps4FwCompatible.replace('{ps4fw}', ps4fw);
+    ui.ps4FwStatus.style.color = 'green';
   } else {
-    console.log('Checkbox is unchecked!');
+    ui.ps4FwStatus.textContent = strings.ps4FwIncompatible.replace('{ps4fw}', ps4fw);
+    ui.ps4FwStatus.style.color = 'red';
+  }
+  // Main screen elements
+  ui.settingsBtn.title = strings.settingsBtnTitle;
+  ui.clickToStartText.textContent = strings.clickToStart;
+  document.querySelector('#choosejb-initial h3').textContent = strings.chooseHEN;
+
+  // About us popup
+  ui.aboutPopup.querySelector('h2').textContent = strings.aboutPsfreeHeader;
+  ui.aboutPopup.querySelectorAll('p')[0].textContent = strings.aboutVersion;
+  ui.aboutPopup.querySelectorAll('p')[1].textContent = strings.aboutDescription;
+  ui.aboutPopup.querySelector('#close-about').textContent = strings.closeButton;
+
+  // Settings popup
+  ui.settingsPopup.querySelector('h2').textContent = strings.settingsPsfreeHeader;
+  ui.settingsPopup.querySelector('#PS4FWOK h3').textContent = strings.ps4FirmwareSupportedHeader;
+  ui.settingsPopup.querySelector('#autojbchkb p').textContent = strings.autoJailbreakText;
+  ui.settingsPopup.querySelector('#chooselang h3').textContent = strings.languageHeader;
+  ui.settingsPopup.querySelector('#enLang').textContent = strings.englishOption;
+  ui.settingsPopup.querySelector('#arLang').textContent = strings.arabicOption;
+  ui.settingsPopup.querySelector('#close-settings').textContent = strings.closeButton;
+
+  // Warning element (Exploit section)
+  const warningHeader = document.querySelector('#warningBox p');
+  const warningNotes = document.querySelector('#warningBox ul');
+  if (warningNotes) {
+    const items = warningNotes.querySelectorAll('li');
+    if (items[0]) items[0].textContent = strings.warnings.note1;
+    if (items[1]) items[1].textContent = strings.warnings.note2;
+    if (items[2]) items[2].textContent = strings.warnings.note3;
+  }
+  warningHeader.textContent = strings.alert;
+
+  // Buttons
+  ui.backToInitialBtn.textContent = strings.backToInitialBtn;
+  ui.exploitRunBtn.title = strings.clickToStart;
+  ui.aboutBtn.title = strings.aboutMenu;
+
+  document.querySelector('#exploit-status-panel h2').textContent = strings.exploitStatusHeader;
+  ui.payloadsSectionTitle.textContent = strings.payloadsHeader;
+  ui.toolsTab.textContent = strings.payloadsToolsHeader;
+  ui.linuxTab.textContent = strings.payloadsLinuxHeader;
+  ui.gamesTab.textContent = strings.payloadsGameHeader;
+  ui.consoleElement.querySelector('center').textContent = strings.waitingUserInput;
+}
+
+
+function saveJbFlavor(name, value) {
+  localStorage.setItem("jailbreakFlavor", value);
+  // Apply hen selector to both inputs
+  document.querySelector(`input[name="${name == "hen" ? "hen2" : "hen"}"][value="${value}"]`).checked = true;
+  currentJbFlavor = value;
+};
+
+function loadJbFlavor() {
+  const flavor = currentJbFlavor || 'GoldHEN';
+  const henRadio = document.querySelector(`input[name="hen"][value="${flavor}"]`);
+  const hen2Radio = document.querySelector(`input[name="hen2"][value="${flavor}"]`);
+
+  if (henRadio && hen2Radio) {
+    henRadio.checked = true;
+    hen2Radio.checked = true;
   }
 }
 
-// Language
-// Language Strings
-const languages = {
-  "en": {
-    "menuPayloads": "Payloads",
-    "menuForceCache": "Force-Cache",
-    "menuUpdateExploit": "Update-Exploit",
-    "menuSettings": "Settings",
-    "menuAbout": "About",
-    "ps4FwSupported": `PS4 FW: ${ps4FwVersion} | Compatible`,
-    "ps4FwUnsupported": `PS4 FW: ${ps4FwVersion} | Incompatible`,
-    "notPs4": `You're not on a PS4, platform: ${platform}`,
-    "payloadsToolsHeader": "Tools",
-    "payloadsGameHeader": "Game",
-    "payloadsLinuxHeader": "Linux",
-    "binLoader": "Bin-Loader",
-    "appDumper": "App-Dumper",
-    "kernelDumper": "Kernel-Dumper",
-    "ps4DumperVtx": "PS4-Dumper-VTX",
-    "app2Usb": "App2USB",
-    "disableUpdates": "Disable-Updates",
-    "enableUpdates": "Enable-Updates",
-    "ftp": "FTP",
-    "historyBlocker": "History-Blocker",
-    "kernelClock": "Kernel-Clock",
-    "orbisToolbox": "Orbis-Toolbox",
-    "ps4Debug": "PS4-Debug",
-    "toDex": "ToDex",
-    "toDev": "ToDev",
-    "toKratos": "ToKratos",
-    "toCex": "ToCex",
-    "backupDb": "Backup-DB",
-    "restoreDb": "Restore-DB",
-    "rifRenamer": "RIF-Renamer",
-    "exitIdu": "ExitIDU",
-    "disableAslr": "Disable-ASLR",
-    "moduleDumper": "Module-Dumper",
-    "webrRte": "WebRTE",
-    "permanentUart": "Permanent-UART",
-    "pupDecrypt": "PUP-Decrypt",
-    "linux1gb": "Linux-1GB",
-    "linux2gb": "Linux-2GB",
-    "linux3gb": "Linux-3GB",
-    "linux4gb": "Linux-4GB",
-    "linux5gb": "Linux-5GB",
-    "debugConsoleHeader": "Debug Console",
-    "aboutPsfreeHeader": "About PSFree",
-    "aboutVersion": "Version: 1.5.1",
-    "aboutDescription": "A simple web interface for PS4 jailbreak.",
-    "closeButton": "Close",
-    "settingsPsfreeHeader": "Settings PSFree",
-    "ps4FirmwaresSupportedHeader": "PS4 Firmwares supported",
-    "chooseYourFlavorHeader": "Choose your flavor",
-    "autoJailbreakText": "Auto-Jailbreak",
-    "enableDebugConsoleText": "Enable Debug Console",
-    "languageHeader": "Language",
-    "englishOption": "English",
-    "arabicOption": "Arabic",
-    "installPsfreeLite": "Install PSFree-Lite",
-    "arabicOption": "Arabic",
-    "englishOption": "English"
-  },
-  "ar": {
-    "menuPayloads": "الإضافات",
-    "menuForceCache": "فرض التخزين المؤقت",
-    "menuUpdateExploit": "تحديث الثغرة",
-    "menuSettings": "الإعدادات",
-    "menuAbout": "حول",
-    "ps4FwSupported": `بلايستايشن 4 إصدار: ${ps4FwVersion} | متوافق`,
-    "ps4FwUnsupported": `بلايستايشن 4 إصدار ${ps4FwVersion || 'غير معروف'} | غير متوافق`,
-    "notPs4": `أنت لست على جهاز بلايستايشن 4. المنصة: ${platform == undefined ? "غير معروفة" : platform}`,
-    "payloadsToolsHeader": "الأدوات",
-    "payloadsGameHeader": "الألعاب",
-    "payloadsLinuxHeader": "لينكس",
-    "binLoader": "محمل ملفات bin",
-    "appDumper": "ناسخ التطبيقات",
-    "kernelDumper": "ناسخ الكيرنال",
-    "ps4DumperVtx": "ناسخ PS4-VTX",
-    "app2Usb": "تطبيق إلى USB",
-    "disableUpdates": "تعطيل التحديثات",
-    "enableUpdates": "تفعيل التحديثات",
-    "ftp": "FTP",
-    "historyBlocker": "مانع السجل",
-    "kernelClock": "كسر سرعة النواة",
-    "orbisToolbox": "صندوق أدوات أوربيس",
-    "ps4Debug": "ps4Debug",
-    "toDex": "toDex",
-    "toDev": "toDev",
-    "toKratos": "إلى كراتوس",
-    "toCex": "إلى Cex",
-    "backupDb": "نسخ قاعدة البيانات احتياطيًا",
-    "restoreDb": "استعادة قاعدة البيانات",
-    "rifRenamer": "إعادة تسمية ملفات RIF",
-    "exitIdu": "الخروج من IDU",
-    "disableAslr": "تعطيل ASLR",
-    "moduleDumper": "ناسخ الإضافة",
-    "webrRte": "WebRTE",
-    "permanentUart": "UART دائم",
-    "pupDecrypt": "فك تشفير PUP",
-    "linux1gb": "لينكس-1 جيجابايت",
-    "linux2gb": "لينكس-2 جيجابايت",
-    "linux3gb": "لينكس-3 جيجابايت",
-    "linux4gb": "لينكس-4 جيجابايت",
-    "linux5gb": "لينكس-5 جيجابايت",
-    "debugConsoleHeader": "وحدة تحكم",
-    "aboutPsfreeHeader": "حول PSFree",
-    "aboutVersion": "الإصدار: 1.5.1",
-    "aboutDescription": "واجهة ويب بسيطة لجيلبريك PS4.",
-    "closeButton": "إغلاق",
-    "settingsPsfreeHeader": "إعدادات PSFree",
-    "ps4FirmwaresSupportedHeader": "إصدارات PS4 المدعومة",
-    "chooseYourFlavorHeader": "اختر نوع الـ HEN",
-    "autoJailbreakText": "تهكير تلقائي",
-    "enableDebugConsoleText": "تمكين وحدة تحكم",
-    "languageHeader": "اللغة",
-    "installPsfreeLite": "تثبيت PSFree-Lite",
-    "arabicOption": "العربية",
-    "englishOption": "الإنجليزية"
-  }
+function saveLanguage() {
+  const language = document.querySelector('input[name="language"]:checked').value;
+  localStorage.setItem('language', language);
+  currentLanguage = language;
+  applyLanguage(language);
 };
-var language = localStorage.getItem('language');
 
-let currentLanguage = language == null ? "en": language; // Default language
+function CheckFW() {
+  const userAgent = navigator.userAgent;
+  const ps4Regex = /PlayStation 4/;
+  const elementsToHide = [
+    'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
+    'payloadsbtn', 'autojbchkb'
+  ];
 
-// Function to update the UI with the selected language
-function setLanguage(lang) {
-    currentLanguage = lang;
-    const strings = languages[currentLanguage];
+  if (ps4Regex.test(userAgent)) {
+    const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
+    const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
+    if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
+      document.getElementById('PS4FW').style.color = 'green';
+      ps4fw = fwVersion;
+    } else {
+      document.getElementById('PS4FW').style.color = 'red';
 
-    if (!strings) {
-        console.error(`Language strings for '${lang}' not found.`);
-        return;
+      elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
     }
 
-    // Update Floating Menu Buttons
-    document.getElementById('payloadsbtn').textContent = strings.menuPayloads;
-    document.getElementById('generate-cache-btn').textContent = strings.menuForceCache;
-    document.getElementById('update-exploit').textContent = strings.menuUpdateExploit;
-    document.getElementById('settings-btn').textContent = strings.menuSettings;
-    document.getElementById('about-btn').textContent = strings.menuAbout;
+  } else {
+    platform = 'Unknown platform';
 
-    // Update PS4FW Message
-    if (ps4FwVersion != undefined && Number(ps4FwVersion) <= 9.6){
-      // For some reason ps4FwVersion and platform variables shows undefined even tho it is.
-      let message = strings.ps4FwSupported.replace("undefined", ps4FwVersion)
-      document.getElementById("PS4FW").textContent = message;
-      document.getElementById("PS4FW").style.color = "green";
-    }else if (ps4FwVersion != undefined && Number(ps4FwVersion) > 9.6){
-      let message = strings.ps4FwUnsupported.replace(undefined, ps4FwVersion);
-      document.getElementById("PS4FW").textContent = message;
-      document.getElementById("PS4FW").style.color = "red";
-    }else {
-      let message;
-      if (currentLanguage == "en") message = strings.notPs4.replace("undefined", platform);
-      if (currentLanguage == "ar") message = strings.notPs4.replace("غير معروفة", platform);
-      document.getElementById("PS4FW").textContent = message;
-      document.getElementById("PS4FW").style.color = "red";
+    if (/Android/.test(userAgent)) platform = 'Android';
+    else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
+    else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
+    else if (/Windows/.test(userAgent)) platform = 'Windows';
+    else if (/Linux/.test(userAgent)) platform = 'Linux';
+
+    document.getElementById('PS4FW').style.color = 'red';
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+  }
+}
+
+// Load settings
+function loadSettings() {
+  try {
+    CheckFW();
+    loadJbFlavor();
+    loadLanguage();
+    applyLanguage(currentLanguage);
+    renderPayloads();
+    loadAutoJb();
+  } catch (e) {
+    alert("Error in loadSettings: " + e.message);
+  }
+}
+
+function getPayloadCategoryClass(category) {
+  switch (category) {
+    case 'tools': return 'category-tools';
+    case 'games': return 'category-games';
+    case 'linux': return 'category-linux';
+    default: return '';
+  }
+}
+
+function renderPayloads() {
+  const payloadsToRender = payloads;
+
+  payloadsToRender.forEach(payload => {
+    const payloadCard = document.createElement('div');
+    payloadCard.id = payload.id;
+    payloadCard.onclick = () => Loadpayloads(payload.funcName);
+    payloadCard.className = `payload payload-card relative group cursor-pointer transition-all duration-300 hover:scale-105`;
+    payloadCard.dataset.payloadId = payload.id;
+
+    payloadCard.innerHTML = `
+    <button style="width: 100%;">
+      <div class="bg-gray-800 border border-white/20 rounded-xl p-6 h-full">
+          <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center space-x-3">
+                  <div class="text-2xl"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> </svg></div>
+                  <div>
+                      <h3 class="text-start font-semibold text-white text-lg">${payload.name}</h3>
+                      <p class="text-start text-cyan-300 text-sm">${payload.version}</p>
+                  </div>
+              </div>
+              ${payload.isRecommended ? `<span class="px-2 py-1 rounded-full text-xs border">${languages[currentLanguage] ? languages[currentLanguage].recommendedLabel : 'Recommended'}</span>` : ''}
+              <span class="px-2 py-1 rounded-full text-xs border ${getPayloadCategoryClass(payload.category)}">
+                  ${payload.category}
+              </span>
+          </div>
+          <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description}</p>
+          <div class="flex items-center justify-between text-xs text-white/60">
+          </div>
+      </div>
+      </button>
+      `;
+    switch (payload.category) {
+      case "tools":
+        ui.toolsSection.appendChild(payloadCard);
+        break;
+      case "games":
+        ui.gamesSection.appendChild(payloadCard);
+        break;
+      case "linux":
+        ui.linuxSection.appendChild(payloadCard);
+        break;
+      default:
+        ui.toolsSection.appendChild(payloadCard);
+        break;
     }
+  });
 
-    // Update Jailbreak Button Title
-    document.getElementById('jailbreak').title = strings.jailbreakButtonTitle;
-
-    // Update Payloads Headers
-    document.getElementById('floating-tools').textContent = strings.payloadsToolsHeader;
-    document.getElementById('floating-games').textContent = strings.payloadsGameHeader;
-    document.getElementById('floating-linux').textContent = strings.payloadsLinuxHeader;
-    document.getElementById('tools1').textContent = strings.payloadsToolsHeader;
-    document.getElementById('tools2').textContent = strings.payloadsGameHeader;
-    document.getElementById('tools3').textContent = strings.payloadsLinuxHeader;
-
-
-    // Update Payload Buttons (Tools)
-    const toolButtons = document.querySelector('#payloads-tools .button-container').children;
-    const toolButtonMap = {
-        "binloader": "binLoader",
-        "load_AppDumper": "appDumper",
-        "load_KernelDumper": "kernelDumper",
-        "load_VTXDumper": "ps4DumperVtx",
-        "load_App2USB": "app2Usb",
-        "load_DisableUpdates": "disableUpdates",
-        "load_EnableUpdates": "enableUpdates",
-        "load_FTP": "ftp",
-        "load_HistoryBlocker": "historyBlocker",
-        "load_KernelClock": "kernelClock",
-        "load_Orbis": "orbisToolbox",
-        "load_PS4Debug": "ps4Debug",
-        "load_ToDex": "toDex",
-        "load_ToDev": "toDev",
-        "load_ToKratos": "toKratos",
-        "load_ToCex": "toCex",
-        "load_BackupDB": "backupDb",
-        "load_RestoreDB": "restoreDb",
-        "load_RIFRenamer": "rifRenamer",
-        "load_ExitIDU": "exitIdu",
-        "load_DisableASLR": "disableAslr",
-        "load_ModuleDumper": "moduleDumper",
-        "load_WebrRTE": "webrRte",
-        "load_PermanentUART": "permanentUart",
-        "load_PUPDecrypt": "pupDecrypt"
-    };
-    for (let i = 0; i < toolButtons.length; i++) {
-        const button = toolButtons[i];
-        const key = button.id || button.dataset.func; // Use id first, then data-func
-        if (key && toolButtonMap[key]) {
-            button.textContent = strings[toolButtonMap[key]];
-        }
-    }
-
-    // Update Payload Buttons (Linux)
-    const linuxButtons = document.querySelector('#payloads-linux .button-container').children;
-    const linuxButtonMap = {
-        "load_Linux": "linux1gb",
-        "load_Linux2gb": "linux2gb",
-        "load_Linux3gb": "linux3gb",
-        "load_Linux4gb": "linux4gb",
-        "load_Linux5gb": "linux5gb"
-    };
-    for (let i = 0; i < linuxButtons.length; i++) {
-        const button = linuxButtons[i];
-        const key = button.dataset.func;
-        if (key && linuxButtonMap[key]) {
-            button.textContent = strings[linuxButtonMap[key]];
-        }
-    }
-
-    // Update Debug Console
-    document.querySelector('#DebugConsole h3').textContent = strings.debugConsoleHeader;
-
-    // Update About Popup
-    document.querySelector('#about-popup h2').textContent = strings.aboutPsfreeHeader;
-    document.querySelector('#about-popup p:nth-of-type(1)').textContent = strings.aboutVersion;
-    document.querySelector('#about-popup p:nth-of-type(2)').textContent = strings.aboutDescription;
-    document.getElementById('close-about').textContent = strings.closeButton;
-
-    // Update Settings Popup
-    document.querySelector('#settings-popup h2').textContent = strings.settingsPsfreeHeader;
-    document.querySelector('#PS4FWOK h3').textContent = strings.ps4FirmwaresSupportedHeader;
-    document.querySelector('#choosejb h3').textContent = strings.chooseYourFlavorHeader;
-    document.getElementById('autojbchkb').querySelector('p').textContent = strings.autoJailbreakText;
-    document.getElementById('debugconsolechkb').querySelector('p').textContent = strings.enableDebugConsoleText;
-    document.getElementById('chooselang').querySelector('h3').textContent = strings.languageHeader;
-    document.getElementById('close-settings').textContent = strings.closeButton;
-    document.getElementById('arLang').textContent = strings.arabicOption;
-    document.getElementById('enLang').textContent = strings.englishOption;
-    // if (document.getElementById('install-psfrl')) { // Check if the element exists
-    //     document.getElementById('install-psfrl').textContent = strings.installPsfreeLite;
-    // }
-
-    // Set text direction based on language
-    const psfreetop = document.getElementById("header");
-    document.body.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-    if (document.body.dir == 'rtl'){
-      psfreetop.style.justifyContent = "flex-end";
-      document.getElementById("DebugConsole").querySelector('h3').style.right = '5%';
-      document.getElementById("DebugConsole").querySelector('h3').style.left = 'inherit';
-
-    }else{
-      psfreetop.style.justifyContent = "flex-start";
-        document.getElementById("DebugConsole").querySelector('h3').style.right = 'inherit';
-      document.getElementById("DebugConsole").querySelector('h3').style.left = '5%';
-    }
-    
 }

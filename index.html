@@ -1,198 +1,269 @@
 <!DOCTYPE html>
-<html manifest="./PSFree.manifest">  
-  <head>
+<html lang="en" manifest="./PSFree.manifest">
+
+<head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSFree Enhanced</title>
+    <!-- Check for/save in cache -->
     <script>
-        function DLProgress(e){Percent=(Math.round(e.loaded / e.total * 100));document.title="Installing offline cache: " + Percent + "%";}
-        function DisplayCacheProgress(){setTimeout(function(){;document.title="Cache Success !";},1000);setTimeout(function(){window.location.href = document.referrer;},3000);}window.applicationCache.addEventListener("progress",DLProgress,false);window.applicationCache.oncached=function(e){DisplayCacheProgress();};window.applicationCache.onupdateready=function(e){DisplayCacheProgress();};
+        function DLProgress(e) { Percent = (Math.round(e.loaded / e.total * 100)); document.title = languages[localStorage.getItem('language')].title + Percent + "%"; }
+        function DisplayCacheProgress() { setTimeout(function () { ; document.title = U+2713; }, 1000); setTimeout(function () { window.location.href = document.referrer; }, 3000); }
+        // check for applicationCache
+        if (window.applicationCache) {
+            window.applicationCache.addEventListener("progress", DLProgress, false);
+            window.applicationCache.oncached = function (e) { DisplayCacheProgress(); };
+            window.applicationCache.onupdateready = function (e) { DisplayCacheProgress(); };
+        } else {
+            console.warn("This browser does not support save in cache!");
+        }
     </script>
-    <meta charset="UTF-8">
-    <title>PSFree</title>
-    <link rel='stylesheet' href='./css/index.css'>
-  </head>
-  <body>
-    <!-- Floating Menu -->
-    <div class="floating-menu">
-      <button onclick="showpayloads()" class="menu-btn" id="payloadsbtn">Payloads</button>
-      <button class="menu-btn" id="generate-cache-btn">Force-Cache</button>
-      <button class="menu-btn" id="update-exploit">Update-Exploit</button>
-      <button onclick="showsettings()" class="menu-btn" id="settings-btn">Settings</button>
-      <button onclick="showabout()" class="menu-btn" id="about-btn">About</button>
-    </div>
 
-    <div class="header" id="header">
-      <div class="header-title" id="header-title">PSFree</div>
-    </div>
+    <!-- Tailwind & Flowbite CSS CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
-    <pre id="update-results" style="white-space: pre-wrap; margin-top: 10px;"></pre>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
 
-    <h2 id="PS4FW">PS4 FW: 0.00 | Compatible</h2>
+<body class="bg-gray-900 text-white">
+    <main class="mainContainer"">
+        <section id="initial-screen" class="relative flex flex-col items-center justify-center min-h-screen p-6 transition-opacity duration-700
+            opacity-100">
+        <!-- Header Buttons -->
+        <header class="absolute top-6 left-6 flex space-x-3 rtl:space-x-reverse z-10">
+            <button onclick="settingsPopup()" id="settings-btn"
+                class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
+                title="Settings">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> </svg>
+            </button>
+            <button onclick="aboutPopup()" id="about-btn"
+                class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
+                title="About">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" viewBox="0 0 512 512"><title>ionicons-v5-f</title><path d="M256,56C145.72,56,56,145.72,56,256s89.72,200,200,200,200-89.72,200-200S366.28,56,256,56Zm0,82a26,26,0,1,1-26,26A26,26,0,0,1,256,138Zm64,226H200V332h44V244H212V212h64V332h44Z"/></svg>            </button>
+        </header>
 
-    <div id="jailbreak-page">
-      <div class="center-btn-wrap">
-        <button id="jailbreak" class="ps-btn" title="PlayStation">
-          <!-- PlayStation SVG logo -->
-          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M0.69116 21.9548C-0.506476 22.7935 -0.284724 24.2384 2.44769 25.1419C5.18011 26.0455 8.35603 26.2323 11.1505 25.729C11.0707 25.729 11.3102 25.729 11.1505 25.729V22.8774L8.43588 23.8C7.39792 24.1355 6.35997 24.2194 5.32202 23.9677C4.5236 23.7161 4.68328 23.2129 5.64139 22.7935L11.1505 20.7806V17.6774L3.48565 20.4452C2.52754 20.7806 1.56943 21.2839 0.69116 21.9548ZM19.2146 9.37419V17.5097C22.4881 19.1871 25.0431 17.5097 25.0431 13.1484C25.0431 8.70323 23.5261 6.69032 19.1348 5.09677C16.8193 4.25806 14.4241 3.50323 12.0288 3V27.2387L17.6178 29V8.61935C17.6178 7.69677 17.6178 7.02581 18.2565 7.27742C19.1348 7.52903 19.2146 8.45161 19.2146 9.37419ZM29.5941 20.0258C27.2787 19.1871 24.8036 18.8516 22.4083 19.1032C21.0779 19.1906 19.8294 19.5869 18.5759 20.0258V23.2968L23.7656 21.2839C24.8036 20.9484 25.8415 20.8645 26.8795 21.1161C27.6779 21.3677 27.5182 21.871 26.5601 22.2903L18.5759 25.3935V28.5806L29.5941 24.3032C30.3925 23.9677 31.1111 23.5484 31.7499 22.8774C32.3088 22.0387 32.0692 20.8645 29.5941 20.0258Z"></path> </g></svg>
+        <!-- PS Button -->
+        <button>
+            <div id="ps-logo-container"
+                class="relative group cursor-pointer flex flex-col items-center justify-center p-8 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                <svg id="ps-logo" class="w-32 h-32 transition-all duration-500 ease-in-out" viewBox="0 0 32 32"
+                    fill="rgb(59 130 246)" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M0.69116 21.9548C-0.506476 22.7935 -0.284724 24.2384 2.44769 25.1419C5.18011 26.0455 8.35603 26.2323 11.1505 25.729C11.0707 25.729 11.3102 25.729 11.1505 25.729V22.8774L8.43588 23.8C7.39792 24.1355 6.35997 24.2194 5.32202 23.9677C4.5236 23.7161 4.68328 23.2129 5.64139 22.7935L11.1505 20.7806V17.6774L3.48565 20.4452C2.52754 20.7806 1.56943 21.2839 0.69116 21.9548ZM19.2146 9.37419V17.5097C22.4881 19.1871 25.0431 17.5097 25.0431 13.1484C25.0431 8.70323 23.5261 6.69032 19.1348 5.09677C16.8193 4.25806 14.4241 3.50323 12.0288 3V27.2387L17.6178 29V8.61935C17.6178 7.69677 17.6178 7.02581 18.2565 7.27742C19.1348 7.52903 19.2146 8.45161 19.2146 9.37419ZM29.5941 20.0258C27.2787 19.1871 24.8036 18.8516 22.4083 19.1032C21.0779 19.1906 19.8294 19.5869 18.5759 20.0258V23.2968L23.7656 21.2839C24.8036 20.9484 25.8415 20.8645 26.8795 21.1161C27.6779 21.3677 27.5182 21.871 26.5601 22.2903L18.5759 25.3935V28.5806L29.5941 24.3032C30.3925 23.9677 31.1111 23.5484 31.7499 22.8774C32.3088 22.0387 32.0692 20.8645 29.5941 20.0258Z">
+                        </path>
+                    </g>
+                </svg>
+                <p class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</p>
+            </div>
         </button>
-      </div>
-      <div class="loader" id="loader" style="display: none;">
-        <div class="loader-circle"></div>
-      </div>
-    </div>
-    
-    <div id="payloads-page" style="display: none;">
-      <nav class="floating-menu-payloads">
-        <button id="floating-tools" onclick="showtoolspayloads()">Tools</button>
-        <button id="floating-games" onclick="showgamepayloads()">Games</button>
-        <button id="floating-linux" onclick="showlinuxpayloads()">Linux</button>
-      </nav>
-      <div id="payloads-tools" style="display: block;">
-        <h2 id="tools1">Tools</h2>
-          <div class="button-container" id="button-container">
-            <button id="binloader">Bin-Loader</button>
-            <button data-func="load_AppDumper">App-Dumper</button>
-            <button data-func="load_KernelDumper">Kernel-Dumper</button>
-            <button data-func="load_VTXDumper">PS4-Dumper-VTX</button>
-            <button data-func="load_App2USB">App2USB</button>
-            <button data-func="load_DisableUpdates">Disable-Updates</button>
-            <button data-func="load_EnableUpdates">Enable-Updates</button>
-            <button data-func="load_FTP">FTP</button>
-            <button data-func="load_HistoryBlocker">History-Blocker</button>
-            <button data-func="load_KernelClock">Kernel-Clock</button>
-            <button data-func="load_Orbis">Orbis-Toolbox</button>
-            <button data-func="load_PS4Debug">PS4-Debug</button>
-            <button data-func="load_ToDex">ToDex</button>
-            <button data-func="load_ToDev">ToDev</button>
-            <button data-func="load_ToKratos">ToKratos</button>
-            <button data-func="load_ToCex">ToCex</button>
-            <button data-func="load_BackupDB">Backup-DB</button>
-            <button data-func="load_RestoreDB">Restore-DB</button>
-            <button data-func="load_RIFRenamer">RIF-Renamer</button>
-            <button data-func="load_ExitIDU">ExitIDU</button>
-            <button data-func="load_DisableASLR">Disable-ASLR</button>
-            <button data-func="load_ModuleDumper">Module-Dumper</button>
-            <button data-func="load_WebrRTE">WebRTE</button>
-            <button data-func="load_PermanentUART">Permanent-UART</button>
-            <button data-func="load_PUPDecrypt">PUP-Decrypt</button>
-          </div>
-      </div>
-      <div id="payloads-game" style="display: none;">
-        <h2 id="tools2">Game</h2>
-          <div class="button-container" id="button-container">
-            <button data-func="load_GTAArbic">GTAV-ArabicGuy-1.27</button>
-            <button data-func="load_GTAArbic3">GTAV-ArabicGuy-1.32</button>
-            <button data-func="load_GTAArbic33">GTAV-ArabicGuy-1.33</button>
-            <button data-func="load_GTABQ133">GTAV-BeefQueefMod-1.33</button>
-            <button data-func="load_GTABQ134">GTAV-BeefQueefMod-1.34</button>
-            <button data-func="load_GTABQ138">GTAV-BeefQueefMod-1.38</button>
-            <button data-func="load_GTAWM132">GTAV-WildeModz-1.32</button>
-            <button data-func="load_GTAWM133">GTAV-WildeModz-1.33</button>
-            <button data-func="load_GTAWM138">GTAV-WildeModz-1.38</button>
-            <button data-func="load_Oysters100">RDR2-OystersMenu-1.00</button>
-            <button data-func="load_Oysters113">RDR2-OystersMenu-1.13</button>
-            <button data-func="load_Oysters119">RDR2-OystersMenu-1.19</button>
-            <button data-func="load_Oysters124">RDR2-OystersMenu-1.24</button>
-            <button data-func="load_Oysters124">RDR2-OystersMenu-1.29</button>
-          </div>
-      </div>
-      <div id="payloads-linux" style="display: none;">
-          <h2 id="tools3">Linux</h2>
-          <div class="button-container" id="button-container">
-            <button data-func="load_Linux">Linux-1GB</button>
-            <button data-func="load_Linux2gb">Linux-2GB</button>
-            <button data-func="load_Linux3gb">Linux-3GB</button>
-            <button data-func="load_Linux4gb">Linux-4GB</button>
-            <button data-func="load_Linux5gb">Linux-5GB</button>
-          </div>
-      </div>
-    </div>
-    
-    <div id="DebugConsole">
-      <h3>Debug Console</h3>
-    
-      <div class="console" style="padding: 20px;"><pre id='console'></pre></div>
-    </div>
-    
 
-    <!-- About Popup -->
-    <div class="overlay" id="overlay-popup"></div>
-    <div class="popup" id="about-popup">
-      <h2>About PSFree</h2>
-      <div>
-        <p>Version: 1.5.1</p>
-        <p>A simple web interface for PS4 jailbreak.</p>
-      </div>
-      <button  onclick="closeabout()" class="close-btn" id="close-about">Close</button>
-    </div>
+        <!-- Compatibility message -->
+        <p id="PS4FW" class="text-white/70 text-lg mt-12 mb-6">-</p>
 
-    <!-- Settings Popup -->
-    <div class="overlay" id="overlay-popup"></div>
-    <div class="popup" id="settings-popup">
-      <h2>Settings PSFree</h2>
-
-      <div id="PS4FWOK">
-        <h3>PS4 Firmwares supported</h3>
-        <div id="listfw">
-          <p>7.00</p>
-          <p>7.01</p>
-          <p>7.02</p>
-          <p>7.50</p>
-          <p>7.51</p>
-          <p>7.55</p>
-          <p>8.00</p>
-          <p>8.01</p>
-          <p>8.03</p>
-          <p>8.50</p>
-          <p>8.52</p>
-          <p>9.00</p>
-          <p>9.03</p>
-          <p>9.04</p>
-          <p>9.50</p>
-          <p>9.51</p>
-          <p>9.60</p>
+        <!-- Jailbreak flavor options -->
+        <div id="choosejb-initial" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-sm text-center">
+            <h3 class="text-xl font-semibold mb-4">Choose your HEN flavor</h3>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 rtl:gap-4 sm:rtl:gap-8">
+                <label
+                    class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto mb-2 sm:mb-0">
+                    <input type="radio" name="hen" value="GoldHEN" onchange="saveJbFlavor(this.name, this.value)"
+                        class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
+                    <span class="text-lg font-semibold text-white/90 select-none">GoldHEN</span>
+                </label>
+                <label
+                    class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto">
+                    <input type="radio" name="hen" value="HEN" onchange="saveJbFlavor(this.name, this.value)"
+                        class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
+                    <span class="text-lg font-semibold text-white/90 select-none">HEN</span>
+                </label>
+            </div>
         </div>
-        
-      </div>
 
-      <div id="choosejb">
-        <h3>Choose your flavor</h3>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="hen" value="GoldHEN" onchange="savejbflavor(); choosejb('GoldHEN')"> GoldHEN
-          </label>
-          <label>
-            <input type="radio" name="hen" value="HEN" onchange="savejbflavor(); choosejb('HEN')"> HEN
-          </label>
+        <!-- Scroll Down Icon -->
+        <button id="scrollDown" class="absolute bottom-10 animate-bounce cursor-pointer"
+            onclick="ui.exploitScreen.scrollIntoView({block: 'end'});">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="currentColor" viewBox="0 0 512 512"><polyline points="112 184 256 328 400 184"></polyline></svg>        
+        </button>
+        </section>
+
+        <!-- Exploit section -->
+        <section id="exploit-main-screen"
+            class="w-full inset-0 bg-gray-900 text-white p-6 transition-opacity duration-700">
+            <div class="container mx-auto" style="width: 100% !important;">
+                <div class="grid md:grid-cols-2 gap-8 h-screen">
+                    <!-- Exploit console panel -->
+                    <div id="exploit-status-panel" class="bg-gray-800 p-6 rounded-lg flex flex-col h-full">
+                        <h2 class="text-xl font-semibold mb-4">Exploit status</h2>
+                        <div id="DebugConsole"
+                            class="flex-grow min-h-[150px] bg-black/50 p-4 rounded-lg overflow-y-auto mb-4 text-xs font-mono"
+                            dir="ltr">
+                            <pre id='console'><center>--</center></pre>
+                        </div>
+                        <div id="warningBox"
+                            class="bg-yellow-600/20 border border-yellow-500/50 rounded-lg p-4 ">
+                            <div class="flex items-start space-x-3 rtl:space-x-reverse">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                <div class="text-sm text-yellow-200">
+                                    <p class="font-medium mb-1">Important notice:</p>
+                                    <ul class="space-y-1 text-yellow-200/80">
+                                        <li>• Make sure to close all apps before running the exploit</li>
+                                        <li>• Make sure to delete cache data before running the exploit for the first time</li>
+                                        <li>• It might take you more than one time</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payloads section -->
+                    <div class="bg-gray-800 p-6 rounded-lg flex flex-col h-full">
+                        <h2 class="text-xl font-semibold mb-4" id="payloads-section-title">Payloads</h2>
+                        <div id="payloadsGrid" class="space-y-3 overflow-y-auto flex-grow max-h-[calc(100vh-250px)]" style="overflow-x: hidden !important;">
+                            <div
+                                class="mb-4 border-b border-gray-200 border-gray-700 w-full sticky top-0 bg-gray-800 z-10 tabs">
+                                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center w-full"
+                                    id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                                    <li class="flex-1" role="presentation">
+                                        <button class="w-full inline-block p-4 border-b-2 rounded-t-lg" id="tools-tab"
+                                            data-tabs-target="#tools" type="button" role="tab" aria-controls="tools"
+                                            aria-selected="false">Tools</button>
+                                    </li>
+                                    <li class="flex-1" role="presentation">
+                                        <button
+                                            class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                            id="linux-tab" data-tabs-target="#linux" type="button" role="tab"
+                                            aria-controls="linux" aria-selected="false">Linux</button>
+                                    </li>
+                                    <li class="flex-1" role="presentation">
+                                        <button
+                                            class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                            id="games-tab" data-tabs-target="#games" type="button" role="tab"
+                                            aria-controls="rdr2" aria-selected="false">Games</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="default-tab-content" class="bg-gray-800">
+                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="tools" role="tabpanel"
+                                    aria-labelledby="tools-tab">
+                                </div>
+                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="linux" role="tabpanel"
+                                    aria-labelledby="linux-tab">
+                                </div>
+                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="games" role="tabpanel"
+                                    aria-labelledby="games-tab">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="henSelection flex items-center justify-center gap-4 mb-4">
+                            <label
+                                class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500">
+                                <input type="radio" name="hen2" value="GoldHEN" class="accent-blue-500 w-4 h-4 ml-2"
+                                    onchange="saveJbFlavor(this.name, this.value)">
+                                <span class="text-base font-semibold text-white/90 select-none">GoldHEN</span>
+                            </label>
+                            <label
+                                class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500">
+                                <input type="radio" name="hen2" value="HEN" class="accent-blue-500 w-4 h-4 ml-2"
+                                    onchange="saveJbFlavor(this.name, this.value)">
+                                <span class="text-base font-semibold text-white/90 select-none">HEN</span>
+                            </label>
+                            <button id="exploitRun"
+                                class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/> </svg>
+                            </button>
+                        </div>
+                        <button id="backToInitialBtn" onclick="ui.initialScreen.scrollIntoView({block: 'end'});"
+                            class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded mt-4 font-semibold disabled:opacity-50 transition-colors">
+                            Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Popups -->
+    <div class="fixed inset-0 bg-black/50 z-50 flex backdrop-blur-sm items-center justify-center p-4 hidden"
+        id="about-popup-overlay">
+        <div id="about-popup" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4">حول PSFree</h2>
+            <div class="space-y-2 text-white/80">
+                <p>Version: 1.5.1</p>
+                <p>A web interface to jailbreak your PS4 using PSFree chained with Lapse kernel exploit</p>
+            </div>
+            <button onclick="aboutPopup()"
+                class="mt-6 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
+                id="close-about">Close</button>
         </div>
-        <label id="autojbchkb">
-          <input type="checkbox" id="ckbaj" />
-          <p id="agtext">Auto-Jailbreak</p>
-        </label>
-        <label id="debugconsolechkb">
-          <input type="checkbox" id="ckbdc" checked />
-          <p id="agtext">Enable Debug Console</p>
-        </label>
-      </div>
-      
-      <!-- Select language -->
-      <div id="chooselang">
-        <h3>Language</h3>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="language" value="en" onchange="savelanguage(); setLanguage('en');"> 
-            <p id="enLang">English</p>
-          </label>
-          <label>
-            <input type="radio" name="language" value="ar" onchange="savelanguage(); setLanguage('ar'); "> 
-            <p id="arLang">Arabic</p>
-          </label>
-        </div>
-      </div>
-
-
-      <button onclick="closesettings()" class="close-btn" id="close-settings">Close</button>
-      <!--<button data-func="load_AppCache" class="install-psfrl" id="install-psfrl">Install PSFree-Lite</button>-->
     </div>
-    <script src='./js/index.js'></script>
-  </body>
+
+    <!-- Settings popup -->
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden"
+        id="settings-popup-overlay">
+        <div id="settings-popup"
+            class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <h2 class="text-2xl font-bold mb-4">PSFree settings</h2>
+
+            <div id="PS4FWOK" class="mb-6">
+                <h3 class="text-lg font-semibold mb-2">Supported PS4 firmware</h3>
+                <div id="listfw" class="grid grid-cols-4 gap-2 text-sm text-white/70">
+                    <p>7.00</p>
+                    <p>7.01</p>
+                    <p>7.02</p>
+                    <p>7.50</p>
+                    <p>7.51</p>
+                    <p>7.55</p>
+                    <p>8.00</p>
+                    <p>8.01</p>
+                    <p>8.03</p>
+                    <p>8.50</p>
+                    <p>8.52</p>
+                    <p>9.00</p>
+                    <p>9.03</p>
+                    <p>9.04</p>
+                    <p>9.50</p>
+                    <p>9.51</p>
+                    <p>9.60</p>
+                </div>
+            </div>
+
+            <label id="autojbchkb" class="flex items-center text-white/80 mt-4 mb-2">
+                <input type="checkbox" id="autoJbBox" class="ml-2"/>
+                <p id="agtext">Jailbreak automatically</p>
+            </label>
+
+            <!-- Language chooser -->
+            <div id="chooselang" class="mb-6">
+                <h3 class="text-lg font-semibold mb-2">Language</h3>
+                <div class="radio-group space-y-2">
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="language" value="en" class="ml-2" onchange="saveLanguage('en');">
+                        <p id="enLang">English</p>
+                    </label>
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="language" value="ar" class="ml-2" onchange="saveLanguage('ar'); ">
+                        <p id="arLang">Arabic</p>
+                    </label>
+                </div>
+            </div>
+
+            <button onclick="settingsPopup()"
+                class="mt-6 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
+                id="close-settings">Close</button>
+        </div>
+    </div>
+
+    <!-- Lucid icons initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings()
+        });
+    </script>
+    <!-- Main JS file -->
+    <script src='js/index.js'></script>
+</body>
+
 </html>
