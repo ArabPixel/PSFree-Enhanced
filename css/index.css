@@ -66,6 +66,7 @@ input[type="radio"]:checked {
 
 .h-full {
     height: 97% !important;
+    max-height: 100vh !important;
 }
 
 .tabs {
