@@ -120,8 +120,8 @@ const payloads = [
     id: "App2USB",
     name: "App2USB",
     version: "1.0",
-    description: "Moves installed applications to a USB drive.",
-    author: "Various",
+    description: "Unofficially Moves installed applications to an external USB drive.",
+    author: "Stooged",
     category: "tools",
     funcName: "load_App2USB"
   },
@@ -130,7 +130,7 @@ const payloads = [
     name: "FTP",
     version: "1.0",
     description: "Enables FTP server access for file transfers.",
-    author: "Various",
+    author: "xvortex",
     category: "tools",
     funcName: "load_FTP"
   },
@@ -139,34 +139,16 @@ const payloads = [
     name: "Disable-Updates",
     version: "1.0",
     description: "Disables automatic system software updates.",
-    author: "Various",
+    author: "Scene",
     category: "tools",
     funcName: "load_DisableUpdates"
-  },
-  {
-    id: "Linux1GB",
-    name: "Linux-1GB",
-    version: "1.0",
-    description: "Loads a 1GB Linux payload for dual-booting.",
-    author: "Various",
-    category: "linux",
-    funcName: "load_Linux"
-  },
-  {
-    id: "Linux2GB",
-    name: "Linux-2GB",
-    version: "1.0",
-    description: "Loads a 2GB Linux payload for dual-booting.",
-    author: "Various",
-    category: "linux",
-    funcName: "load_Linux2gb"
   },
   {
     id: "KernelDumper",
     name: "Kernel-Dumper",
     version: "1.0",
     description: "Dumps the PS4 kernel.",
-    author: "Team",
+    author: "Eversion",
     category: "tools",
     funcName: "load_KernelDumper"
   },
@@ -174,8 +156,8 @@ const payloads = [
     id: "PS4DumperVTX",
     name: "PS4-Dumper-VTX",
     version: "1.0",
-    description: "Dumps PS4 system data.",
-    author: "VTX",
+    description: "All-in-one game dumper for PS4.",
+    author: "xvortex",
     category: "tools",
     funcName: "load_VTXDumper"
   },
@@ -183,8 +165,8 @@ const payloads = [
     id: "HistoryBlocker",
     name: "History-Blocker",
     version: "1.0",
-    description: "Blocks browser history recording.",
-    author: "Various",
+    description: "Blocks the browser from remembering and returning to the last opened page on start. Run again to enable/disable.",
+    author: "Stooged",
     category: "tools",
     funcName: "load_HistoryBlocker"
   },
@@ -192,8 +174,8 @@ const payloads = [
     id: "KernelClock",
     name: "Kernel-Clock",
     version: "1.0",
-    description: "Adjusts the kernel clock.",
-    author: "Various",
+    description: "Changes the internal clock of the PS4, can be used to reactive licenses/features. Use with caution!",
+    author: "Zer0xFF",
     category: "tools",
     funcName: "load_KernelClock"
   },
@@ -201,8 +183,8 @@ const payloads = [
     id: "OrbisToolbox",
     name: "Orbis-Toolbox",
     version: "1.0",
-    description: "Collection of useful PS4 tools.",
-    author: "Various",
+    description: "A modification of the playstation UI to help with launching and developing homebrew..",
+    author: "OSM-Made",
     category: "tools",
     funcName: "load_Orbis"
   },
@@ -211,7 +193,7 @@ const payloads = [
     name: "PS4-Debug",
     version: "1.0",
     description: "Debugging tools for PS4.",
-    author: "Various",
+    author: "golden",
     category: "tools",
     funcName: "load_PS4Debug"
   },
@@ -219,8 +201,8 @@ const payloads = [
     id: "ToDex",
     name: "ToDex",
     version: "1.0",
-    description: "Converts console to DEX mode.",
-    author: "Various",
+    description: "Spoofs the target ID to match that of a test-kit, enables some extra options, etc.",
+    author: "zecoxao",
     category: "tools",
     funcName: "load_ToDex"
   },
@@ -228,8 +210,8 @@ const payloads = [
     id: "ToDev",
     name: "ToDev",
     version: "1.0",
-    description: "Converts console to DEV mode.",
-    author: "Various",
+    description: "unlocks some PS4 Debug / TestKit Features.",
+    author: "SonysNightmare",
     category: "tools",
     funcName: "load_ToDev"
   },
@@ -255,8 +237,8 @@ const payloads = [
     id: "BackupDB",
     name: "Backup-DB",
     version: "1.0",
-    description: "Backs up the console database.",
-    author: "Various",
+    description: "Backs up your PS4's databases, licenses, and user data. Note this may not be useful if you have to reinitalize as your keys may change.",
+    author: "Stooged",
     category: "tools",
     funcName: "load_BackupDB"
   },
@@ -264,8 +246,8 @@ const payloads = [
     id: "RestoreDB",
     name: "Restore-DB",
     version: "1.0",
-    description: "Restores the console database.",
-    author: "Various",
+    description: "Restores the data saved in the 'Backup' payload.",
+    author: "Stooged",
     category: "tools",
     funcName: "load_RestoreDB"
   },
@@ -273,8 +255,8 @@ const payloads = [
     id: "RIFRenamer",
     name: "RIF-Renamer",
     version: "1.0",
-    description: "Renames RIF files.",
-    author: "Various",
+    description: "Renames 'fake' RIFs to 'free' RIFs for better HEN compatibility. Use this if your PKGs only work with Mira+HEN.",
+    author: "Al Azif",
     category: "tools",
     funcName: "load_RIFRenamer"
   },
@@ -282,8 +264,8 @@ const payloads = [
     id: "ExitIDU",
     name: "ExitIDU",
     version: "1.0",
-    description: "Exits IDU mode.",
-    author: "Various",
+    description: "Exits IDU mode and restarts the console.",
+    author: "Scene Collective",
     category: "tools",
     funcName: "load_ExitIDU"
   },
@@ -291,8 +273,8 @@ const payloads = [
     id: "DisableASLR",
     name: "Disable-ASLR",
     version: "1.0",
-    description: "Disables ASLR.",
-    author: "Various",
+    description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
+    author: "Scene Collective",
     category: "tools",
     funcName: "load_DisableASLR"
   },
@@ -300,8 +282,8 @@ const payloads = [
     id: "ModuleDumper",
     name: "Module-Dumper",
     version: "1.0",
-    description: "Dumps system modules.",
-    author: "Al-Azif",
+    description: "Dumps the decrypted modules from /system, /system_ex, /update and the root of the filesystem to a USB device.",
+    author: "SocraticBliss",
     category: "tools",
     funcName: "load_ModuleDumper"
   },
@@ -309,7 +291,7 @@ const payloads = [
     id: "WebRTE",
     name: "WebRTE",
     version: "1.0",
-    description: "Web Real-Time Editing.",
+    description: "Web Realtime Trainer Engine",
     author: "golden",
     category: "tools",
     funcName: "load_WebrRTE"
@@ -318,7 +300,7 @@ const payloads = [
     id: "PermanentUART",
     name: "Permanent-UART",
     version: "1.0",
-    description: "Enables permanent UART access.",
+    description: "Enabled hardware based UART without a kernel patch, persists though updates.",
     author: "JTAG7371",
     category: "tools",
     funcName: "load_PermanentUART"
@@ -327,7 +309,7 @@ const payloads = [
     id: "PUPDecrypt",
     name: "PUP-Decrypt",
     version: "1.0",
-    description: "Decrypts PUP files.",
+    description: "Payload to decrypt the contents of a firmware update file (PUP) on the PS4",
     author: "andy-man",
     category: "tools",
     funcName: "load_PUPDecrypt"
@@ -459,11 +441,29 @@ const payloads = [
     funcName: "load_Oysters129"
   },
   {
+    id: "Linux1GB",
+    name: "Linux-1GB",
+    version: "1.0",
+    description: "Linux payload for PS4",
+    author: "Nazky",
+    category: "linux",
+    funcName: "load_Linux"
+  },
+  {
+    id: "Linux2GB",
+    name: "Linux-2GB",
+    version: "1.0",
+    description: "Linux payload for PS4",
+    author: "Nazky",
+    category: "linux",
+    funcName: "load_Linux2gb"
+  },
+  {
     id: "Linux3GB",
     name: "Linux-3GB",
     version: "1.0",
     description: "Loads a 3GB Linux payload for dual-booting.",
-    author: "Various",
+    author: "Nazky",
     category: "linux",
     funcName: "load_Linux3gb"
   },
@@ -472,7 +472,7 @@ const payloads = [
     name: "Linux-4GB",
     version: "1.0",
     description: "Loads a 4GB Linux payload for dual-booting.",
-    author: "Various",
+    author: "Nazky",
     category: "linux",
     funcName: "load_Linux4gb"
   },
@@ -481,7 +481,7 @@ const payloads = [
     name: "Linux-5GB",
     version: "1.0",
     description: "Loads a 5GB Linux payload for dual-booting.",
-    author: "Various",
+    author: "Nazky",
     category: "linux",
     funcName: "load_Linux5gb"
   },
@@ -554,7 +554,7 @@ async function jailbreak() {
     console.log("All modules are loaded!");
     const JailbreakModule = modules[0];
 
-    if (localStorage.getItem('jailbreakFlavor') == 'GoldHEN') {
+    if (currentJbFlavor == 'GoldHEN') {
       if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
         JailbreakModule.GoldHEN();
       } else {
