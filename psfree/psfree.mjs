@@ -60,7 +60,7 @@ const [is_ps4, version] = (() => {
     throw RangeError(`invalid config.target: ${hex(value)}`);
   }
 
-  log(`Console: PS${is_ps4 ? "4" : "5"} | Firmware: ${hex(version)}`);
+  log(`console: PS${is_ps4 ? "4" : "5"} | firmware: ${hex(version)}`);
 
   return [is_ps4, version];
 })();
@@ -81,7 +81,7 @@ const ssv_len = (() => {
   if (0x900 <= version) {
     return 0x50;
   }
-  throw new RangeError(`unsupported console/firmware: ps${is_ps4 ? "4" : "5"}, version: ${hex(version)}`);
+  throw new RangeError(`unsupported: PS${is_ps4 ? "4" : "5"} | firmware ${hex(version)}`);
 })();
 
 // these constants are expected to be divisible by 2
