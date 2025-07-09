@@ -859,3 +859,18 @@ function renderPayloads() {
   });
 
 }
+
+// Handling cache
+function DLProgress(e) { 
+  Percent = (Math.round(e.loaded / e.total * 100)); 
+  document.title = languages[localStorage.getItem('language')].title + Percent + "%"; 
+}
+function DisplayCacheProgress() { 
+  setTimeout(function () {
+    document.title = U + 2713; 
+  }, 1000);
+    setTimeout(function () { 
+      window.location.href = 
+      document.referrer; 
+    }, 3000); 
+  }

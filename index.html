@@ -5,20 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PSFree Enhanced</title>
-    <!-- Check for/save in cache -->
-    <script>
-        function DLProgress(e) { Percent = (Math.round(e.loaded / e.total * 100)); document.title = languages[localStorage.getItem('language')].title + Percent + "%"; }
-        function DisplayCacheProgress() { setTimeout(function () { ; document.title = U+2713; }, 1000); setTimeout(function () { window.location.href = document.referrer; }, 3000); }
-        // check for applicationCache
-        if (window.applicationCache) {
-            window.applicationCache.addEventListener("progress", DLProgress, false);
-            window.applicationCache.oncached = function (e) { DisplayCacheProgress(); };
-            window.applicationCache.onupdateready = function (e) { DisplayCacheProgress(); };
-        } else {
-            console.warn("This browser does not support save in cache!");
-        }
-    </script>
-
     <!-- Tailwind & Flowbite CSS CDN -->
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
@@ -256,10 +242,17 @@
         </div>
     </div>
 
-    <!-- Lucid icons initialization -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            loadSettings()
+            loadSettings();
+            // check for applicationCache
+            if (window.applicationCache) {
+                window.applicationCache.addEventListener("progress", DLProgress, false);
+                window.applicationCache.oncached = function (e) { DisplayCacheProgress(); };
+                window.applicationCache.onupdateready = function (e) { DisplayCacheProgress(); };
+            } else {
+                console.warn("This browser does not support save in cache!");
+            }
         });
     </script>
     <!-- Main JS file -->
