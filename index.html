@@ -106,30 +106,30 @@
                     <!-- Payloads section -->
                     <div class="bg-gray-800 p-6 rounded-lg flex flex-col h-full">
                         <h2 class="text-xl font-semibold mb-4" id="payloads-section-title">Payloads</h2>
+                        <div
+                            class="mb-4 border-b border-gray-200 border-gray-700 w-full sticky top-0 bg-gray-800 z-10 tabs">
+                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center w-full"
+                                id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                                <li class="flex-1" role="presentation">
+                                    <button class="w-full inline-block p-4 border-b-2 rounded-t-lg" id="tools-tab"
+                                        data-tabs-target="#tools" type="button" role="tab" aria-controls="tools"
+                                        aria-selected="false">Tools</button>
+                                </li>
+                                <li class="flex-1" role="presentation">
+                                    <button
+                                        class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                        id="linux-tab" data-tabs-target="#linux" type="button" role="tab"
+                                        aria-controls="linux" aria-selected="false">Linux</button>
+                                </li>
+                                <li class="flex-1" role="presentation">
+                                    <button
+                                        class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                        id="games-tab" data-tabs-target="#games" type="button" role="tab"
+                                        aria-controls="rdr2" aria-selected="false">Games</button>
+                                </li>
+                            </ul>
+                        </div>
                         <div id="payloadsGrid" class="space-y-3 overflow-y-auto flex-grow max-h-[calc(100vh-250px)]" style="overflow-x: hidden !important;">
-                            <div
-                                class="mb-4 border-b border-gray-200 border-gray-700 w-full sticky top-0 bg-gray-800 z-10 tabs">
-                                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center w-full"
-                                    id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
-                                    <li class="flex-1" role="presentation">
-                                        <button class="w-full inline-block p-4 border-b-2 rounded-t-lg" id="tools-tab"
-                                            data-tabs-target="#tools" type="button" role="tab" aria-controls="tools"
-                                            aria-selected="false">Tools</button>
-                                    </li>
-                                    <li class="flex-1" role="presentation">
-                                        <button
-                                            class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
-                                            id="linux-tab" data-tabs-target="#linux" type="button" role="tab"
-                                            aria-controls="linux" aria-selected="false">Linux</button>
-                                    </li>
-                                    <li class="flex-1" role="presentation">
-                                        <button
-                                            class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
-                                            id="games-tab" data-tabs-target="#games" type="button" role="tab"
-                                            aria-controls="rdr2" aria-selected="false">Games</button>
-                                    </li>
-                                </ul>
-                            </div>
                             <div id="default-tab-content" class="bg-gray-800">
                                 <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="tools" role="tabpanel"
                                     aria-labelledby="tools-tab">
