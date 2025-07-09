@@ -49,6 +49,7 @@ export const syscall_map = new Map(
     getdirentries: 196,
     __sysctl: 202,
     mlock: 203,
+    munlock: 204,
     clock_gettime: 232,
     nanosleep: 240,
     sched_yield: 331,

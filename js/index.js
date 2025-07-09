@@ -562,7 +562,7 @@ async function jailbreak() {
       }
     } else {
       if (JailbreakModule && typeof JailbreakModule.HEN === 'function') {
-        JailbreakModule.HEN(ps4fw.replace('.', ''));
+        JailbreakModule.HEN();
       } else {
         console.error("HEN function not found in Jailbreak.js module");
       }
@@ -748,43 +748,43 @@ function saveLanguage() {
 };
 
 function CheckFW() {
-  // const userAgent = navigator.userAgent;
-  // const ps4Regex = /PlayStation 4/;
-  // const elementsToHide = [
-  //   'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-  //   'payloadsbtn', 'autojbchkb'
-  // ];
+  const userAgent = navigator.userAgent;
+  const ps4Regex = /PlayStation 4/;
+  const elementsToHide = [
+    'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
+    'payloadsbtn', 'autojbchkb'
+  ];
 
-  // if (ps4Regex.test(userAgent)) {
-  //   const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
-  //   const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
-  //   if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
-  //     document.getElementById('PS4FW').style.color = 'green';
-  //     ps4fw = fwVersion;
-  //   } else {
-  //     document.getElementById('PS4FW').style.color = 'red';
+  if (ps4Regex.test(userAgent)) {
+    const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
+    const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
+    if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
+      document.getElementById('PS4FW').style.color = 'green';
+      ps4fw = fwVersion;
+    } else {
+      document.getElementById('PS4FW').style.color = 'red';
 
-  //     elementsToHide.forEach(id => {
-  //       const el = document.getElementById(id);
-  //       if (el) el.style.display = 'none';
-  //     });
-  //   }
+      elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+    }
 
-  // } else {
-  //   platform = 'Unknown platform';
+  } else {
+    platform = 'Unknown platform';
 
-  //   if (/Android/.test(userAgent)) platform = 'Android';
-  //   else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
-  //   else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
-  //   else if (/Windows/.test(userAgent)) platform = 'Windows';
-  //   else if (/Linux/.test(userAgent)) platform = 'Linux';
+    if (/Android/.test(userAgent)) platform = 'Android';
+    else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
+    else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
+    else if (/Windows/.test(userAgent)) platform = 'Windows';
+    else if (/Linux/.test(userAgent)) platform = 'Linux';
 
-  //   document.getElementById('PS4FW').style.color = 'red';
-  //   elementsToHide.forEach(id => {
-  //     const el = document.getElementById(id);
-  //     if (el) el.style.display = 'none';
-  //   });
-  // }
+    document.getElementById('PS4FW').style.color = 'red';
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+  }
 }
 
 // Load settings
@@ -863,7 +863,7 @@ function renderPayloads() {
 // Handling cache
 function DLProgress(e) { 
   Percent = (Math.round(e.loaded / e.total * 100)); 
-  document.title = languages[currentLanguage].title + Percent + "%"; 
+  document.title = languages[currentLanguage].title + " " + Percent + "%"; 
 }
 function DisplayCacheProgress() { 
   setTimeout(function () {
