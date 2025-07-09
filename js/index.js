@@ -863,7 +863,7 @@ function renderPayloads() {
 // Handling cache
 function DLProgress(e) { 
   Percent = (Math.round(e.loaded / e.total * 100)); 
-  document.title = languages[localStorage.getItem('language')].title + Percent + "%"; 
+  document.title = languages[currentLanguage].title + Percent + "%"; 
 }
 function DisplayCacheProgress() { 
   setTimeout(function () {
