@@ -1,9 +1,7 @@
 
-# PSFree
+# PSFree Enhanced
 
-PSFree is a unstable and work in progress jailbreak multi firmware website for the PlayStation 4 and the PlayStation 5.
-
-  
+PSFree Enhanced still in beta and it's unstable and work in progress. Jailbreak multi firmware website for the PlayStation 4.
 
 This repo is based on the work of three other repos :
 
@@ -15,7 +13,6 @@ This repo is based on the work of three other repos :
 
 ___
 
-  
 
 ### Know issues
 
@@ -27,16 +24,8 @@ ___
 
 - Some payloads may not work correctly.
 
-  
 
 ### Currently working firmware
-
-  
-
-This repo only supports PS4 for now.
-
-  
-  
 
 | Console | Firmware |
 
@@ -53,43 +42,24 @@ This repo only supports PS4 for now.
  
  *Note: those are only **nice to have** features and aesthetics. And these changes may or may not affect the efficiency of the jailbreak process.*
 
-
 # How to run
-
-  
-
-## Website
-
-[Click Here](https://arabpixel.github.io/PSFree/)
-
-  
+___
+## Online
+* [Click Here](https://arabpixel.github.io/PSFree/) to try PSFree Enhanced online
 
 ## Locally
-
+You'll either need a local server, even Live Server extension on VSCode works, or install python, which is the recommended way to generate manifest at the end using the provided python script by [Nazky](https://github.com/nazky)
   
+### for Python
 
-You need python !
-
-  
-
-### Python
-
-##### Linux:
-
+#### Linux:
+___
 Just start the 'start_server.sh'.
-
-  
-
-###### Command:
-
 ```bash
-
-sudo  chmod  start_server.sh
-
+sudo chmod start_server.sh
 ./start_server.sh
-
 ```
-
-##### Windows:
-
-Just start (double-click) the start_server.bat.
+#### Windows:
+Just start (double-click) the start_server.bat.*
+___
+## Contributions are welcome :)
