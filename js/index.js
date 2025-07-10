@@ -695,7 +695,7 @@ function applyLanguage(lang) {
   if (ps4fw === null) {
     ui.ps4FwStatus.textContent = strings.notPs4 + platform;
     ui.ps4FwStatus.style.color = 'red';
-  } else if (ps4fw <= 960) {
+  } else if (ps4fw <= 9.60) {
     ui.ps4FwStatus.textContent = strings.ps4FwCompatible.replace('{ps4fw}', ps4fw);
     ui.ps4FwStatus.style.color = 'green';
   } else {
@@ -773,43 +773,42 @@ function saveLanguage() {
 };
 
 function CheckFW() {
-  // const userAgent = navigator.userAgent;
-  // const ps4Regex = /PlayStation 4/;
-  // const elementsToHide = [
-  //   'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-  //   'payloadsbtn', 'autojbchkb'
-  // ];
+  const userAgent = navigator.userAgent;
+  const ps4Regex = /PlayStation 4/;
+  const elementsToHide = [
+    'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
+    'payloadsbtn', 'autojbchkb'
+  ];
 
-  // if (ps4Regex.test(userAgent)) {
-  //   const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
-  //   const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
-  //   if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
-  //     document.getElementById('PS4FW').style.color = 'green';
-  //     ps4fw = fwVersion;
-  //   } else {
-  //     document.getElementById('PS4FW').style.color = 'red';
+  if (ps4Regex.test(userAgent)) {
+    const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
+    const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
+    if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
+      document.getElementById('PS4FW').style.color = 'green';
+    } else {
+      document.getElementById('PS4FW').style.color = 'red';
 
-  //     elementsToHide.forEach(id => {
-  //       const el = document.getElementById(id);
-  //       if (el) el.style.display = 'none';
-  //     });
-  //   }
+      elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+    }
+    ps4fw = fwVersion;
+  } else {
+    platform = 'Unknown platform';
 
-  // } else {
-  //   platform = 'Unknown platform';
+    if (/Android/.test(userAgent)) platform = 'Android';
+    else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
+    else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
+    else if (/Windows/.test(userAgent)) platform = 'Windows';
+    else if (/Linux/.test(userAgent)) platform = 'Linux';
 
-  //   if (/Android/.test(userAgent)) platform = 'Android';
-  //   else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
-  //   else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
-  //   else if (/Windows/.test(userAgent)) platform = 'Windows';
-  //   else if (/Linux/.test(userAgent)) platform = 'Linux';
-
-  //   document.getElementById('PS4FW').style.color = 'red';
-  //   elementsToHide.forEach(id => {
-  //     const el = document.getElementById(id);
-  //     if (el) el.style.display = 'none';
-  //   });
-  // }
+    document.getElementById('PS4FW').style.color = 'red';
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+  }
 }
 
 // Load settings
