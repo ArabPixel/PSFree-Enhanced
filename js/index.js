@@ -487,6 +487,7 @@ const payloads = [
   },
 ];
 
+// Events
 // Scroll snap for the PS4
 ui.mainContainer.addEventListener('scroll', () => {
   if (ui.mainContainer.scrollTop > lastScrollY) {
@@ -514,14 +515,14 @@ ui.psLogoContainer.addEventListener('click', () => {
   jailbreak()
   ui.exploitScreen.scrollIntoView({ block: "end" })
 });
-
+// Run payloads
 document.querySelectorAll('button[data-func]').forEach(button => {
   button.addEventListener('click', () => {
     const payload = button.getAttribute('data-func');
     Loadpayloads(payload);
   });
 });
-
+// Auto jailbreak
 ui.autoJbCheckbox.addEventListener('change', (e) => {
   isAutoJailbreakEnabled = e.target.checked;
   localStorage.setItem('autoJailbreak', e.target.checked);
@@ -533,6 +534,30 @@ ui.autoJbCheckbox.addEventListener('change', (e) => {
     }
   }
 });
+// tabs switching
+ui.toolsTab.addEventListener('click', () =>{
+  if (ui.toolsSection.classList.contains('hidden')){
+    ui.toolsSection.classList.remove('hidden');
+    ui.linuxSection.classList.add('hidden');
+    ui.gamesSection.classList.add('hidden');
+  }
+})
+
+ui.linuxTab.addEventListener('click', () =>{
+  if (ui.linuxSection.classList.contains('hidden')){
+    ui.toolsSection.classList.add('hidden');
+    ui.linuxSection.classList.remove('hidden');
+    ui.gamesSection.classList.add('hidden');
+  }
+})
+
+ui.gamesTab.addEventListener('click', () =>{
+  if (ui.gamesSection.classList.contains('hidden')){
+    ui.toolsSection.classList.add('hidden');
+    ui.linuxSection.classList.add('hidden');
+    ui.gamesSection.classList.remove('hidden');
+  }
+})
 
 // popups
 function aboutPopup() {
@@ -686,11 +711,11 @@ function applyLanguage(lang) {
   ui.aboutPopup.querySelector('h2').textContent = strings.aboutPsfreeHeader;
   ui.aboutPopup.querySelectorAll('p')[0].textContent = strings.aboutVersion;
   ui.aboutPopup.querySelectorAll('p')[1].textContent = strings.aboutDescription;
+  ui.aboutPopup.querySelector('#PS4FWOK h3').textContent = strings.ps4FirmwareSupportedHeader;
   ui.aboutPopup.querySelector('#close-about').textContent = strings.closeButton;
 
   // Settings popup
   ui.settingsPopup.querySelector('h2').textContent = strings.settingsPsfreeHeader;
-  ui.settingsPopup.querySelector('#PS4FWOK h3').textContent = strings.ps4FirmwareSupportedHeader;
   ui.settingsPopup.querySelector('#autojbchkb p').textContent = strings.autoJailbreakText;
   ui.settingsPopup.querySelector('#chooselang h3').textContent = strings.languageHeader;
   ui.settingsPopup.querySelector('#enLang').textContent = strings.englishOption;
@@ -748,43 +773,43 @@ function saveLanguage() {
 };
 
 function CheckFW() {
-  const userAgent = navigator.userAgent;
-  const ps4Regex = /PlayStation 4/;
-  const elementsToHide = [
-    'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'payloadsbtn', 'autojbchkb'
-  ];
+  // const userAgent = navigator.userAgent;
+  // const ps4Regex = /PlayStation 4/;
+  // const elementsToHide = [
+  //   'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
+  //   'payloadsbtn', 'autojbchkb'
+  // ];
 
-  if (ps4Regex.test(userAgent)) {
-    const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
-    const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
-    if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
-      document.getElementById('PS4FW').style.color = 'green';
-      ps4fw = fwVersion;
-    } else {
-      document.getElementById('PS4FW').style.color = 'red';
+  // if (ps4Regex.test(userAgent)) {
+  //   const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
+  //   const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
+  //   if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
+  //     document.getElementById('PS4FW').style.color = 'green';
+  //     ps4fw = fwVersion;
+  //   } else {
+  //     document.getElementById('PS4FW').style.color = 'red';
 
-      elementsToHide.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
-    }
+  //     elementsToHide.forEach(id => {
+  //       const el = document.getElementById(id);
+  //       if (el) el.style.display = 'none';
+  //     });
+  //   }
 
-  } else {
-    platform = 'Unknown platform';
+  // } else {
+  //   platform = 'Unknown platform';
 
-    if (/Android/.test(userAgent)) platform = 'Android';
-    else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
-    else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
-    else if (/Windows/.test(userAgent)) platform = 'Windows';
-    else if (/Linux/.test(userAgent)) platform = 'Linux';
+  //   if (/Android/.test(userAgent)) platform = 'Android';
+  //   else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
+  //   else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
+  //   else if (/Windows/.test(userAgent)) platform = 'Windows';
+  //   else if (/Linux/.test(userAgent)) platform = 'Linux';
 
-    document.getElementById('PS4FW').style.color = 'red';
-    elementsToHide.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-  }
+  //   document.getElementById('PS4FW').style.color = 'red';
+  //   elementsToHide.forEach(id => {
+  //     const el = document.getElementById(id);
+  //     if (el) el.style.display = 'none';
+  //   });
+  // }
 }
 
 // Load settings
