@@ -1,7 +1,4 @@
-/* css/style.css */
-:root {
-    --primaryColor: rgb(59 130 246 / var(--tw-text-opacity, 1));
-}
+/* replace rgb colors with hex value for better compatibility */
 
 body {
     font-family: system-ui, -apple-system, sans-serif, "Inter", sans-serif;
@@ -42,7 +39,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked {
     border: none;
-    background: var(--primaryColor);
+    background: #3B82F6;
 }
 
 /* For PS4 (because its old browser) */
