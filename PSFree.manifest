@@ -1,12 +1,11 @@
 CACHE MANIFEST
 # v1
-# Generated on 2025-07-10 16:53:36.100338
+# Generated on 2025-07-17 01:04:08.520770
 
 CACHE:
 index.html
 css/index.css
 js/index.js
-payloads/Jailbreak.js
 payloads/payloads.js
 payloads/Bins/Dumper/appdumper.bin
 payloads/Bins/Dumper/kerneldumper.bin
@@ -55,6 +54,8 @@ payloads/Bins/Tools/ToDex.bin
 payloads/Bins/Tools/ToKratos.bin
 payloads/Bins/Tools/WebRTE_900.bin
 payloads/GoldHEN/GoldHEN.bin
+payloads/GoldHEN/goldhen_2.3_702L.bin
+payloads/GoldHEN/goldhen_2.3_755L.bin
 payloads/HEN/HEN.bin
 psfree/alert.mjs
 psfree/config.mjs

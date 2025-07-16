@@ -69,9 +69,9 @@ const languages = {
     "englishOption": "English",
     "arabicOption": "Arabic",
     "warnings": {
-      "note1": "• Make sure to close all apps before running the exploit",
-      "note2": "• Make sure to delete cache data before running the exploit for the first time",
-      "note3": "• It might take you more than one time",
+      "note1": "Make sure to close all apps before running the exploit",
+      "note2": "Make sure to delete cache data before running the exploit for the first time",
+      "note3": "It might take you more than one time",
     },
     "backToInitialBtn": "Back",
     "alert": "Important notice",
@@ -104,9 +104,9 @@ const languages = {
     "arabicOption": "العربية",
     "englishOption": "الإنجليزية",
     "warnings": {
-      "note1": "• تأكد من إغلاق كل التطبيقات قبل تنفيذ الثغرة",
-      "note2": "• تأكد من ان تقوم بمسح الملفات المؤقته قبل تنفيذ الثغرة لأول مرة",
-      "note3": "• قم يتطلب الأمر المحاولة اكثر من مرة",
+      "note1": "تأكد من إغلاق كل التطبيقات قبل تنفيذ الثغرة",
+      "note2": "تأكد من ان تقوم بمسح الملفات المؤقته قبل تنفيذ الثغرة لأول مرة",
+      "note3": "قم يتطلب الأمر المحاولة اكثر من مرة",
     },
     "backToInitialBtn": "الرجوع",
     "alert": "ملاحظات هامة",
@@ -573,24 +573,20 @@ function settingsPopup() {
 async function jailbreak() {
   try {
     const modules = await loadMultipleModules([
-      '../payloads/Jailbreak.js',
       '../psfree/alert.mjs'
     ]);
     console.log("All modules are loaded!");
-    const JailbreakModule = modules[0];
 
     if (currentJbFlavor == 'GoldHEN') {
-      if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
-        JailbreakModule.GoldHEN();
-      } else {
-        console.error("GoldHEN function not found in Jailbreak.js module");
+      if (ps4fw >= 7.00 && ps4fw <= 7.02){
+        window.payload_path = './payloads/GoldHEN/goldhen_2.3_702L.bin';
+      }else if (ps4fw >= 7.50 && ps4fw <= 7.55){
+        window.payload_path = './payloads/GoldHEN/goldhen_2.3_755L.bin';
+      }else{
+        window.payload_path = './payloads/GoldHEN/GoldHEN.bin';
       }
     } else {
-      if (JailbreakModule && typeof JailbreakModule.HEN === 'function') {
-        JailbreakModule.HEN();
-      } else {
-        console.error("HEN function not found in Jailbreak.js module");
-      }
+      window.payload_path = './payloads/HEN/HEN.bin';
     }
   } catch (e) {
     console.error("Failed to jailbreak:", e);
@@ -639,13 +635,12 @@ async function Loadpayloads(payload) {
         '../payloads/payloads.js',
         '../psfree/alert.mjs'
       ]);
-      console.log("All modules are loaded!");
     } else {
       modules = await loadMultipleModules([
         '../payloads/payloads.js'
       ]);
-      console.log("All modules are loaded!");
     }
+    console.log("All modules are loaded!");
 
     const payloadModule = modules[0];
     if (payloadModule && typeof payloadModule[payload] === 'function') {
@@ -775,23 +770,22 @@ function saveLanguage() {
 function CheckFW() {
   const userAgent = navigator.userAgent;
   const ps4Regex = /PlayStation 4/;
-  const elementsToHide = [
-    'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'payloadsbtn', 'autojbchkb'
-  ];
+  let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
+  // const elementsToHide = [
+  //   'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
+  //   'payloadsbtn', 'autojbchkb'
+  // ];
 
   if (ps4Regex.test(userAgent)) {
-    const firmwareMatch = userAgent.match(/PlayStation 4\/([\d.]+)/);
-    const fwVersion = firmwareMatch ? firmwareMatch[1] : null;
-    if (fwVersion === '7.00' || fwVersion === '7.01' || fwVersion === '7.02' || fwVersion === '7.50' || fwVersion === '7.51' || fwVersion === '7.55' || fwVersion === fwVersion === '8.00' || fwVersion === '8.01' || fwVersion === '8.01' || fwVersion === '8.03' || fwVersion === '8.50' || fwVersion === '8.52' || fwVersion === '9.00' || fwVersion === '9.03' || fwVersion === '9.04' || fwVersion === '9.50' || fwVersion === '9.51' || fwVersion === '9.60') {
+    if (fwVersion > 7.00 && fwVersion <= 9.60) {
       document.getElementById('PS4FW').style.color = 'green';
     } else {
       document.getElementById('PS4FW').style.color = 'red';
 
-      elementsToHide.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
+      // elementsToHide.forEach(id => {
+      //   const el = document.getElementById(id);
+      //   if (el) el.style.display = 'none';
+      // });
     }
     ps4fw = fwVersion;
   } else {
@@ -804,10 +798,10 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) platform = 'Linux';
 
     document.getElementById('PS4FW').style.color = 'red';
-    elementsToHide.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
+    // elementsToHide.forEach(id => {
+    //   const el = document.getElementById(id);
+    //   if (el) el.style.display = 'none';
+    // });
   }
 }
 
