@@ -771,10 +771,10 @@ function CheckFW() {
   const userAgent = navigator.userAgent;
   const ps4Regex = /PlayStation 4/;
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
-  // const elementsToHide = [
-  //   'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-  //   'payloadsbtn', 'autojbchkb'
-  // ];
+  const elementsToHide = [
+    'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
+    'payloadsbtn', 'autojbchkb'
+  ];
 
   if (ps4Regex.test(userAgent)) {
     if (fwVersion > 7.00 && fwVersion <= 9.60) {
@@ -782,10 +782,10 @@ function CheckFW() {
     } else {
       document.getElementById('PS4FW').style.color = 'red';
 
-      // elementsToHide.forEach(id => {
-      //   const el = document.getElementById(id);
-      //   if (el) el.style.display = 'none';
-      // });
+      elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
     }
     ps4fw = fwVersion;
   } else {
@@ -798,10 +798,10 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) platform = 'Linux';
 
     document.getElementById('PS4FW').style.color = 'red';
-    // elementsToHide.forEach(id => {
-    //   const el = document.getElementById(id);
-    //   if (el) el.style.display = 'none';
-    // });
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
   }
 }
 
