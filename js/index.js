@@ -773,7 +773,7 @@ function CheckFW() {
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
   const elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'payloadsbtn', 'autojbchkb'
+    'payloadsbtn', 'autojbchkb', 'click-to-start-text'
   ];
 
   if (ps4Regex.test(userAgent)) {
@@ -885,7 +885,7 @@ function DLProgress(e) {
 }
 function DisplayCacheProgress() { 
   setTimeout(function () {
-    document.title = U + 2713; 
+    document.title = "\u2713"; 
   }, 1000);
     setTimeout(function () { 
       window.location.href = 
