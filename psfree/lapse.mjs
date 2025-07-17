@@ -1975,6 +1975,7 @@ function runPayload(path) {
     log("network error");
   };
   xhr.send();
+  payloadSucces();
 }
 
 kexploit().then((success) => {
@@ -1983,10 +1984,15 @@ kexploit().then((success) => {
       runBinLoader();
     } else {
       runPayload(window.payload_path);
+      payloadSucces();
     }
-    setTimeout(() => {
-      sessionStorage.setItem('jbsuccess', 1);
-      window.location.reload();
-    }, 3000); // 3 seconds delay
   }
 });
+
+function payloadSucces(){
+  log("payload executed successfully, reloading page in 3 seconds...");
+  setTimeout(() => {
+  sessionStorage.setItem('jbsuccess', 1);
+  window.location.reload();
+  }, 3000); // 3 seconds delay
+}

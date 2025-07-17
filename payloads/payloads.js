@@ -75,10 +75,6 @@ function Loadpayloadlocal(PLfile){ //Loading Payload via Payload Param.
 
 function Loadpayloadonline(PLfile) {
     window.payload_path = PLfile;
-    setTimeout(() => {
-        sessionStorage.setItem('jbsuccess', 1);
-        window.location.reload();
-    }, 3000); // 3 seconds delay
 }
 
 // Payloads
