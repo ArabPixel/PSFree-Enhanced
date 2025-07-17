@@ -1,7 +1,4 @@
-/* css/style.css */
-:root {
-    --primaryColor: rgb(59 130 246 / var(--tw-text-opacity, 1));
-}
+/* replace rgb colors with hex value for better compatibility */
 
 body {
     font-family: system-ui, -apple-system, sans-serif, "Inter", sans-serif;
@@ -42,7 +39,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked {
     border: none;
-    background: var(--primaryColor);
+    background: #3B82F6;
 }
 
 /* For PS4 (because its old browser) */
@@ -62,6 +59,11 @@ input[type="radio"]:checked {
     margin: 12px;
     -webkit-box-shadow: 0px -25px 8px -20px rgba(0, 0, 0, 0.2);
     box-shadow: 0px -25px 8px -20px rgba(0, 0, 0, 0.2);
+}
+
+.fwSelected{
+    border-radius: 5px;
+    border-bottom: 2px solid #2563eb;
 }
 
 .h-full {
@@ -86,7 +88,7 @@ input[type="radio"]:checked {
 
 /* Thumb of the scrollbar */
 ::-webkit-scrollbar-thumb {
-    background: var(--primaryColor);
+    background: #2563eb;
     border-radius: 10px;
 }
 

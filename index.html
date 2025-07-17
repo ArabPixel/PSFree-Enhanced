@@ -37,12 +37,12 @@
                         </path>
                     </g>
                 </svg>
-                <p class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</p>
             </div>
+            <p class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</p>
         </button>
 
         <!-- Compatibility message -->
-        <p id="PS4FW" class="text-white/70 text-lg mt-12 mb-6">-</p>
+        <p id="PS4FW" class="text-white/70 text-lg mt-4 mb-6">-</p>
 
         <!-- Jailbreak flavor options -->
         <div id="choosejb-initial" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-sm text-center">
@@ -90,9 +90,9 @@
                                 <div class="text-sm text-yellow-200">
                                     <p class="font-medium mb-1">Important notice:</p>
                                     <ul class="space-y-1 text-yellow-200/80">
-                                        <li>• Make sure to close all apps before running the exploit</li>
-                                        <li>• Make sure to delete cache data before running the exploit for the first time</li>
-                                        <li>• It might take you more than one time</li>
+                                        <li>Make sure to close all apps before running the exploit</li>
+                                        <li>Make sure to delete cache data before running the exploit for the first time</li>
+                                        <li>It might take you more than one time</li>
                                     </ul>
                                 </div>
                             </div>
@@ -171,31 +171,31 @@
     <div class="fixed inset-0 bg-black/50 z-50 flex backdrop-blur-sm items-center justify-center p-4 hidden"
         id="about-popup-overlay">
         <div id="about-popup" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
-            <h2 class="text-2xl font-bold mb-4">حول PSFree</h2>
+            <h2 class="text-2xl font-bold mb-4">About PSFree</h2>
             <div class="space-y-2 text-white/80">
-                <p>Version: 1.5.1</p>
+                <p>Version: 1.5.2</p>
                 <p>A web interface to jailbreak your PS4 using PSFree chained with Lapse kernel exploit</p>
             </div>
             <div id="PS4FWOK" class="mt-6">
-                <h3 class="text-xl font-bold mb-4">Supported PS4 firmware</h3>
+                <h3 class="text-l font-bold mb-4">Supported PS4 firmware</h3>
                 <div id="listfw" class="grid grid-cols-4 gap-2 text-sm text-white/70">
-                    <p>7.00</p>
-                    <p>7.01</p>
-                    <p>7.02</p>
-                    <p>7.50</p>
-                    <p>7.51</p>
-                    <p>7.55</p>
-                    <p>8.00</p>
-                    <p>8.01</p>
-                    <p>8.03</p>
-                    <p>8.50</p>
-                    <p>8.52</p>
-                    <p>9.00</p>
-                    <p>9.03</p>
-                    <p>9.04</p>
-                    <p>9.50</p>
-                    <p>9.51</p>
-                    <p>9.60</p>
+                    <p id="fw700">7.00</p>
+                    <p id="fw701">7.01</p>
+                    <p id="fw702">7.02</p>
+                    <p id="fw750">7.50</p>
+                    <p id="fw751">7.51</p>
+                    <p id="fw755">7.55</p>
+                    <p id="fw800">8.00</p>
+                    <p id="fw801">8.01</p>
+                    <p id="fw803">8.03</p>
+                    <p id="fw850">8.50</p>
+                    <p id="fw852">8.52</p>
+                    <p id="fw900">9.00</p>
+                    <p id="fw903">9.03</p>
+                    <p id="fw904">9.04</p>
+                    <p id="fw950">9.50</p>
+                    <p id="fw951">9.51</p>
+                    <p id="fw960">9.60</p>
                 </div>
             </div>
             <button onclick="aboutPopup()"
@@ -251,7 +251,7 @@
         });
     </script>
     <!-- Main JS file -->
-    <script defer src='js/index.js'></script>
+    <script src='js/index.js'></script>
 </body>
 
 </html>
