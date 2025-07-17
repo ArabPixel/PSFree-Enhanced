@@ -1975,7 +1975,6 @@ function runPayload(path) {
     log("network error");
   };
   xhr.send();
-  payloadSucces();
 }
 
 kexploit().then((success) => {
