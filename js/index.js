@@ -778,7 +778,7 @@ function CheckFW() {
   ];
 
   if (ps4Regex.test(userAgent)) {
-    if (fwVersion > 7.00 && fwVersion <= 9.60) {
+    if (fwVersion >= 7.00 && fwVersion <= 9.60) {
       document.getElementById('PS4FW').style.color = 'green';
     } else {
       document.getElementById('PS4FW').style.color = 'red';
