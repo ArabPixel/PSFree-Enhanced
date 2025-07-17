@@ -1984,5 +1984,9 @@ kexploit().then((success) => {
     } else {
       runPayload(window.payload_path);
     }
+    setTimeout(() => {
+      sessionStorage.setItem('jbsuccess', 1);
+      window.location.reload();
+    }, 3000); // 3 seconds delay
   }
 });

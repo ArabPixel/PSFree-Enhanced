@@ -573,20 +573,21 @@ function settingsPopup() {
 async function jailbreak() {
   try {
     const modules = await loadMultipleModules([
+      '../payloads/Jailbreak.js',
       '../psfree/alert.mjs'
     ]);
-    console.log("All modules are loaded!");
+    const JailbreakModule = modules[0];
 
     if (currentJbFlavor == 'GoldHEN') {
-      if (ps4fw >= 7.00 && ps4fw <= 7.02){
-        window.payload_path = './payloads/GoldHEN/goldhen_2.3_702L.bin';
-      }else if (ps4fw >= 7.50 && ps4fw <= 7.55){
-        window.payload_path = './payloads/GoldHEN/goldhen_2.3_755L.bin';
-      }else{
-        window.payload_path = './payloads/GoldHEN/GoldHEN.bin';
+      if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
+        JailbreakModule.GoldHEN();
+      } else {
+        alert("GoldHEN function not found in Jailbreak.js module");
       }
     } else {
-      window.payload_path = './payloads/HEN/HEN.bin';
+      if (JailbreakModule && typeof JailbreakModule.HEN === 'function') {
+        JailbreakModule.HEN();
+      }
     }
   } catch (e) {
     console.error("Failed to jailbreak:", e);
