@@ -788,6 +788,8 @@ function CheckFW() {
       });
     }
     ps4fw = fwVersion;
+    let fwElement = "fw"+fwVersion.replace('.','');
+    document.getElementById(fwElement).classList.add('fwSelected');
   } else {
     platform = 'Unknown platform';
 
