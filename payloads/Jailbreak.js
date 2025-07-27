@@ -4,12 +4,13 @@ export function GoldHEN() {
     case 'testGoldHEN':
         window.payload_path = './payloads/testing/goldhen_2.4b18.5_allfw_test.bin';
         break;
-        case '2.4b18.4':
+    case '2.4b18.4':
         window.payload_path = './payloads/GoldHEN/GoldHEN.bin';
-        case 'v2.3/702':
+        break;
+    case 'v2.3/702':
         window.payload_path = './payloads/GoldHEN/goldhen_2.3_702L.bin';
         break;
-        case 'v2.3/55':
+    case 'v2.3/755':
         window.payload_path = './payloads/GoldHEN/goldhen_2.3_755L.bin';
         break;
     default:
