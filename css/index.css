@@ -19,6 +19,7 @@ input,
 svg,
 label {
     margin: 0 7px !important;
+    cursor: pointer;
 }
 
 .grid{
@@ -422,6 +423,7 @@ section { /* Apply to initial-screen and exploit-main-screen */
 .category-tools { border-color: #a78bfa; /* Example purple */ }
 .category-games { border-color: #f87171; /* Example red */ }
 .category-linux { border-color: #34d399; /* Example green */ }
+.category-testing { border-color: red; /* Example red */ }
 
 /* --- Tab specific styling (from your HTML and Flowbite's typical behavior) --- */
 .tabs ul {
@@ -448,13 +450,15 @@ button{
 
 #tools,
 #games,
-#linux{
+#linux,
+#testing {
     background-color: transparent;
 }
 
 #tools-tab,
 #games-tab,
-#linux-tab{
+#linux-tab,
+#testing-tab {
     background-color: transparent;
 }
 

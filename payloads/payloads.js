@@ -278,3 +278,8 @@ export function load_Oysters129(){
 export function load_AppCache(){
     Loadpayloadlocal("./payloads/Bins/Tools/appcache-install.bin");
 }
+
+// Testing tools
+export function load_ps4debugTest() {
+    Loadpayloadlocal("./payloads/testing/ps4debug_v1.1.19.bin");
+}
