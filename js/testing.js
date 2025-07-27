@@ -823,10 +823,10 @@ function CheckFW() {
     } else {
       document.getElementById('PS4FW').style.color = 'red';
 
-      // elementsToHide.forEach(id => {
-      //   const el = document.getElementById(id);
-      //   if (el) el.style.display = 'none';
-      // });
+      elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
     }
     ps4fw = fwVersion;
     let fwElement = "fw"+fwVersion.replace('.','');
@@ -841,10 +841,10 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) platform = 'Linux';
 
     document.getElementById('PS4FW').style.color = 'red';
-  //   elementsToHide.forEach(id => {
-  //     const el = document.getElementById(id);
-  //     if (el) el.style.display = 'none';
-  //   });
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
   }
 }
 
