@@ -921,6 +921,3 @@ function renderPayloads() {
   });
 
 }
-
-
-}
