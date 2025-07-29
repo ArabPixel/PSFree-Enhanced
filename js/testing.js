@@ -606,10 +606,10 @@ async function jailbreak() {
     const JailbreakModule = modules[0];
 
     if (currentJbFlavor == 'GoldHEN') {
-      if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
-        JailbreakModule.GoldHEN();
+      if (JailbreakModule && typeof JailbreakModule.testGoldHEN === 'function') {
+        JailbreakModule.testGoldHEN();
       } else {
-        alert("GoldHEN function not found in Jailbreak.js module");
+        alert("test GoldHEN function not found in Jailbreak.js module");
       }
     } else {
       if (JailbreakModule && typeof JailbreakModule.HEN === 'function') {
@@ -745,8 +745,7 @@ function applyLanguage(lang) {
   ui.settingsPopup.querySelector('#enLang').textContent = strings.englishOption;
   ui.settingsPopup.querySelector('#arLang').textContent = strings.arabicOption;
   ui.settingsPopup.querySelector('#close-settings').textContent = strings.closeButton;
-  document.getElementById('testingMsgSettings').textContent = strings.testingMsg;
-  
+
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
@@ -792,12 +791,10 @@ function loadJbFlavor() {
   const version = currentJbVersion;
   const henRadio = document.querySelector(`input[name="hen"][value="${flavor}"]`);
   const hen2Radio = document.querySelector(`input[name="hen2"][value="${flavor}"]`);
-  const goldhens = document.querySelector(`input[name="goldhens"][value="${currentJbVersion}"]`);
 
   if (henRadio && hen2Radio) {
     henRadio.checked = true;
-    hen2Radio.checked = true;
-    goldhens.checked = true;
+    hen2Radio.checked = true;    
   }
 }
 
@@ -922,5 +919,8 @@ function renderPayloads() {
         break;
     }
   });
+
+}
+
 
 }
