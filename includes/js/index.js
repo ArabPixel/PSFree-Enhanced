@@ -649,6 +649,15 @@ function loadAutoJb() {
   }
 }
 
+function setGoldHENVer(value){
+  localStorage.setItem('GHVer', value);
+}
+
+function loadGoldHENVer(){
+  const goldHenVer = localStorage.getItem("GHVer");
+  document.querySelector(`input[name="goldhen"][value="${goldHenVer}"]`).checked = true;
+}
+
 
 function loadLanguage() {
   var language = localStorage.getItem("language");
@@ -759,7 +768,7 @@ function CheckFW() {
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
   const elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'payloadsbtn', 'autojbchkb', 'click-to-start-text'
+    'payloadsbtn', 'autojbchkb', 'click-to-start-text', 'chooseGoldHEN'
   ];
 
   if (ps4Regex.test(userAgent)) {
@@ -776,6 +785,29 @@ function CheckFW() {
     ps4fw = fwVersion;
     let fwElement = "fw"+fwVersion.replace('.','');
     document.getElementById(fwElement).classList.add('fwSelected');
+    // Display only Compatible GoldHENs
+    const GoldHENsOption = {
+      "9.60": ["GHv2.3Fw755", "GHv2.3Fw702"],
+      "9.00": ["GHv2.3Fw755", "GHv2.3Fw702"],
+      "9.03": ["GHv2.3Fw755", "GHv2.3Fw702", "GHv2.4b18", "GHv2.4b18.2"],
+      "7.55": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"],
+      "7.02": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"]
+    };
+    // To remove all of them with one line in case the firmware is not listed
+    const allElements = [
+      "GHv2.3Fw755",
+      "GHv2.3Fw702",
+      "GHv2.4b18",
+      "GHv2.4b18.4",
+      "GHv2.4b18.2"
+    ];
+    const idsToRemove = GoldHENsOption[ps4fw] || allElements;
+
+    idsToRemove.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    });
+
   } else {
     platform = 'Unknown platform';
 
@@ -786,10 +818,10 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) platform = 'Linux';
 
     document.getElementById('PS4FW').style.color = 'red';
-    // elementsToHide.forEach(id => {
-    //   const el = document.getElementById(id);
-    //   if (el) el.style.display = 'none';
-    // });
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
   }
 }
 
@@ -802,6 +834,7 @@ function loadSettings() {
     applyLanguage(currentLanguage);
     renderPayloads();
     loadAutoJb();
+    loadGoldHENVer();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
   }

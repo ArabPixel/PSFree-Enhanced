@@ -1,9 +1,10 @@
 CACHE MANIFEST
 # v1
-# Generated on 2025-08-09 14:12:52.081208
+# Generated on 2025-08-09 17:53:23.489321
 
 CACHE:
 index.html
+.vscode/settings.json
 includes/index.css
 includes/js/index.js
 includes/js/languages.js
@@ -56,8 +57,10 @@ includes/payloads/Bins/Tools/ToKratos.bin
 includes/payloads/Bins/Tools/WebRTE_900.bin
 includes/payloads/GoldHEN/goldhen_2.3_702L.bin
 includes/payloads/GoldHEN/goldhen_2.3_755L.bin
-includes/payloads/GoldHEN/goldhen_2.4b18.3.bin
+includes/payloads/GoldHEN/goldhen_v2.4b18.2.bin
+includes/payloads/GoldHEN/goldhen_v2.4b18.4.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.5.bin
+includes/payloads/GoldHEN/goldhen_v2.4b18.bin
 includes/payloads/HEN/HEN.bin
 includes/payloads/testing/goldhen_2.4b18.5_allfw_test.bin
 includes/payloads/testing/ps4debug_v1.1.19.bin
