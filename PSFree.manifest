@@ -1,13 +1,11 @@
 CACHE MANIFEST
 # v1
-# Generated on 2025-08-09 17:53:23.489321
+# Generated on 2025-08-09 22:47:06.245491
 
 CACHE:
 index.html
-.vscode/settings.json
 includes/index.css
 includes/js/index.js
-includes/js/languages.js
 includes/payloads/Jailbreak.js
 includes/payloads/payloads.js
 includes/payloads/Bins/Dumper/appdumper.bin
