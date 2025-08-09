@@ -1979,7 +1979,16 @@ function runPayload(path) {
 
 kexploit().then((success) => {
   if (success) {
-    // runPayload("./payload.bin");
-    runBinLoader();
+    if (sessionStorage.getItem('binloader')){
+      runBinLoader();
+    } else {
+      runPayload(window.payload_path);
+      payloadSucces();
+    }
   }
 });
+
+function payloadSucces(){
+  log("payload executed successfully, reloading page in 4 seconds...");
+  setTimeout(() => {window.location.reload();}, 4000); // 4 seconds delay
+}

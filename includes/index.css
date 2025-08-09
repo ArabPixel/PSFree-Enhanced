@@ -1,0 +1,502 @@
+/* replace rgb colors with hex value for better compatibility */
+
+body {
+    font-family: system-ui, -apple-system, sans-serif, "Inter", sans-serif;
+    overflow: hidden;
+}
+
+.mainContainer{
+    overflow-y: scroll;
+}
+
+#initial-screen,
+#exploit-main-screen {
+    height: 100vh;
+}
+
+
+input,
+svg,
+label {
+    margin: 0 7px !important;
+    cursor: pointer;
+}
+
+.grid{
+    align-items: center;
+}
+
+/* Custom radio button styling for better compatibility */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #888;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked {
+    border: none;
+    background: #3B82F6;
+}
+
+/* For PS4 (because its old browser) */
+.inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.payload {
+    margin-bottom: 16px;
+}
+
+.henSelection {
+    padding: 12px 0;
+    margin: 12px;
+    -webkit-box-shadow: 0px -25px 8px -20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px -25px 8px -20px rgba(0, 0, 0, 0.2);
+}
+
+.fwSelected{
+    border-radius: 5px;
+    /* border-bottom: 2px solid #2563eb; */
+    background-color: #2563eb;
+    color: white;
+}
+
+.h-full {
+    height: 97% !important;
+    max-height: 100vh !important;
+}
+
+.tabs {
+    -webkit-box-shadow: 0px 17px 8px -11px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 17px 8px -11px rgba(0, 0, 0, 0.2);
+    padding: 12px 0;
+}
+
+/* Scrollbar design */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Thumb of the scrollbar */
+::-webkit-scrollbar-thumb {
+    background: #2563eb;
+    border-radius: 10px;
+}
+
+/* Payloads categories colors */
+
+.category-tools {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+}
+
+.category-games {
+    background-color: rgba(234, 179, 8, 0.2);
+    color: #facc15;
+}
+
+.category-linux {
+    background-color: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+}
+.category-games, .category-tools, .category-linux{
+    border: none !important;
+}
+
+ /* AI CSS to replace tailwindcss (been lazy and I don't want to write everything from scratch)*/
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Tailwind Color Palette (Approximations based on common values) --- */
+/* These are approximations. For exact matches, refer to Tailwind's default config. */
+:root {
+    --color-gray-900: #111827;
+    --color-gray-800: #1f2937;
+    --color-gray-700: #374151;
+    --color-gray-600: #4b5563;
+    --color-gray-50: #f9fafb;
+    --color-blue-600: #2563eb;
+    --color-blue-700: #1d4ed8;
+    --color-blue-500: #3b82f6;
+    --color-blue-400: #60a5fa;
+    --color-yellow-600: #ca8a04;
+    --color-yellow-500: #eab308;
+    --color-yellow-400: #facc15;
+    --color-yellow-200: #fde68a;
+    --color-cyan-300: #67e8f9;
+    --color-white: #ffffff;
+}
+
+/* --- Utility Classes Replication --- */
+
+/* Background Colors */
+.bg-gray-900 { background-color: var(--color-gray-900); }
+.bg-gray-800 { background-color: var(--color-gray-800); }
+.bg-gray-700 { background-color: var(--color-gray-700); }
+.bg-gray-700\/60 { background-color: rgba(55, 65, 81, 0.6); } /* 60% opacity */
+.bg-black\/50 { background-color: rgba(0, 0, 0, 0.5); } /* 50% opacity */
+.bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); } /* 5% opacity */
+.bg-white\/10 { background-color: rgba(255, 255, 255, 0.1); } /* 10% opacity */
+.bg-yellow-600\/20 { background-color: rgba(202, 138, 4, 0.2); } /* 20% opacity */
+.bg-blue-600 { background-color: var(--color-blue-600); }
+.bg-gray-50 { background-color: var(--color-gray-50); } /* Used in tabs, though often overridden */
+
+
+/* Text Colors */
+.text-white { color: var(--color-white); }
+.text-white\/70 { color: rgba(255, 255, 255, 0.7); } /* 70% opacity */
+.text-white\/80 { color: rgba(255, 255, 255, 0.8); } /* 80% opacity */
+.text-white\/90 { color: rgba(255, 255, 255, 0.9); } /* 90% opacity */
+.text-cyan-300 { color: var(--color-cyan-300); }
+.text-yellow-400 { color: var(--color-yellow-400); }
+.text-yellow-200 { color: var(--color-yellow-200); }
+.text-yellow-200\/80 { color: rgba(253, 230, 138, 0.8); } /* 80% opacity */
+.text-gray-600 { color: var(--color-gray-600); } /* For hover states */
+.text-blue-500 { color: var(--color-blue-500); } /* For active tabs/focus */
+
+
+/* Font Sizes */
+.text-xs { font-size: 0.75rem; /* 12px */ }
+.text-sm { font-size: 0.875rem; /* 14px */ }
+.text-base { font-size: 1rem; /* 16px */ }
+.text-lg { font-size: 1.125rem; /* 18px */ }
+.text-xl { font-size: 1.25rem; /* 20px */ }
+.text-2xl { font-size: 1.5rem; /* 24px */ }
+
+/* Font Weights */
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+/* Text Alignment */
+.text-center { text-align: center; }
+.text-start { text-align: start; }
+
+/* Line Height */
+.leading-relaxed { line-height: 1.625; } /* 26px for 16px base */
+
+/* User Select */
+.select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/* Display */
+.flex { display: flex; }
+.inline-block { display: inline-block; }
+.hidden { display: none; }
+.grid { display: grid; }
+
+/* Flex Direction */
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-grow { flex-grow: 1; }
+
+/* Alignment */
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+/* Spacing (Padding & Margin) */
+.p-2 { padding: 0.5rem; /* 8px */ }
+.p-3 { padding: 0.75rem; /* 12px */ }
+.p-4 { padding: 1rem; /* 16px */ }
+.p-6 { padding: 1.5rem; /* 24px */ }
+.p-8 { padding: 2rem; /* 32px */ }
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+.mt-0\.5 { margin-top: 0.125rem; /* 2px */ }
+.mt-4 { margin-top: 1rem; /* 16px */ }
+.mt-6 { margin-top: 1.5rem; /* 24px */ }
+.mt-12 { margin-top: 3rem; /* 48px */ }
+.mb-1 { margin-bottom: 0.25rem; /* 4px */ }
+.mb-2 { margin-bottom: 0.5rem; /* 8px */ }
+.mb-4 { margin-bottom: 1rem; /* 16px */ }
+.mb-6 { margin-bottom: 1.5rem; /* 24px */ }
+.-mb-px { margin-bottom: -1px; } /* For tabs border */
+
+.ml-2 { margin-left: 0.5rem; /* 8px */ }
+.ml-3 { margin-left: 0.75rem; /* 12px */ }
+/* Flowbite uses me-2 for margin-inline-end, but it's not present in your HTML classes */
+
+/* Space between children */
+.space-x-1 > :not([hidden]) ~ :not([hidden]) { margin-right: calc(0.25rem * var(--tw-space-x-reverse)); margin-left: calc(0.25rem * (1 - var(--tw-space-x-reverse))); }
+.space-x-3 > :not([hidden]) ~ :not([hidden]) { margin-right: calc(0.75rem * var(--tw-space-x-reverse)); margin-left: calc(0.75rem * (1 - var(--tw-space-x-reverse))); }
+.space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-right: calc(1rem * var(--tw-space-x-reverse)); margin-left: calc(1rem * (1 - var(--tw-space-x-reverse))); }
+.space-y-1 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(0.25rem * (1 - var(--tw-space-y-reverse))); margin-bottom: calc(0.25rem * var(--tw-space-y-reverse)); }
+.space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(0.5rem * (1 - var(--tw-space-y-reverse))); margin-bottom: calc(0.5rem * var(--tw-space-y-reverse)); }
+.space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(0.75rem * (1 - var(--tw-space-y-reverse))); margin-bottom: calc(0.75rem * var(--tw-space-y-reverse)); }
+
+/* Gap for flex/grid */
+.gap-2 { gap: 0.5rem; /* 8px */ }
+.gap-4 { gap: 1rem; /* 16px */ }
+.gap-8 { gap: 2rem; /* 32px */ }
+
+/* Sizing */
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.h-5 { height: 1.25rem; /* 20px */ }
+.h-6 { height: 1.5rem; /* 24px */ }
+.h-10 { height: 2.5rem; /* 40px */ }
+.h-32 { height: 8rem; /* 128px */ }
+.w-4 { width: 1rem; /* 16px */ }
+.w-5 { width: 1.25rem; /* 20px */ }
+.w-6 { width: 1.5rem; /* 24px */ }
+.w-10 { width: 2.5rem; /* 40px */ }
+.w-32 { width: 8rem; /* 128px */ }
+.max-w-sm { max-width: 24rem; /* 384px */ }
+.max-w-md { max-width: 28rem; /* 448px */ }
+.max-w-lg { max-width: 32rem; /* 512px */ }
+.min-h-screen { min-height: 100vh; }
+.min-h-\[150px\] { min-height: 150px; } /* Custom value */
+.max-h-\[calc\(100vh-250px\)\] { max-height: calc(100vh - 250px); } /* Custom value */
+.h-screen { height: 100vh; }
+
+
+/* Positioning */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.top-6 { top: 1.5rem; /* 24px */ }
+.left-6 { left: 1.5rem; /* 24px */ }
+.bottom-10 { bottom: 2.5rem; /* 40px */ }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.z-10 { z-index: 10; }
+.z-50 { z-index: 50; }
+.z-\[9999\] { z-index: 9999; } /* Custom z-index for modals */
+.sticky { position: sticky; }
+.top-0 { top: 0; }
+
+/* Borders */
+.border { border-width: 1px; border-style: solid; border-color: currentColor; }
+.border-2 { border-width: 2px; border-style: solid; border-color: currentColor; }
+/* .border-4 is not used in your HTML */
+.border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+.border-white\/20 { border-color: rgba(255, 255, 255, 0.2); } /* 20% opacity */
+.border-blue-500 { border-color: var(--color-blue-500); }
+.border-yellow-500\/50 { border-color: rgba(234, 179, 8, 0.5); } /* 50% opacity */
+.border-transparent { border-color: transparent; }
+.border-gray-200 { border-color: #e5e7eb; } /* Flowbite default */
+.border-gray-700 { border-color: var(--color-gray-700); } /* Flowbite default */
+
+
+/* Rounded Corners */
+.rounded { border-radius: 0.25rem; /* 4px */ }
+.rounded-lg { border-radius: 0.5rem; /* 8px */ }
+.rounded-xl { border-radius: 0.75rem; /* 12px */ }
+.rounded-full { border-radius: 9999px; }
+.rounded-t-lg { border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; }
+
+/* Shadow */
+.shadow { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); }
+.shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+
+/* Transitions */
+.transition-opacity { transition-property: opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.transition-colors { transition-property: background-color, border-color, color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+.duration-300 { transition-duration: 300ms; }
+.duration-500 { transition-duration: 500ms; }
+.duration-700 { transition-duration: 700ms; }
+.ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Transforms */
+.transform { transform: translate(var(--tw-translate-x, 0), var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)); }
+.scale-105 { --tw-scale-x: 1.05; --tw-scale-y: 1.05; transform: scale(var(--tw-scale-x), var(--tw-scale-y)); }
+
+
+/* Animation */
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+    50% { transform: translateY(0); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+}
+
+/* Cursor */
+.cursor-pointer { cursor: pointer; }
+
+/* Overflow */
+.overflow-y-auto { overflow-y: auto; }
+.overflow-x-hidden { overflow-x: hidden; }
+
+/* Opacity */
+.opacity-100 { opacity: 1; }
+.disabled\:opacity-50:disabled { opacity: 0.5; } /* For disabled buttons */
+
+/* Backdrop Filter */
+.backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px); /* For Safari/iOS */
+}
+
+/* Specific Styles for Main Container and Sections */
+.mainContainer {
+    height: 100vh; /* Ensure main container takes full viewport height */
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch; /* For smoother scrolling on touch devices */
+}
+
+section { /* Apply to initial-screen and exploit-main-screen */
+    min-height: 100vh;
+    /* Ensure sections fill the viewport height to enable snapping */
+}
+
+/* --- Pseudo-class Variants --- */
+
+/* Hover States */
+.hover\:bg-gray-700:hover { background-color: var(--color-gray-700); }
+.hover\:text-white:hover { color: var(--color-white); }
+.hover\:bg-white\/10:hover { background-color: rgba(255, 255, 255, 0.1); }
+.hover\:scale-105:hover { transform: scale(1.05); }
+.hover\:bg-blue-700:hover { background-color: var(--color-blue-700); }
+.hover\:text-gray-600:hover { color: var(--color-gray-600); }
+.hover\:border-gray-300:hover { border-color: #d1d5db; } /* Approximation for gray-300 */
+.hover\:bg-blue-500\/40:hover { background-color: rgba(59, 130, 246, 0.4); } /* 40% opacity */
+
+
+/* Focus States */
+.focus-within\:border-blue-500:focus-within { border-color: var(--color-blue-500); }
+.focus\:ring-2:focus { box-shadow: 0 0 0 2px var(--color-blue-400); } /* Ring effect */
+.focus\:ring-blue-400:focus { --tw-ring-color: var(--color-blue-400); } /* Ring color */
+
+/* Accent Color for Radio/Checkbox */
+.accent-blue-500 { accent-color: var(--color-blue-500); }
+
+/* RTL Adjustments */
+[dir="rtl"] .rtl\:space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+    /* For space-x-reverse, Tailwind sets --tw-space-x-reverse: 1 */
+    /* So, original margin-left becomes margin-right and vice-versa */
+    margin-right: calc(0.75rem * (1 - var(--tw-space-x-reverse, 0))); /* Original margin-left 0.75rem */
+    margin-left: calc(0.75rem * var(--tw-space-x-reverse, 0)); /* Original margin-right 0.75rem */
+}
+
+/* --- Media Queries for Responsive Classes --- */
+
+/* Small devices (sm) */
+@media (min-width: 640px) {
+    .sm\:flex-row { flex-direction: row; }
+    .sm\:gap-8 { gap: 2rem; }
+    .sm\:w-auto { width: auto; }
+    .sm\:mb-0 { margin-bottom: 0; }
+    /* If you had sm:rtl:gap-8, you'd define it here too */
+    /* [dir="rtl"] .sm\:rtl\:gap-8 { ... } */
+}
+
+/* Medium devices (md) */
+@media (min-width: 768px) {
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* --- Custom classes for payload categories (from your JS) --- */
+.category-tools { border-color: #a78bfa; /* Example purple */ }
+.category-games { border-color: #f87171; /* Example red */ }
+.category-linux { border-color: #34d399; /* Example green */ }
+.category-testing { border-color: red; /* Example red */ }
+
+/* --- Tab specific styling (from your HTML and Flowbite's typical behavior) --- */
+.tabs ul {
+    border-color: var(--color-gray-700); /* Default border for the tab list */
+    list-style: none;
+}
+.tabs button {
+    border-color: transparent; /* Default for inactive tabs */
+    color: rgba(255, 255, 255, 0.8); /* Default text color for inactive tabs */
+}
+.tabs button[aria-selected="true"] {
+    border-color: var(--color-blue-500);
+    color: var(--color-blue-500);
+}
+.tabs button:not([aria-selected="true"]):hover {
+    color: var(--color-gray-600);
+    border-color: #d1d5db; /* Approximation for gray-300 */
+}
+/* Manual css */
+button{
+    background-color: transparent;
+    border: none;
+}
+
+#tools,
+#games,
+#linux,
+#testing {
+    background-color: transparent;
+}
+
+#tools-tab,
+#games-tab,
+#linux-tab,
+#testing-tab {
+    background-color: transparent;
+}
+
+#default-tab-content div div{
+    cursor: pointer;
+}
+
+#console center{
+    font-size: 12px !important;
+}
+
+svg,
+button{
+    color: white;
+    cursor: pointer;
+}
+
+#listfw{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-around;
+}
+
+#listfw p{
+    padding: 1px 5px;
+}
+
+#default-tab{
+    display: flex;
+    justify-content: space-around;
+}
+
+#default-tabs li{
+    width: 33%;
+}
+
+#initial-screen header{
+    gap: 5px;
+}
