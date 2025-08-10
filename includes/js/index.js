@@ -774,6 +774,8 @@ function CheckFW() {
   if (ps4Regex.test(userAgent)) {
     if (fwVersion >= 7.00 && fwVersion <= 9.60) {
       document.getElementById('PS4FW').style.color = 'green';
+let fwElement = "fw"+fwVersion.replace('.','');
+    document.getElementById(fwElement).classList.add('fwSelected');
     } else {
       document.getElementById('PS4FW').style.color = 'red';
 
@@ -783,8 +785,6 @@ function CheckFW() {
       });
     }
     ps4fw = fwVersion;
-    let fwElement = "fw"+fwVersion.replace('.','');
-    document.getElementById(fwElement).classList.add('fwSelected');
     // Display only Compatible GoldHENs
     const GoldHENsOption = {
       "9.60": ["GHv2.3Fw755", "GHv2.3Fw702"],
