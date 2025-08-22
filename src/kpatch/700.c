@@ -30,6 +30,7 @@ struct kexec_args {
 };
 
 static inline void restore(void *kbase, struct kexec_args *uap);
+static inline void patch_aio(void *kbase);
 static inline void do_patch(void *kbase);
 
 __attribute__((section (".text.start")))
@@ -38,6 +39,7 @@ int kpatch(void *td, struct kexec_args *uap) {
     void * const kbase = (void *)rdmsr(0xc0000082) - xfast_syscall_off;
 
     do_patch(kbase);
+    patch_aio(kbase);
     restore(kbase, uap);
 
     return 0;
@@ -59,6 +61,16 @@ static inline void restore(void *kbase, struct kexec_args *uap) {
     for (int i = 0; i < 0x30; i += 8) {
         write64(kbase, 0x112d250 + i, sysent_661_save[i / 8]);
     }
+}
+
+// TODO:
+__attribute__((always_inline))
+static inline void patch_aio(void *kbase) {
+    const u64 aio_off = 0x04a1bb1;
+
+    disable_cr0_wp();
+
+    enable_cr0_wp();
 }
 
 __attribute__((always_inline))
