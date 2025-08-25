@@ -1989,6 +1989,6 @@ kexploit().then((success) => {
 });
 
 function payloadSucces(){
-  log("payload executed successfully, reloading page in 4 seconds...");
+  log("AIO fix applied");
   setTimeout(() => {window.location.reload();}, 4000); // 4 seconds delay
 }
