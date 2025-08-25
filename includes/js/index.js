@@ -40,7 +40,6 @@ const ui = {
   settingsPopup: document.getElementById('settings-popup'),
 
   // Settings elements
-  autoJbCheckbox: document.getElementById('autoJbBox'),
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
 };
 const languages = {
@@ -64,7 +63,6 @@ const languages = {
     "closeButton": "Close",
     "settingsPsfreeHeader": "Settings",
     "ps4FirmwareSupportedHeader": "Supported PS4 firmware",
-    "autoJailbreakText": "Jailbreak automatically",
     "languageHeader": "Language",
     "englishOption": "English",
     "arabicOption": "Arabic",
@@ -99,7 +97,6 @@ const languages = {
     "closeButton": "إغلاق",
     "settingsPsfreeHeader": "الإعدادات",
     "ps4FirmwareSupportedHeader": "إصدارات PS4 المدعومة",
-    "autoJailbreakText": "تهكير تلقائي",
     "languageHeader": "اللغة",
     "arabicOption": "العربية",
     "englishOption": "الإنجليزية",
@@ -507,18 +504,6 @@ ui.psLogoContainer.addEventListener('click', () => {
   ui.exploitScreen.scrollIntoView({ block: "end" })
 });
 
-// Auto jailbreak
-ui.autoJbCheckbox.addEventListener('change', (e) => {
-  isAutoJailbreakEnabled = e.target.checked;
-  localStorage.setItem('autoJailbreak', e.target.checked);
-  if (e.target.checked) {
-    if (confirm(languages[currentLanguage].jailbreakNow + currentJbFlavor)) {
-      settingsPopup()
-      ui.exploitScreen.scrollIntoView({ block: "end" })
-      jailbreak();
-    }
-  }
-});
 // tabs switching
 ui.toolsTab.addEventListener('click', () =>{
   if (ui.toolsSection.classList.contains('hidden')){
@@ -639,16 +624,6 @@ async function Loadpayloads(payload) {
   }
 }
 
-function loadAutoJb() {
-  ui.autoJbCheckbox.checked = isAutoJailbreakEnabled == 'true' ? true : false;
-  if (isAutoJailbreakEnabled == 'true') {
-    if (confirm(languages[currentLanguage].jailbreakNow + currentJbFlavor)) {
-      ui.exploitScreen.scrollIntoView({ block: "end" })
-      jailbreak();
-    }
-  }
-}
-
 function setGoldHENVer(value){
   localStorage.setItem('GHVer', value);
 }
@@ -706,7 +681,6 @@ function applyLanguage(lang) {
 
   // Settings popup
   ui.settingsPopup.querySelector('h2').textContent = strings.settingsPsfreeHeader;
-  ui.settingsPopup.querySelector('#autojbchkb p').textContent = strings.autoJailbreakText;
   ui.settingsPopup.querySelector('#chooselang h3').textContent = strings.languageHeader;
   ui.settingsPopup.querySelector('#enLang').textContent = strings.englishOption;
   ui.settingsPopup.querySelector('#arLang').textContent = strings.arabicOption;
@@ -768,14 +742,38 @@ function CheckFW() {
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
   const elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'payloadsbtn', 'autojbchkb', 'click-to-start-text', 'chooseGoldHEN'
+    'payloadsbtn', 'click-to-start-text', 'chooseGoldHEN'
   ];
 
   if (ps4Regex.test(userAgent)) {
     if (fwVersion >= 7.00 && fwVersion <= 9.60) {
       document.getElementById('PS4FW').style.color = 'green';
-let fwElement = "fw"+fwVersion.replace('.','');
-    document.getElementById(fwElement).classList.add('fwSelected');
+
+      // Highlight firmware in about popup
+      let fwElement = "fw"+fwVersion.replace('.','');
+      document.getElementById(fwElement).classList.add('fwSelected');
+      // Display only Compatible GoldHENs
+      const GoldHENsOption = {
+        "9.60": ["GHv2.3Fw755", "GHv2.3Fw702"],
+        "9.00": ["GHv2.3Fw755", "GHv2.3Fw702"],
+        "9.03": ["GHv2.3Fw755", "GHv2.3Fw702", "GHv2.4b18", "GHv2.4b18.2"],
+        "7.55": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"],
+        "7.02": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"]
+      };
+      // To remove all of them with one line in case the firmware is not listed
+      const allElements = [
+        "GHv2.3Fw755",
+        "GHv2.3Fw702",
+        "GHv2.4b18",
+        "GHv2.4b18.4",
+        "GHv2.4b18.2"
+      ];
+      const idsToRemove = GoldHENsOption[ps4fw] || allElements;
+
+      idsToRemove.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+      });
     } else {
       document.getElementById('PS4FW').style.color = 'red';
 
@@ -785,29 +783,6 @@ let fwElement = "fw"+fwVersion.replace('.','');
       });
     }
     ps4fw = fwVersion;
-    // Display only Compatible GoldHENs
-    const GoldHENsOption = {
-      "9.60": ["GHv2.3Fw755", "GHv2.3Fw702"],
-      "9.00": ["GHv2.3Fw755", "GHv2.3Fw702"],
-      "9.03": ["GHv2.3Fw755", "GHv2.3Fw702", "GHv2.4b18", "GHv2.4b18.2"],
-      "7.55": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"],
-      "7.02": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"]
-    };
-    // To remove all of them with one line in case the firmware is not listed
-    const allElements = [
-      "GHv2.3Fw755",
-      "GHv2.3Fw702",
-      "GHv2.4b18",
-      "GHv2.4b18.4",
-      "GHv2.4b18.2"
-    ];
-    const idsToRemove = GoldHENsOption[ps4fw] || allElements;
-
-    idsToRemove.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.remove();
-    });
-
   } else {
     platform = 'Unknown platform';
 
@@ -817,11 +792,11 @@ let fwElement = "fw"+fwVersion.replace('.','');
     else if (/Windows/.test(userAgent)) platform = 'Windows';
     else if (/Linux/.test(userAgent)) platform = 'Linux';
 
-    document.getElementById('PS4FW').style.color = 'red';
-    elementsToHide.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
+    // document.getElementById('PS4FW').style.color = 'red';
+    // elementsToHide.forEach(id => {
+    //   const el = document.getElementById(id);
+    //   if (el) el.style.display = 'none';
+    // });
   }
 }
 
@@ -833,7 +808,6 @@ function loadSettings() {
     loadLanguage();
     applyLanguage(currentLanguage);
     renderPayloads();
-    loadAutoJb();
     loadGoldHENVer();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
