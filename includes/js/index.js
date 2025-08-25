@@ -752,28 +752,6 @@ function CheckFW() {
       // Highlight firmware in about popup
       let fwElement = "fw"+fwVersion.replace('.','');
       document.getElementById(fwElement).classList.add('fwSelected');
-      // Display only Compatible GoldHENs
-      const GoldHENsOption = {
-        "9.60": ["GHv2.3Fw755", "GHv2.3Fw702"],
-        "9.00": ["GHv2.3Fw755", "GHv2.3Fw702"],
-        "9.03": ["GHv2.3Fw755", "GHv2.3Fw702", "GHv2.4b18", "GHv2.4b18.2"],
-        "7.55": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"],
-        "7.02": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"]
-      };
-      // To remove all of them with one line in case the firmware is not listed
-      const allElements = [
-        "GHv2.3Fw755",
-        "GHv2.3Fw702",
-        "GHv2.4b18",
-        "GHv2.4b18.4",
-        "GHv2.4b18.2"
-      ];
-      const idsToRemove = GoldHENsOption[ps4fw] || allElements;
-
-      idsToRemove.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.remove();
-      });
     } else {
       document.getElementById('PS4FW').style.color = 'red';
 
@@ -783,6 +761,29 @@ function CheckFW() {
       });
     }
     ps4fw = fwVersion;
+    // Display only Compatible GoldHENs
+    const GoldHENsOption = {
+      "9.60": ["GHv2.3Fw755", "GHv2.3Fw702"],
+      "9.00": ["GHv2.3Fw755", "GHv2.3Fw702"],
+      "9.03": ["GHv2.3Fw755", "GHv2.3Fw702", "GHv2.4b18", "GHv2.4b18.2"],
+      "7.55": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"],
+      "7.02": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"]
+    };
+    // To remove all of them with one line in case the firmware is not listed
+    const allElements = [
+      "GHv2.3Fw755",
+      "GHv2.3Fw702",
+      "GHv2.4b18",
+      "GHv2.4b18.4",
+      "GHv2.4b18.2"
+    ];
+    const idsToRemove = GoldHENsOption[ps4fw] || allElements;
+
+    idsToRemove.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    });
+
   } else {
     platform = 'Unknown platform';
 
@@ -792,11 +793,11 @@ function CheckFW() {
     else if (/Windows/.test(userAgent)) platform = 'Windows';
     else if (/Linux/.test(userAgent)) platform = 'Linux';
 
-    // document.getElementById('PS4FW').style.color = 'red';
-    // elementsToHide.forEach(id => {
-    //   const el = document.getElementById(id);
-    //   if (el) el.style.display = 'none';
-    // });
+    document.getElementById('PS4FW').style.color = 'red';
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
   }
 }
 
