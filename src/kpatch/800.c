@@ -65,13 +65,12 @@ static inline void restore(void *kbase, struct kexec_args *uap) {
 
 __attribute__((always_inline))
 static inline void patch_aio(void *kbase) {
-    const u64 aio_off = 0x9f141;
-
     disable_cr0_wp();
 
-    // offset = 0x00
+    const u64 aio_off = 0x9F141;
+
     // patch = {0xeb, 0x48}
-    write16(kbase, aio_off + 0x00, 0x48eb);
+    write16(kbase, aio_off, 0x48eb);
 
     // offset = 0x42
     // patch = {0xeb, 0x06}
