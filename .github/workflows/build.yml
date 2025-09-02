@@ -27,7 +27,7 @@ jobs:
       - name: Upload entire repository as zip
         uses: actions/upload-artifact@v4
         with:
-          name: psfree-lapse
+          name: PSFree-Enhanced
           path: ${{ github.workspace }}
           if-no-files-found: error
           compression-level: 9
