@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # v1
-# Generated on 2025-08-09 22:47:06.245491
+# Generated on 2025-09-03 21:13:28.104236
 
 CACHE:
 index.html
@@ -53,11 +53,12 @@ includes/payloads/Bins/Tools/ToDev.bin
 includes/payloads/Bins/Tools/ToDex.bin
 includes/payloads/Bins/Tools/ToKratos.bin
 includes/payloads/Bins/Tools/WebRTE_900.bin
-includes/payloads/GoldHEN/goldhen_2.3_702L.bin
-includes/payloads/GoldHEN/goldhen_2.3_755L.bin
+includes/payloads/GoldHEN/goldhen_v2.3_702L.bin
+includes/payloads/GoldHEN/goldhen_v2.3_755L.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.2.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.4.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.5.bin
+includes/payloads/GoldHEN/goldhen_v2.4b18.6.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.bin
 includes/payloads/HEN/HEN.bin
 includes/payloads/testing/goldhen_2.4b18.5_allfw_test.bin
