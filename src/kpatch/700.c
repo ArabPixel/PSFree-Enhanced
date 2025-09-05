@@ -63,12 +63,60 @@ static inline void restore(void *kbase, struct kexec_args *uap) {
     }
 }
 
-// TODO:
 __attribute__((always_inline))
 static inline void patch_aio(void *kbase) {
-    const u64 aio_off = 0x04a1bb1;
-
     disable_cr0_wp();
+
+    const u64 aio_off = 0x4a1bb1;
+
+    // patch = {0xeb}
+    write8(kbase, aio_off, 0xeb);
+
+    // offset = 0x3d
+    // patch = {0xeb, 0x07}
+    write16(kbase, aio_off + 0x3d, 0x07eb);
+
+    // offset = 0x46
+    // patch = {0x41, 0x83, 0xbf, 0xa0, 0x04, 0x00, 0x00, 0x00, 0x90}
+    write64(kbase, aio_off + 0x46, 0x00000004a0bf8341);
+    write8(kbase, aio_off + 0x4e, 0x90);
+
+    // offset = 0x57
+    // patch = {0x87}
+    write8(kbase, aio_off + 0x57, 0x87);
+
+    // offset = 0x64
+    // patch = {0xb7}
+    write8(kbase, aio_off + 0x64, 0xb7);
+
+    // offset = 0x7c
+    // patch = {0x87}
+    write8(kbase, aio_off + 0x7c, 0x87);
+
+    // offset = 0x89
+    // patch = {0xb7}
+    write8(kbase, aio_off + 0x89, 0xb7);
+
+    // offset = 0xa1
+    // patch = {0xbf}
+    write8(kbase, aio_off + 0xa1, 0xbf);
+
+    // offset = 0xad
+    // patch = {0xbf}
+    write8(kbase, aio_off + 0xad, 0xbf);
+
+    // offset = 0xb9
+    // patch = {0xbf}
+    write8(kbase, aio_off + 0xb9, 0xbf);
+
+    // offset = 0xc5
+    // patch = {0xbf}
+    write8(kbase, aio_off + 0xc5, 0xbf);
+
+    // offset = 0xd4
+    // patch = {0x49, 0x8b, 0xff}
+    write16(kbase, aio_off + 0xd4, 0x8b49);
+    write8(kbase, aio_off + 0xd6, 0xff);
 
     enable_cr0_wp();
 }
