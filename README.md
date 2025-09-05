@@ -29,7 +29,8 @@ _Note: Support for other firmwares listed in the "Vulnerability Scope" table may
 
 ## TODO List
 
-- [ ] Blackscreen/Save issue with certain games
+- [X] ~~Blackscreen/Save issue with certain games~~ Issue is patched post-exploit
+  - [ ] Determine root cause and fix more directly
 - [ ] `lapse.mjs`: Just set the bits for JIT privs
 - [ ] `view.mjs`: Assumes PS4, support PS5 as well
 - [ ] Add PS5 support
