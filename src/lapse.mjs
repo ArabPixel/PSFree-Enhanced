@@ -1917,7 +1917,7 @@ function runBinLoader() {
     call_nze("pthread_create", pthread, 0, payload_loader, payload_buffer);
   }
 
-  log("awaiting payload...");
+  log("awaiting payload on port 9020...");
 }
 
 function runPayload(path) {

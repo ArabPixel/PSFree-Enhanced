@@ -58,7 +58,7 @@ const languages = {
     "payloadsGameHeader": "Game",
     "payloadsLinuxHeader": "Linux",
     "aboutPsfreeHeader": "About PSFree Enhanced",
-    "aboutVersion": "Version: 1.5.1.3",
+    "aboutVersion": "Version: 1.5.1",
     "aboutDescription": "A web interface to jailbreak your PS4 using PSFree chained with Lapse kernel exploit.",
     "closeButton": "Close",
     "settingsPsfreeHeader": "Settings",
@@ -92,7 +92,7 @@ const languages = {
     "payloadsGameHeader": "الألعاب",
     "payloadsLinuxHeader": "لينكس",
     "aboutPsfreeHeader": "حول PSFree المحسن",
-    "aboutVersion": "الإصدار: 1.5.1.3",
+    "aboutVersion": "الإصدار: 1.5.1",
     "aboutDescription": "واجهة ويب لتهكير البلايستايشن 4 بإستخدام ثغرة PSFree المربوطة مع ثغرة النواة Lapse",
     "closeButton": "إغلاق",
     "settingsPsfreeHeader": "الإعدادات",
@@ -121,6 +121,15 @@ const payloads = [
     author: "Stooged",
     category: "tools",
     funcName: "load_App2USB"
+  },
+    {
+    id: "BinLoader",
+    name: "BinLoader",
+    version: "1.0",
+    description: "Launches BinLoader server on port 9020 to send files over the local network.",
+    author: "",
+    category: "tools",
+    funcName: "load_BinLoader"
   },
   {
     id: "FTP",
@@ -541,6 +550,7 @@ function settingsPopup() {
 
 // Jailbreak-related functions
 async function jailbreak() {
+  sessionStorage.removeItem('binloader');
   try {
     const modules = await loadMultipleModules([
       '../payloads/Jailbreak.js',

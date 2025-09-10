@@ -35,6 +35,14 @@ _Note: Support for other firmwares listed in the "Vulnerability Scope" table may
 - [ ] `view.mjs`: Assumes PS4, support PS5 as well
 - [ ] Add PS5 support
 
+## Additional features
+
+- Language switcher
+- HEN flavor selector
+- GoldHEN version selector
+- Descriptive payload selection
+- Up to date
+
 ## Copyright and Authors:
 
 AGPL-3.0-or-later (see [LICENSE](LICENSE)). This repo belongs to the group `anonymous`. We refer to anonymous contributors as "anonymous" as well.

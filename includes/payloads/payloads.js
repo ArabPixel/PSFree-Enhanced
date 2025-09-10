@@ -36,7 +36,6 @@ function Loadpayloadlocal(PLfile){ //Loading Payload via Payload Param.
 		req.onerror = function(){
 			//alert("Cannot Load Payload Because The BinLoader Server Is Not Running");//<<If server is not running, alert message.
             //ServerStatus("Cannot Load Payload Because The BinLoader Server Is Not Running");
-            import('../../src/alert.mjs');
             Loadpayloadonline(PLfile);
 			return;
 		};
@@ -52,7 +51,6 @@ function Loadpayloadlocal(PLfile){ //Loading Payload via Payload Param.
                         }else{
                             //alert('Payload not sent !');
                             setTimeout(() => {
-                                import('../../src/alert.mjs');
                                 Loadpayloadonline(PLfile);
                             }, 3000); // 3 seconds delay
                             return;
@@ -74,7 +72,10 @@ function Loadpayloadlocal(PLfile){ //Loading Payload via Payload Param.
 // Load Payloads with exploit
 
 function Loadpayloadonline(PLfile) {
-    window.payload_path = PLfile;
+    if (PLfile == undefined){
+        sessionStorage.setItem('binloader', 1);
+    }else window.payload_path = PLfile;
+    import('../../src/alert.mjs');
 }
 
 // Payloads
@@ -104,6 +105,10 @@ export function load_ModuleDumper(){
 
 
 // Tools
+
+export function load_BinLoader(){
+    Loadpayloadonline(undefined);
+}
 
 export function load_PS4Debug(){
     Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4debug.bin");
