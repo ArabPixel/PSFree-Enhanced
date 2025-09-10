@@ -639,7 +639,7 @@ function setGoldHENVer(value){
 }
 
 function loadGoldHENVer(){
-  const goldHenVer = localStorage.getItem("GHVer") || "GHv2.4b18.5";
+  const goldHenVer = localStorage.getItem("GHVer") || "GHv2.4b18.6";
   document.querySelector(`input[name="goldhen"][value="${goldHenVer}"]`).checked = true;
 }
 
