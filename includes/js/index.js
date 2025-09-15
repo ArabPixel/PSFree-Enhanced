@@ -116,369 +116,387 @@ const payloads = [
   {
     id: "App2USB",
     name: "App2USB",
-    version: "1.0",
-    description: "Unofficially Moves installed applications to an external USB drive.",
     author: "Stooged",
+    description: "Unofficially Moves installed applications to an external USB drive.",
+    specificFW: "",
     category: "tools",
     funcName: "load_App2USB"
   },
     {
     id: "BinLoader",
     name: "BinLoader",
-    version: "1.0",
-    description: "Launches BinLoader server on port 9020 to send files over the local network.",
-    author: "",
+    author: "PSFree Exploit",
+    description: "Launches BinLoader server on port 9020 to send payloads.",
+    specificFW: "7.00 - 9.60",
     category: "tools",
     funcName: "load_BinLoader"
   },
   {
     id: "FTP",
     name: "FTP",
-    version: "1.0",
-    description: "Enables FTP server access for file transfers.",
     author: "xvortex",
+    description: "Enables FTP server access for file transfers.",
+    specificFW: "",
     category: "tools",
     funcName: "load_FTP"
   },
   {
     id: "DisableUpdates",
     name: "Disable-Updates",
-    version: "1.0",
+    author: "Scene Collective",
     description: "Disables automatic system software updates.",
-    author: "Scene",
+    specificFW: "",
     category: "tools",
     funcName: "load_DisableUpdates"
   },
   {
     id: "PS4Debug",
     name: "PS4-Debug",
-    version: "v1.1.19",
+    author: "CTN & SiSTR0",
     description: "Debugging tools for PS4.",
-    author: "SiSTRo & Ctn",
+    specificFW: "",
     category: "tools",
     funcName: "load_PS4Debug"
   },
   {
     id: "KernelDumper",
     name: "Kernel-Dumper",
-    version: "1.0",
-    description: "Dumps the PS4 kernel.",
     author: "Eversion",
+    description: "Dumps the PS4 kernel.",
+    specificFW: "",
     category: "tools",
     funcName: "load_KernelDumper"
   },
   {
     id: "PS4DumperVTX",
     name: "PS4-Dumper-VTX",
-    version: "1.0",
-    description: "All-in-one game dumper for PS4.",
     author: "xvortex",
+    description: "All-in-one game dumper for PS4.",
+    specificFW: "9.00",
     category: "tools",
     funcName: "load_VTXDumper"
   },
   {
+    id: "FanThreshold",
+    name: "Fan-Threshold",
+    author: "Scene Collective",
+    description: "Sets the cooling fan's profile on the PlayStation 4",
+    specificFW: "",
+    category: "tools",
+    funcName: "load_FanThreshold"
+  },
+  {
     id: "HistoryBlocker",
     name: "History-Blocker",
-    version: "1.0",
-    description: "Blocks the browser from remembering and returning to the last opened page on start. Run again to enable/disable.",
     author: "Stooged",
+    description: "Blocks the browser from remembering and returning to the last opened page on start. Run again to enable/disable.",
+    specificFW: "",
     category: "tools",
     funcName: "load_HistoryBlocker"
   },
   {
+    id: "EnableBrowser",
+    name: "Enable-Browser",
+    author: "Scene Collective",
+    description: "Permanently activates the browser without needing to sign into PSN.",
+    specificFW: "",
+    category: "tools",
+    funcName: "load_EnableBrowser"
+  },
+  {
     id: "OrbisToolbox",
     name: "Orbis-Toolbox",
-    version: "1.0",
-    description: "A modification of the playstation UI to help with launching and developing homebrew..",
     author: "OSM-Made",
+    description: "A modification of the playstation UI to help with launching and developing homebrew..",
+    specificFW: "9.00",
     category: "tools",
     funcName: "load_Orbis"
   },
   {
     id: "ToDex",
     name: "ToDex",
-    version: "1.0",
-    description: "Spoofs the target ID to match that of a test-kit, enables some extra options, etc.",
     author: "zecoxao",
+    description: "Spoofs the target ID to match that of a test-kit, enables some extra options, etc.",
+    specificFW: "",
     category: "tools",
     funcName: "load_ToDex"
   },
   {
     id: "ToDev",
     name: "ToDev",
-    version: "1.0",
-    description: "unlocks some PS4 Debug / TestKit Features.",
     author: "SonysNightmare",
+    description: "unlocks some PS4 Debug / TestKit Features.",
+    specificFW: "",
     category: "tools",
     funcName: "load_ToDev"
   },
   {
     id: "ToKratos",
     name: "ToKratos",
-    version: "1.0",
-    description: "Custom firmware conversion tool.",
     author: "Various",
+    description: "Custom firmware conversion tool.",
+    specificFW: "",
     category: "tools",
     funcName: "load_ToKratos"
   },
   {
     id: "ToCex",
     name: "ToCex",
-    version: "1.0",
-    description: "Converts console to CEX mode.",
     author: "Various",
+    description: "Converts console to CEX mode.",
+    specificFW: "",
     category: "tools",
     funcName: "load_ToCex"
   },
   {
     id: "BackupDB",
     name: "Backup-DB",
-    version: "1.0",
-    description: "Backs up your PS4's databases, licenses, and user data. Note this may not be useful if you have to reinitalize as your keys may change.",
     author: "Stooged",
+    description: "Backs up your PS4's databases, licenses, and user data. Note this may not be useful if you have to reinitalize as your keys may change.",
+    specificFW: "",
     category: "tools",
     funcName: "load_BackupDB"
   },
   {
     id: "RestoreDB",
     name: "Restore-DB",
-    version: "1.0",
-    description: "Restores the data saved in the 'Backup' payload.",
     author: "Stooged",
+    description: "Restores the data saved in the 'Backup' payload.",
+    specificFW: "",
     category: "tools",
     funcName: "load_RestoreDB"
   },
   {
     id: "RIFRenamer",
     name: "RIF-Renamer",
-    version: "1.0",
-    description: "Renames 'fake' RIFs to 'free' RIFs for better HEN compatibility. Use this if your PKGs only work with Mira+HEN.",
     author: "Al Azif",
+    description: "Renames 'fake' RIFs to 'free' RIFs for better HEN compatibility. Use this if your PKGs only work with Mira+HEN.",
+    specificFW: "",
     category: "tools",
     funcName: "load_RIFRenamer"
   },
   {
     id: "ExitIDU",
     name: "ExitIDU",
-    version: "1.0",
-    description: "Exits IDU mode and restarts the console.",
     author: "Scene Collective",
+    description: "Exits IDU mode and restarts the console.",
+    specificFW: "",
     category: "tools",
     funcName: "load_ExitIDU"
   },
   {
-    id: "DisableASLR",
+    id: "DisableASLR", 
     name: "Disable-ASLR",
-    version: "1.0",
-    description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
     author: "Scene Collective",
+    description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
+    specificFW: "",
     category: "tools",
     funcName: "load_DisableASLR"
   },
   {
     id: "ModuleDumper",
     name: "Module-Dumper",
-    version: "1.0",
-    description: "Dumps the decrypted modules from /system, /system_ex, /update and the root of the filesystem to a USB device.",
     author: "SocraticBliss",
+    description: "Dumps the decrypted modules from /system, /system_ex, /update and the root of the filesystem to a USB device.",
+    specificFW: "",
     category: "tools",
     funcName: "load_ModuleDumper"
   },
   {
     id: "WebRTE",
     name: "WebRTE",
-    version: "1.0",
-    description: "Web Realtime Trainer Engine",
     author: "golden",
+    description: "Web Realtime Trainer Engine",
+    specificFW: "9.00",
     category: "tools",
     funcName: "load_WebrRTE"
   },
   {
     id: "PermanentUART",
     name: "Permanent-UART",
-    version: "1.0",
-    description: "Enabled hardware based UART without a kernel patch, persists though updates.",
     author: "JTAG7371",
+    description: "Enabled hardware based UART without a kernel patch, persists though updates.",
+    specificFW: "",
     category: "tools",
     funcName: "load_PermanentUART"
   },
   {
     id: "PUPDecrypt",
     name: "PUP-Decrypt",
-    version: "1.0",
-    description: "Payload to decrypt the contents of a firmware update file (PUP) on the PS4",
     author: "andy-man",
+    description: "Payload to decrypt the contents of a firmware update file (PUP) on the PS4",
+    specificFW: "",
     category: "tools",
     funcName: "load_PUPDecrypt"
   },
   {
     id: "GTAVArabicGuy127",
     name: "GTAV-ArabicGuy-1.27",
-    version: "1.27",
-    description: "GTA V mod menu by ArabicGuy.",
     author: "ArabicGuy",
+    description: "GTA V mod menu by ArabicGuy.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTAArbic"
   },
   {
     id: "GTAVArabicGuy132",
     name: "GTAV-ArabicGuy-1.32",
-    version: "1.32",
-    description: "GTA V mod menu by ArabicGuy.",
     author: "ArabicGuy",
+    description: "GTA V mod menu by ArabicGuy.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTAArbic3"
   },
   {
     id: "GTAVArabicGuy133",
     name: "GTAV-ArabicGuy-1.33",
-    version: "1.33",
-    description: "GTA V mod menu by ArabicGuy.",
     author: "ArabicGuy",
+    description: "GTA V mod menu by ArabicGuy.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTAArbic33"
   },
   {
     id: "GTAVBeefQueefMod133",
     name: "GTAV-BeefQueefMod-1.33",
-    version: "1.33",
-    description: "GTA V mod menu by BeefQueef.",
     author: "BeefQueef",
+    description: "GTA V mod menu by BeefQueef.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTABQ133"
   },
   {
     id: "GTAVBeefQueefMod134",
     name: "GTAV-BeefQueefMod-1.34",
-    version: "1.34",
-    description: "GTA V mod menu by BeefQueef.",
     author: "BeefQueef",
+    description: "GTA V mod menu by BeefQueef.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTABQ134"
   },
   {
     id: "GTAVBeefQueefMod138",
     name: "GTAV-BeefQueefMod-1.38",
-    version: "1.38",
-    description: "GTA V mod menu by BeefQueef.",
     author: "BeefQueef",
+    description: "GTA V mod menu by BeefQueef.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTABQ138"
   },
   {
     id: "GTAVWildeModz132",
     name: "GTAV-WildeModz-1.32",
-    version: "1.32",
-    description: "GTA V mod menu by WildeModz.",
     author: "WildeModz",
+    description: "GTA V mod menu by WildeModz.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTAWM132"
   },
   {
     id: "GTAVWildeModz133",
     name: "GTAV-WildeModz-1.33",
-    version: "1.33",
-    description: "GTA V mod menu by WildeModz.",
     author: "WildeModz",
+    description: "GTA V mod menu by WildeModz.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTAWM133"
   },
   {
     id: "GTAVWildeModz138",
     name: "GTAV-WildeModz-1.38",
-    version: "1.38",
-    description: "GTA V mod menu by WildeModz.",
     author: "WildeModz",
+    description: "GTA V mod menu by WildeModz.",
+    specificFW: "",
     category: "games",
     funcName: "load_GTAWM138"
   },
   {
     id: "RDR2OystersMenu100",
-    name: "RDR2-OystersMenu-1.00",
-    version: "1.00",
-    description: "RDR2 mod menu by Oysters.",
+    name: "RDR2-OystersMenu-0",
     author: "Oysters",
+    description: "RDR2 mod menu by Oysters.",
+    specificFW: "",
     category: "games",
     funcName: "load_Oysters100"
   },
   {
     id: "RDR2OystersMenu113",
     name: "RDR2-OystersMenu-1.13",
-    version: "1.13",
-    description: "RDR2 mod menu by Oysters.",
     author: "Oysters",
+    description: "RDR2 mod menu by Oysters.",
+    specificFW: "",
     category: "games",
     funcName: "load_Oysters113"
   },
   {
     id: "RDR2OystersMenu119",
     name: "RDR2-OystersMenu-1.19",
-    version: "1.19",
-    description: "RDR2 mod menu by Oysters.",
     author: "Oysters",
+    description: "RDR2 mod menu by Oysters.",
+    specificFW: "",
     category: "games",
     funcName: "load_Oysters119"
   },
   {
     id: "RDR2OystersMenu124",
     name: "RDR2-OystersMenu-1.24",
-    version: "1.24",
-    description: "RDR2 mod menu by Oysters.",
     author: "Oysters",
+    description: "RDR2 mod menu by Oysters.",
+    specificFW: "",
     category: "games",
     funcName: "load_Oysters124"
   },
   {
     id: "RDR2OystersMenu129",
     name: "RDR2-OystersMenu-1.29",
-    version: "1.29",
-    description: "RDR2 mod menu by Oysters.",
     author: "Oysters",
+    description: "RDR2 mod menu by Oysters.",
+    specificFW: "",
     category: "games",
     funcName: "load_Oysters129"
   },
   {
     id: "Linux1GB",
     name: "Linux-1GB",
-    version: "1.0",
-    description: "Linux payload for PS4",
     author: "Nazky",
+    description: "Linux payload for PS4",
+    specificFW: "9.00",
     category: "linux",
     funcName: "load_Linux"
   },
   {
     id: "Linux2GB",
     name: "Linux-2GB",
-    version: "1.0",
-    description: "Linux payload for PS4",
     author: "Nazky",
+    description: "Linux payload for PS4",
+    specificFW: "9.00",
     category: "linux",
     funcName: "load_Linux2gb"
   },
   {
     id: "Linux3GB",
     name: "Linux-3GB",
-    version: "1.0",
-    description: "Loads a 3GB Linux payload for dual-booting.",
     author: "Nazky",
+    description: "Loads a 3GB Linux payload for dual-booting.",
+    specificFW: "9.00",
     category: "linux",
     funcName: "load_Linux3gb"
   },
   {
     id: "Linux4GB",
     name: "Linux-4GB",
-    version: "1.0",
-    description: "Loads a 4GB Linux payload for dual-booting.",
     author: "Nazky",
+    description: "Loads a 4GB Linux payload for dual-booting.",
+    specificFW: "9.00",
     category: "linux",
     funcName: "load_Linux4gb"
   },
   {
     id: "Linux5GB",
     name: "Linux-5GB",
-    version: "1.0",
-    description: "Loads a 5GB Linux payload for dual-booting.",
     author: "Nazky",
+    description: "Loads a 5GB Linux payload for dual-booting.",
+    specificFW: "9.00",
     category: "linux",
     funcName: "load_Linux5gb"
   },
@@ -852,16 +870,16 @@ function renderPayloads() {
                   <div class="text-2xl"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> </svg></div>
                   <div>
                       <h3 class="text-start font-semibold text-white text-lg">${payload.name}</h3>
-                      <p class="text-start text-cyan-300 text-sm">${payload.version}</p>
+                      <p class="text-start text-cyan-300" style="font-size: 0.75rem">${payload.author}</p>
                   </div>
               </div>
-              ${payload.isRecommended ? `<span class="px-2 py-1 rounded-full text-xs border">${languages[currentLanguage] ? languages[currentLanguage].recommendedLabel : 'Recommended'}</span>` : ''}
               <span class="px-2 py-1 rounded-full text-xs border ${getPayloadCategoryClass(payload.category)}">
                   ${payload.category}
               </span>
           </div>
           <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description}</p>
           <div class="flex items-center justify-between text-xs text-white/60">
+          <p style="color: orange;">${payload.specificFW != '' ? payload.specificFW + " only" : ""} </p>
           </div>
       </div>
       </button>

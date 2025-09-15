@@ -28,10 +28,6 @@ export function GoldHEN() {
     }
 }
 
-export function testGoldHEN() {
-    window.payload_path = './includes/payloads/testing/goldhen_2.4b18.5_allfw_test.bin';
-}  
-
 export function HEN() {
     window.payload_path = './includes/payloads/HEN/HEN.bin';
 }
