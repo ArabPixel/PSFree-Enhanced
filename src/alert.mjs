@@ -39,4 +39,6 @@ addEventListener("error", (event) => {
 
 // we have to dynamically import the program if we want to catch its syntax
 // errors
-import("./psfree.mjs");
+if (ps4fw >= 7.00 && ps4fw <= 9.60 ){
+  import("./psfree.mjs");
+}else alert("Unsupported firmware to run the exploit")

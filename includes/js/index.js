@@ -30,9 +30,11 @@ const ui = {
   gamesTab: document.getElementById('games-tab'),
   linuxSection: document.getElementById('linux'),
   linuxTab: document.getElementById('linux-tab'),
+  payloadsSection: document.getElementById('payloadsSection'),
+  payloadsList: document.getElementById("payloadsGrid"),
   payloadsSectionTitle: document.getElementById('payloads-section-title'),
   exploitRunBtn: document.getElementById('exploitRun'),
-  backToInitialBtn: document.getElementById('backToInitialBtn'),
+  secondHostBtn: document.querySelectorAll('.secondHostBtn'),
   // Popups
   aboutPopupOverlay: document.getElementById('about-popup-overlay'),
   aboutPopup: document.getElementById('about-popup'),
@@ -71,11 +73,12 @@ const languages = {
       "note2": "Make sure to delete cache data before running the exploit for the first time",
       "note3": "It might take you more than one time",
     },
-    "backToInitialBtn": "Back",
+    "secondHostBtn": "Load payloads using GoldHEN's BinLoader - External link",
     "alert": "Important notice",
     "waitingUserInput": "Waiting for user action",
     "jailbreakNow": "Jailbreak process will start with ",
     "cache": "Installing Cache: ",
+    "httpsHost":"Loading payloads through GoldHEN's BinLoader is not possible at the moment, click the blue button below to use the supported host."
   },
   "ar": {
     "title": "PSFree محسن",
@@ -105,11 +108,12 @@ const languages = {
       "note2": "تأكد من ان تقوم بمسح الملفات المؤقته قبل تنفيذ الثغرة لأول مرة",
       "note3": "قم يتطلب الأمر المحاولة اكثر من مرة",
     },
-    "backToInitialBtn": "الرجوع",
+    "secondHostBtn": "تنفيذ التعديلات بإستخدام خادم GoldHEN - رابط خارجي",
     "alert": "ملاحظات هامة",
     "waitingUserInput": "في انتظار التنفيذ من المستخدم",
     "jailbreakNow": "عملية تحميل الثغرة ستبدأ بإستحدام ",
-    "cache": "جاري تحميل الموقع في الذاكرة المحلية:  "
+    "cache": "جاري تحميل الموقع في الذاكرة المحلية:  ",
+    "httpsHost":"تنفيذ الإضافات بإستخدام GoldHEN غير مدعوم حاليا, إضغط على الزر الأزرق ادناه للإنتقال الى الهوست المدعوم"
   }
 }
 const payloads = [
@@ -538,6 +542,7 @@ ui.toolsTab.addEventListener('click', () =>{
     ui.linuxSection.classList.add('hidden');
     ui.gamesSection.classList.add('hidden');
   }
+  ui.payloadsList.scrollTop = 0;
 })
 
 ui.linuxTab.addEventListener('click', () =>{
@@ -546,6 +551,7 @@ ui.linuxTab.addEventListener('click', () =>{
     ui.linuxSection.classList.remove('hidden');
     ui.gamesSection.classList.add('hidden');
   }
+  ui.payloadsList.scrollTop = 0;
 })
 
 ui.gamesTab.addEventListener('click', () =>{
@@ -554,6 +560,7 @@ ui.gamesTab.addEventListener('click', () =>{
     ui.linuxSection.classList.add('hidden');
     ui.gamesSection.classList.remove('hidden');
   }
+  ui.payloadsList.scrollTop = 0;
 })
 
 // popups
@@ -629,16 +636,9 @@ async function Loadpayloads(payload) {
   try {
     let modules;
     sessionStorage.removeItem('binloader');
-    if (isHttps()) {
-      modules = await loadMultipleModules([
-        '../payloads/payloads.js',
-        '../../src/alert.mjs'
-      ]);
-    } else {
       modules = await loadMultipleModules([
         '../payloads/payloads.js'
       ]);
-    }
     console.log("All modules are loaded!");
 
     const payloadModule = modules[0];
@@ -724,9 +724,14 @@ function applyLanguage(lang) {
     if (items[2]) items[2].textContent = strings.warnings.note3;
   }
   warningHeader.textContent = strings.alert;
+  if (isHttps()){
+    document.getElementById("httpsHost").innerText = strings.httpsHost;
+    ui.secondHostBtn[1].style.display = "block";
+  }
 
   // Buttons
-  ui.backToInitialBtn.textContent = strings.backToInitialBtn;
+  ui.secondHostBtn[0].textContent = strings.secondHostBtn;
+  ui.secondHostBtn[1].textContent = strings.secondHostBtn;  
   ui.exploitRunBtn.title = strings.clickToStart;
   ui.aboutBtn.title = strings.aboutMenu;
 
@@ -768,9 +773,9 @@ function CheckFW() {
   const userAgent = navigator.userAgent;
   const ps4Regex = /PlayStation 4/;
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
-  const elementsToHide = [
+  let elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'payloadsbtn', 'click-to-start-text', 'chooseGoldHEN'
+    'click-to-start-text', 'chooseGoldHEN'
   ];
 
   if (ps4Regex.test(userAgent)) {
@@ -782,6 +787,18 @@ function CheckFW() {
       document.getElementById(fwElement).classList.add('fwSelected');
     } else {
       document.getElementById('PS4FW').style.color = 'red';
+      if (isHttps()){
+        ui.secondHostBtn[0].style.display = "block";
+      }else{
+        // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's BinLoader
+        const toRemove = ['exploit-main-screen', 'scrollDown'];
+        elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
+        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
+        document.getElementById('exploitContainer').style.display = "block";
+        // Sizing the payload's section
+        ui.payloadsSection.style.width = "75%";
+        ui.payloadsSection.style.margin = "auto";
+      }
 
       elementsToHide.forEach(id => {
         const el = document.getElementById(id);

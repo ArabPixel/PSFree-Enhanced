@@ -41,8 +41,12 @@ _Note: Support for other firmwares listed in the "Vulnerability Scope" table may
 - HEN flavor selector
 - GoldHEN version selector
 - Descriptive payload selection
-- Up to date
+- Unsuported payload loading protection
+- Load payloads with GoldHEN's BinLoader through a mirrored [http host](http://psfree-enhanced.free.nf/)
+- Up to date
 
+## Contribution
+- Feel free to contribute and improve the host by modefying, updating or adding new features!
 ## Copyright and Authors:
 
 AGPL-3.0-or-later (see [LICENSE](LICENSE)). This repo belongs to the group `anonymous`. We refer to anonymous contributors as "anonymous" as well.
