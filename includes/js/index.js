@@ -3,7 +3,6 @@ let currentLanguage = localStorage.getItem('language') || 'en';
 let currentJbFlavor = localStorage.getItem('jailbreakFlavor') || 'GoldHEN';
 let isAutoJailbreakEnabled = localStorage.getItem('autoJailbreak');
 let selectedSecondaryPayload;
-let ps4fw = null;
 let platform = "Unknown";
 let lastScrollY = 0;
 let lastSection = localStorage.getItem('lastSection') || "initial";
@@ -212,7 +211,7 @@ const payloads = [
     name: "Orbis-Toolbox",
     author: "OSM-Made",
     description: "A modification of the playstation UI to help with launching and developing homebrew..",
-    specificFW: "9.00",
+    specificFW: "5.05, 6.72, 7.02, 7.55, 9.00",
     category: "tools",
     funcName: "load_Orbis"
   },
@@ -309,9 +308,9 @@ const payloads = [
   {
     id: "WebRTE",
     name: "WebRTE",
-    author: "golden",
+    author: "Made by golden<br>updated by EchoStrech",
     description: "Web Realtime Trainer Engine",
-    specificFW: "9.00",
+    specificFW: "5.05, 6.72, 7.00-11.00",
     category: "tools",
     funcName: "load_WebrRTE"
   },
@@ -595,7 +594,7 @@ async function jailbreak() {
       }
     }
   } catch (e) {
-    console.error("Failed to jailbreak:", e);
+    alert("Failed to jailbreak: " + e);
   }
 }
 
@@ -605,7 +604,7 @@ async function loadMultipleModules(files) {
     const modules = await Promise.all(files.map(file => import(file)));
     return modules; // array of imported modules
   } catch (error) {
-    console.error("Error loading modules:", error);
+    alert("Error loading modules: " + error);
     throw error;
   }
 }
@@ -625,7 +624,7 @@ async function binloader() {
       console.error("GoldHEN function not found in GoldHEN.js module");
     }
   } catch (e) {
-    console.error("Failed to jailbreak:", e);
+    console.error("Failed to jailbreak: " + e);
   }
 }
 function isHttps() {
@@ -648,7 +647,7 @@ async function Loadpayloads(payload) {
       alert(`${payload} function not found in payloads.js module`);
     }
   } catch (e) {
-    alert(`Failed to load ${payload}:`, e);
+    alert(`Failed to load ${payload}: ${e}`);
   }
 }
 
@@ -663,10 +662,8 @@ function loadGoldHENVer(){
 
 
 function loadLanguage() {
-  var language = localStorage.getItem("language");
-  if (language == null) {
-    document.querySelector('input[name=language][value="en"]').checked = true;
-  } else document.querySelector(`input[name="language"][value="${language}`).checked = true;
+  var language = localStorage.getItem("language") || 'en';
+  document.querySelector(`input[name="language"][value="${language}"]`).checked = true;
 }
 
 // Update UI langauge
@@ -685,14 +682,14 @@ function applyLanguage(lang) {
 
 
   // Check if ps4 is supported
-  if (ps4fw === null) {
+  if (window.ps4Fw === null) {
     ui.ps4FwStatus.textContent = strings.notPs4 + platform;
     ui.ps4FwStatus.style.color = 'red';
-  } else if (ps4fw <= 9.60) {
-    ui.ps4FwStatus.textContent = strings.ps4FwCompatible.replace('{ps4fw}', ps4fw);
+  } else if (window.ps4Fw <= 9.60) {
+    ui.ps4FwStatus.textContent = strings.ps4FwCompatible.replace('{ps4fw}', window.ps4Fw);
     ui.ps4FwStatus.style.color = 'green';
   } else {
-    ui.ps4FwStatus.textContent = strings.ps4FwIncompatible.replace('{ps4fw}', ps4fw);
+    ui.ps4FwStatus.textContent = strings.ps4FwIncompatible.replace('{ps4fw}', window.ps4Fw);
     ui.ps4FwStatus.style.color = 'red';
   }
   // Main screen elements
@@ -805,7 +802,7 @@ function CheckFW() {
         if (el) el.style.display = 'none';
       });
     }
-    ps4fw = fwVersion;
+    window.ps4Fw = fwVersion;
     // Display only Compatible GoldHENs
     const GoldHENsOption = {
       "9.60": ["GHv2.3Fw755", "GHv2.3Fw702"],
@@ -822,7 +819,7 @@ function CheckFW() {
       "GHv2.4b18.4",
       "GHv2.4b18.2"
     ];
-    const idsToRemove = GoldHENsOption[ps4fw] || allElements;
+    const idsToRemove = GoldHENsOption[fwVersion] || allElements;
 
     idsToRemove.forEach(id => {
       const el = document.getElementById(id);

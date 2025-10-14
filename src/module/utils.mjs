@@ -29,8 +29,11 @@ export function die(msg = "") {
 }
 
 const console = document.getElementById("console");
+const debugConsole = document.getElementById("DebugConsole");
 export function log(msg = "") {
   console.append(`${msg}\n`);
+  // scroll console to bottom
+  debugConsole.scrollTop = debugConsole.scrollHeight;
 }
 
 export function clear_log() {
