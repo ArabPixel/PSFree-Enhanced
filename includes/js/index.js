@@ -312,7 +312,7 @@ const payloads = [
     description: "Web Realtime Trainer Engine",
     specificFW: "5.05, 6.72, 7.00-11.00",
     category: "tools",
-    funcName: "load_WebrRTE"
+    funcName: "load_WebRTE"
   },
   {
     id: "PermanentUART",

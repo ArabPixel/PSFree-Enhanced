@@ -174,11 +174,11 @@ export function load_Orbis(){
     }else Loadpayloadlocal("./includes/payloads/Bins/Tools/Orbis-Toolbox-900.bin");
 }
 
-export function load_WebrRTE(){
-    if (window.ps4Fw != 5.05 || window.ps4Fw != 6.72 || (window.ps4Fw >= 7.00 && window.ps4Fw <= 11.00)){
+export function load_WebRTE(){
+    if (window.ps4Fw != 5.05 && window.ps4Fw != 6.72 && (window.ps4Fw < 7.00 || window.ps4Fw > 11.00)){
         //  5.05, 6.72 And 7.00 - 11.00
         alert(`Unsupported firmware ${window.ps4Fw}`);
-    }else Loadpayloadlocal("./includes/payloads/Bins/Tools/WebRTE_900.bin");
+    }else Loadpayloadlocal("./includes/payloads/Bins/Tools/WebRTE.bin");
 }
 
 export function load_ToDex(){
