@@ -1,5 +1,6 @@
 /* replace rgb colors with hex value for better compatibility */
-
+/* Arabic font fix for some html elements on 7.xx like "button" */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap');
 body {
     font-family: system-ui, -apple-system, sans-serif, "Inter", sans-serif;
     overflow: hidden;
@@ -446,6 +447,7 @@ section { /* Apply to initial-screen and exploit-main-screen */
 }
 /* Manual css */
 button{
+    font-family: "Noto Sans Arabic", sans-serif;
     background-color: transparent;
     border: none;
 }

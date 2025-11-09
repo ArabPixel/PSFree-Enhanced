@@ -1,11 +1,9 @@
 // @ts-nocheck
 let currentLanguage = localStorage.getItem('language') || 'en';
 let currentJbFlavor = localStorage.getItem('jailbreakFlavor') || 'GoldHEN';
-let isAutoJailbreakEnabled = localStorage.getItem('autoJailbreak');
-let selectedSecondaryPayload;
 let platform = "Unknown";
 let lastScrollY = 0;
-let lastSection = localStorage.getItem('lastSection') || "initial";
+let lastSection = "initial";
 const ui = {
   mainContainer: document.querySelector('.mainContainer'),
 
@@ -43,78 +41,6 @@ const ui = {
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
 };
-const languages = {
-  "en": {
-    "title": "PSFree Enhanced",
-    "ps4FwCompatible": `PS4 FW: {ps4fw} | Compatible`,
-    "ps4FwIncompatible": `PS4 FW: {ps4fw} | Incompatible`,
-    "notPs4": "You are not on a PS4, platform: ",
-    "clickToStart": "Click to start",
-    "chooseHEN": "Choose your HEN flavor",
-    "exploitStatusHeader": "Exploit status",
-    "payloadsHeader": "Payloads",
-    "settingsBtnTitle": "Settings",
-    "aboutMenu": "About",
-    "payloadsToolsHeader": "Tools",
-    "payloadsGameHeader": "Game",
-    "payloadsLinuxHeader": "Linux",
-    "aboutPsfreeHeader": "About PSFree Enhanced",
-    "aboutVersion": "Version: 1.5.1",
-    "aboutDescription": "A web interface to jailbreak your PS4 using PSFree chained with Lapse kernel exploit.",
-    "closeButton": "Close",
-    "settingsPsfreeHeader": "Settings",
-    "ps4FirmwareSupportedHeader": "Supported PS4 firmware",
-    "languageHeader": "Language",
-    "englishOption": "English",
-    "arabicOption": "Arabic",
-    "warnings": {
-      "note1": "Make sure to close all apps before running the exploit",
-      "note2": "Make sure to delete cache data before running the exploit for the first time",
-      "note3": "It might take you more than one time",
-    },
-    "secondHostBtn": "Load payloads using GoldHEN's BinLoader - External link",
-    "alert": "Important notice",
-    "waitingUserInput": "Waiting for user action",
-    "jailbreakNow": "Jailbreak process will start with ",
-    "cache": "Installing Cache: ",
-    "httpsHost":"Loading payloads through GoldHEN's BinLoader is not possible at the moment, click the blue button below to use the supported host."
-  },
-  "ar": {
-    "title": "PSFree محسن",
-    "ps4FwCompatible": `بلايستايشن 4 إصدار {ps4fw} | مدعوم`,
-    "ps4FwIncompatible": `بلايستايشن 4 إصدار {ps4fw} | غير مدعوم`,
-    "notPs4": "انت لست على جهاز بلايستايشن 4, المنصة: ",
-    "clickToStart": "انقر للبدء",
-    "chooseHEN": "اختر نكهتك",
-    "exploitStatusHeader": "حالة الثغرة",
-    "payloadsHeader": "الإضافات",
-    "settingsBtnTitle": "الإعدادات",
-    "aboutMenu": "حول",
-    "payloadsToolsHeader": "الأدوات",
-    "payloadsGameHeader": "الألعاب",
-    "payloadsLinuxHeader": "لينكس",
-    "aboutPsfreeHeader": "حول PSFree المحسن",
-    "aboutVersion": "الإصدار: 1.5.1",
-    "aboutDescription": "واجهة ويب لتهكير البلايستايشن 4 بإستخدام ثغرة PSFree المربوطة مع ثغرة النواة Lapse",
-    "closeButton": "إغلاق",
-    "settingsPsfreeHeader": "الإعدادات",
-    "ps4FirmwareSupportedHeader": "إصدارات PS4 المدعومة",
-    "languageHeader": "اللغة",
-    "arabicOption": "العربية",
-    "englishOption": "الإنجليزية",
-    "warnings": {
-      "note1": "تأكد من إغلاق كل التطبيقات قبل تنفيذ الثغرة",
-      "note2": "تأكد من ان تقوم بمسح الملفات المؤقته قبل تنفيذ الثغرة لأول مرة",
-      "note3": "قم يتطلب الأمر المحاولة اكثر من مرة",
-    },
-    "secondHostBtn": "تنفيذ التعديلات بإستخدام خادم GoldHEN - رابط خارجي",
-    "alert": "ملاحظات هامة",
-    "waitingUserInput": "في انتظار التنفيذ من المستخدم",
-    "jailbreakNow": "عملية تحميل الثغرة ستبدأ بإستحدام ",
-    "cache": "جاري تحميل الموقع في الذاكرة المحلية:  ",
-    "httpsHost":"تنفيذ الإضافات بإستخدام GoldHEN غير مدعوم حاليا, إضغط على الزر الأزرق ادناه للإنتقال الى الهوست المدعوم"
-  }
-}
 const payloads = [
   {
     id: "App2USB",
@@ -308,7 +234,7 @@ const payloads = [
   {
     id: "WebRTE",
     name: "WebRTE",
-    author: "Made by golden<br>updated by EchoStrech",
+    author: "Made by golden<br>updated by EchoStretch",
     description: "Web Realtime Trainer Engine",
     specificFW: "5.05, 6.72, 7.00-11.00",
     category: "tools",
@@ -609,24 +535,6 @@ async function loadMultipleModules(files) {
   }
 }
 
-async function binloader() {
-  try {
-    sessionStorage.setItem('binloader', 1);
-    const modules = await loadMultipleModules([
-      '../../src/alert.mjs'
-    ]);
-    console.log("All modules are loaded!");
-
-    const goldhenModule = modules[0];
-    if (goldhenModule && typeof goldhenModule.runBinLoader === 'function') {
-      goldhenModule.runBinLoader();
-    } else {
-      console.error("GoldHEN function not found in GoldHEN.js module");
-    }
-  } catch (e) {
-    console.error("Failed to jailbreak: " + e);
-  }
-}
 function isHttps() {
   return window.location.protocol === 'https:';
 }
@@ -662,14 +570,33 @@ function loadGoldHENVer(){
 
 
 function loadLanguage() {
-  var language = localStorage.getItem("language") || 'en';
-  document.querySelector(`input[name="language"][value="${language}"]`).checked = true;
+  document.querySelector(`input[name="language"][value="${currentLanguage}"]`).checked = true;
+  const langScript = document.getElementById("langScript");
+  if(langScript) langScript.remove();
+  // load language file
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = `./includes/js/languages/${currentLanguage}.js`;
+    script.onload = () => resolve(window.lang);
+    script.id = "langScript";
+    script.onerror = () => reject(new Error(`Failed to load ${currentLanguage}`));
+    document.head.appendChild(script);
+  });
+}
+// Apply lanuage after loading the language file
+async function initLanguage() {
+  try {
+      await loadLanguage(currentLanguage);
+      applyLanguage(currentLanguage);
+  } catch (e) {
+      console.error(e);
+  }
 }
 
 // Update UI langauge
 function applyLanguage(lang) {
   currentLanguage = lang;
-  const strings = languages[currentLanguage];
+  const strings = window.lang
 
   if (!strings) {
     console.error(`Language list ${lang} is not available`);
@@ -682,7 +609,7 @@ function applyLanguage(lang) {
 
 
   // Check if ps4 is supported
-  if (window.ps4Fw === null) {
+  if (window.ps4Fw === undefined) {
     ui.ps4FwStatus.textContent = strings.notPs4 + platform;
     ui.ps4FwStatus.style.color = 'red';
   } else if (window.ps4Fw <= 9.60) {
@@ -707,9 +634,10 @@ function applyLanguage(lang) {
   // Settings popup
   ui.settingsPopup.querySelector('h2').textContent = strings.settingsPsfreeHeader;
   ui.settingsPopup.querySelector('#chooselang h3').textContent = strings.languageHeader;
-  ui.settingsPopup.querySelector('#enLang').textContent = strings.englishOption;
-  ui.settingsPopup.querySelector('#arLang').textContent = strings.arabicOption;
   ui.settingsPopup.querySelector('#close-settings').textContent = strings.closeButton;
+  ui.settingsPopup.querySelector('#ghVer').textContent = strings.ghVer;
+  ui.settingsPopup.querySelector('#chooseGoldHEN summary').textContent = strings.otherVer;
+  ui.settingsPopup.querySelector('#latestVer').textContent = strings.latestVer;
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
@@ -763,7 +691,7 @@ function saveLanguage() {
   const language = document.querySelector('input[name="language"]:checked').value;
   localStorage.setItem('language', language);
   currentLanguage = language;
-  applyLanguage(language);
+  initLanguage();
 };
 
 function CheckFW() {
@@ -848,8 +776,7 @@ function loadSettings() {
   try {
     CheckFW();
     loadJbFlavor();
-    loadLanguage();
-    applyLanguage(currentLanguage);
+    initLanguage(currentLanguage);
     renderPayloads();
     loadGoldHENVer();
   } catch (e) {
@@ -893,7 +820,7 @@ function renderPayloads() {
           </div>
           <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description}</p>
           <div class="flex items-center justify-between text-xs text-white/60">
-          <p style="color: orange;">${payload.specificFW != '' ? payload.specificFW + " only" : ""} </p>
+          <p style="color: orange;">${payload.specificFW != '' ? payload.specificFW : ""} </p>
           </div>
       </div>
       </button>
@@ -919,14 +846,13 @@ function renderPayloads() {
 // Handling cache
 function DLProgress(e) { 
   Percent = (Math.round(e.loaded / e.total * 100)); 
-  document.title = languages[currentLanguage].title + " " + Percent + "%"; 
+  document.title = window.lang.cache + " " + Percent + "%"; 
 }
 function DisplayCacheProgress() { 
   setTimeout(function () {
     document.title = "\u2713"; 
   }, 1000);
     setTimeout(function () { 
-      window.location.href = 
-      document.referrer; 
+      location.reload();
     }, 3000); 
   }

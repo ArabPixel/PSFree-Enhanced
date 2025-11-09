@@ -38,7 +38,7 @@
                     </g>
                 </svg>
             </div>
-            <p class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</p>
+            <h3 class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</h3>
         </button>
 
         <!-- Compatibility message -->
@@ -217,23 +217,24 @@
             <div id="chooselang" class="mb-6">
                 <h3 class="text-lg font-semibold mb-2">Language</h3>
                 <div class="radio-group space-y-2">
+                    <!-- Language options -->
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="en" class="ml-2" onchange="saveLanguage('en');">
-                        <p id="enLang">English</p>
+                        <input type="radio" name="language" value="en" class="ml-2" onchange="saveLanguage(this.value);">
+                        <p>English</p>
                     </label>
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="ar" class="ml-2" onchange="saveLanguage('ar'); ">
-                        <p id="arLang">Arabic</p>
+                        <input type="radio" name="language" value="ar" class="ml-2" onchange="saveLanguage(this.value); ">
+                        <p>العربية</p>
                     </label>
                 </div>
             </div>
             <!-- Choose GoldHEN version -->
             <div id="chooseGoldHEN" class="mb-6">
-                <h3 class="text-lg font-semibold mb-2">GoldHEN versions</h3>
+                <h3 class="text-lg font-semibold mb-2" id="ghVer">GoldHEN versions</h3>
                 <div class="radio-group space-y-2">
                     <label class="flex items-center text-white/80">
                         <input type="radio" name="goldhen" value="GHv2.4b18.6" onchange="setGoldHENVer(this.value);">
-                        <p>GoldHEN v2.4b18.6 - Latest</p>
+                        <p>GoldHEN v2.4b18.6 - </p><pre id="latestVer"> Latest</pre>
                     </label>
                     <details>
                         <summary>Other versions</summary>
