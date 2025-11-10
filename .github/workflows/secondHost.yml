@@ -1,0 +1,24 @@
+name: Deploy to mirrored Host
+on:
+  push:
+    branches:
+      - main  # or master, depending on your repo
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload to mirrored host via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./   # folder you want to upload
+          server-dir: /htdocs/   # your web root
+          exclude: |
+            **/.git*
+            **/.github*
