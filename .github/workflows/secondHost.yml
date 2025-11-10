@@ -22,3 +22,4 @@ jobs:
           exclude: |
             **/.git*
             **/.github*
+            includes/payloads/Bins/** 
