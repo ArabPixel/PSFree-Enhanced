@@ -29,7 +29,11 @@ window.lang = {
     "waitingUserInput": "Waiting for user action",
     "cache": "Installing Cache: ",
     "httpsHost": "Loading payloads through GoldHEN's BinLoader is not possible at the moment, click the blue button below to use the supported host.",
-    "ghVer" : "GoldHEN Versions",
+    "ghVer": "GoldHEN Versions",
     "otherVer": "Other versions",
-    "latestVer":   "Latest"
+    "latestVer": "Latest",
+    "fanTitle": "Fan Threshold",
+    "fanDescription": "Sets the temperature threshold where the fan will kick into turbo",
+    "selectTemp":   "Select a temperature",
+    "default":  "Default" // Fan default string
 }

@@ -27,7 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 import { Int } from "./module/int64.mjs";
 import { mem } from "./module/mem.mjs";
-import { log, die, hex, hexdump } from "./module/utils.mjs";
+import { log, clear_log, die, hex, hexdump } from "./module/utils.mjs";
 import { cstr, jstr } from "./module/memtools.mjs";
 import { page_size, context_size } from "./module/offset.mjs";
 import { Chain } from "./module/chain.mjs";
@@ -1979,6 +1979,7 @@ function runPayload(path) {
 
 kexploit().then((success) => {
   if (success) {
+    clear_log();
     if (sessionStorage.getItem('binloader')){
       runBinLoader();
     } else {

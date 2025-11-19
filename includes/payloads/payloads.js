@@ -206,7 +206,8 @@ export function load_PUPDecrypt(){
 }
 
 export function load_FanThreshold(){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-fan-threshold.bin");
+    const temp = sessionStorage.getItem('fanTemp');
+    Loadpayloadlocal(`./includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold${temp}.bin`);
 }
 
 export function load_EnableBrowser(){

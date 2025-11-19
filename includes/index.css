@@ -1,8 +1,6 @@
 /* replace rgb colors with hex value for better compatibility */
-/* Arabic font fix for some html elements on 7.xx like "button" */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap');
 body {
-    font-family: system-ui, -apple-system, sans-serif, "Inter", sans-serif;
+    font-family: sans-serif;
     overflow: hidden;
 }
 
@@ -127,7 +125,6 @@ html {
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 body {
@@ -226,6 +223,7 @@ body {
 .items-start { align-items: flex-start; }
 .justify-center { justify-content: center; }
 .justify-between { justify-content: space-between; }
+.justify-evenly { justify-content: space-evenly; }
 
 /* Spacing (Padding & Margin) */
 .p-2 { padding: 0.5rem; /* 8px */ }
@@ -434,6 +432,7 @@ section { /* Apply to initial-screen and exploit-main-screen */
     list-style: none;
 }
 .tabs button {
+    font-family: sans-serif;
     border-color: transparent; /* Default for inactive tabs */
     color: rgba(255, 255, 255, 0.8); /* Default text color for inactive tabs */
 }
@@ -447,7 +446,6 @@ section { /* Apply to initial-screen and exploit-main-screen */
 }
 /* Manual css */
 button{
-    font-family: "Noto Sans Arabic", sans-serif;
     background-color: transparent;
     border: none;
 }

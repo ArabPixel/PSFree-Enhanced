@@ -37,6 +37,8 @@ const ui = {
   aboutPopup: document.getElementById('about-popup'),
   settingsPopupOverlay: document.getElementById('settings-popup-overlay'),
   settingsPopup: document.getElementById('settings-popup'),
+  chooseFanThresholdOverlay: document.getElementById('choose-fanThreshold-overlay'),
+  chooseFanThreshold: document.getElementById('choose-fanThreshold'),
 
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
@@ -112,7 +114,7 @@ const payloads = [
     description: "Sets the cooling fan's profile on the PlayStation 4",
     specificFW: "",
     category: "tools",
-    funcName: "load_FanThreshold"
+    funcName: "chooseFanThreshold"
   },
   {
     id: "HistoryBlocker",
@@ -497,6 +499,10 @@ function settingsPopup() {
   ui.settingsPopupOverlay.classList.toggle('hidden');
 }
 
+function chooseFanThreshold(){
+  ui.chooseFanThresholdOverlay.classList.toggle('hidden');
+}
+
 
 // Jailbreak-related functions
 async function jailbreak() {
@@ -543,6 +549,10 @@ async function Loadpayloads(payload) {
   try {
     let modules;
     sessionStorage.removeItem('binloader');
+    if (payload == "chooseFanThreshold"){
+      chooseFanThreshold();
+      return;
+    }
       modules = await loadMultipleModules([
         '../payloads/payloads.js'
       ]);
@@ -602,70 +612,122 @@ function applyLanguage(lang) {
     console.error(`Language list ${lang} is not available`);
     return;
   }
+  /**
+   * Safely updates element's textContent only if translation exists and is not empty.
+   * @param {HTMLElement} element - The DOM element to update.
+   * @param {string} key - The key in the 'strings' object.
+   */
+  const updateText = (element, key) => {
+    const translation = strings[key];
+    // Check if element exists, and translation is a non-empty string.
+    if (element && translation && typeof translation === 'string' && translation.length > 0) { 
+      element.textContent = translation;
+    }
+  };
 
+  /**
+   * Safely updates element's title attribute only if translation exists and is not empty.
+   * @param {HTMLElement} element - The DOM element to update.
+   * @param {string} key - The key in the 'strings' object.
+   */
+  const updateTitle = (element, key) => {
+    const translation = strings[key];
+    // Check if element exists, and translation is a non-empty string.
+    if (element && translation && typeof translation === 'string' && translation.length > 0) { 
+      element.title = translation;
+    }
+  };
+
+  // Document Properties
   document.title = strings.title || "PSFree Enhanced";
   document.dir = (currentLanguage === 'ar') ? 'rtl' : 'ltr';
   document.lang = currentLanguage;
 
 
-  // Check if ps4 is supported
-  if (window.ps4Fw === undefined) {
-    ui.ps4FwStatus.textContent = strings.notPs4 + platform;
-    ui.ps4FwStatus.style.color = 'red';
-  } else if (window.ps4Fw <= 9.60) {
-    ui.ps4FwStatus.textContent = strings.ps4FwCompatible.replace('{ps4fw}', window.ps4Fw);
-    ui.ps4FwStatus.style.color = 'green';
+  // PS4 Firmware Status Check
+  const ps4Fw = window.ps4Fw;
+  const ps4StatusElement = ui.ps4FwStatus;
+
+  if (ps4Fw === undefined) {
+    if (strings.notPs4 && strings.notPs4.length > 0) {
+      ps4StatusElement.textContent = strings.notPs4 + platform;
+    }
+    ps4StatusElement.style.color = 'red';
+  } else if (ps4Fw <= 9.60) {
+    if (strings.ps4FwCompatible && strings.ps4FwCompatible.length > 0) {
+      ps4StatusElement.textContent = strings.ps4FwCompatible.replace('{ps4fw}', ps4Fw);
+    }
+    ps4StatusElement.style.color = 'green';
   } else {
-    ui.ps4FwStatus.textContent = strings.ps4FwIncompatible.replace('{ps4fw}', window.ps4Fw);
-    ui.ps4FwStatus.style.color = 'red';
+    if (strings.ps4FwIncompatible && strings.ps4FwIncompatible.length > 0) {
+      ps4StatusElement.textContent = strings.ps4FwIncompatible.replace('{ps4fw}', ps4Fw);
+    }
+    ps4StatusElement.style.color = 'orange';
   }
-  // Main screen elements
-  ui.settingsBtn.title = strings.settingsBtnTitle;
-  ui.clickToStartText.textContent = strings.clickToStart;
-  document.querySelector('#choosejb-initial h3').textContent = strings.chooseHEN;
 
-  // About us popup
-  ui.aboutPopup.querySelector('h2').textContent = strings.aboutPsfreeHeader;
-  ui.aboutPopup.querySelectorAll('p')[0].textContent = strings.aboutVersion;
-  ui.aboutPopup.querySelectorAll('p')[1].textContent = strings.aboutDescription;
-  ui.aboutPopup.querySelector('#PS4FWOK h3').textContent = strings.ps4FirmwareSupportedHeader;
-  ui.aboutPopup.querySelector('#close-about').textContent = strings.closeButton;
+  // Main Screen Elements
+  updateTitle(ui.settingsBtn, 'settingsBtnTitle');
+  updateText(ui.clickToStartText, 'clickToStart');
+  updateText(document.querySelector('#choosejb-initial h3'), 'chooseHEN');
 
-  // Settings popup
-  ui.settingsPopup.querySelector('h2').textContent = strings.settingsPsfreeHeader;
-  ui.settingsPopup.querySelector('#chooselang h3').textContent = strings.languageHeader;
-  ui.settingsPopup.querySelector('#close-settings').textContent = strings.closeButton;
-  ui.settingsPopup.querySelector('#ghVer').textContent = strings.ghVer;
-  ui.settingsPopup.querySelector('#chooseGoldHEN summary').textContent = strings.otherVer;
-  ui.settingsPopup.querySelector('#latestVer').textContent = strings.latestVer;
+  // About Us Popup
+  updateText(ui.aboutPopup.querySelector('h2'), 'aboutPsfreeHeader');
+  
+  const aboutParagraphs = ui.aboutPopup.querySelectorAll('p');
+  updateText(aboutParagraphs[0], 'aboutVersion');
+  updateText(aboutParagraphs[1], 'aboutDescription');
+  
+  updateText(ui.aboutPopup.querySelector('#PS4FWOK h3'), 'ps4FirmwareSupportedHeader');
+  updateText(ui.aboutPopup.querySelector('#close-about'), 'closeButton');
+
+  // Fan Threshold
+  updateText(ui.chooseFanThreshold.querySelector('#close-fanChoose'), 'closeButton');
+  updateText(ui.chooseFanThreshold.querySelector('h2'), 'fanTitle');
+  updateText(ui.chooseFanThreshold.querySelector('p'), 'fanDescription');
+  updateText(ui.chooseFanThreshold.querySelector('h3'), 'selectTemp');
+  updateText(document.getElementById('defaultTemp'), 'default');
+
+  // Settings Popup 
+  updateText(ui.settingsPopup.querySelector('h2'), 'settingsPsfreeHeader');
+  updateText(ui.settingsPopup.querySelector('#chooselang h3'), 'languageHeader');
+  updateText(ui.settingsPopup.querySelector('#close-settings'), 'closeButton');
+  updateText(ui.settingsPopup.querySelector('#ghVer'), 'ghVer');
+  updateText(ui.settingsPopup.querySelector('#chooseGoldHEN summary'), 'otherVer'); 
+  updateText(ui.settingsPopup.querySelector('#latestVer'), 'latestVer');
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
   const warningNotes = document.querySelector('#warningBox ul');
-  if (warningNotes) {
+  
+  if (warningNotes && strings.warnings) {
     const items = warningNotes.querySelectorAll('li');
-    if (items[0]) items[0].textContent = strings.warnings.note1;
-    if (items[1]) items[1].textContent = strings.warnings.note2;
-    if (items[2]) items[2].textContent = strings.warnings.note3;
+    // Check both existence and length for nested properties
+    if (items[0] && strings.warnings.note1 && strings.warnings.note1.length > 0) items[0].textContent = strings.warnings.note1;
+    if (items[1] && strings.warnings.note2 && strings.warnings.note2.length > 0) items[1].textContent = strings.warnings.note2;
+    if (items[2] && strings.warnings.note3 && strings.warnings.note3.length > 0) items[2].textContent = strings.warnings.note3;
   }
-  warningHeader.textContent = strings.alert;
+  updateText(warningHeader, 'alert');
+  
   if (isHttps()){
-    document.getElementById("httpsHost").innerText = strings.httpsHost;
+    const httpsHostElement = document.getElementById("httpsHost");
+    if (httpsHostElement && strings.httpsHost && strings.httpsHost.length > 0){
+        httpsHostElement.innerText = strings.httpsHost;
+    }
     ui.secondHostBtn[1].style.display = "block";
   }
 
-  // Buttons
-  ui.secondHostBtn[0].textContent = strings.secondHostBtn;
-  ui.secondHostBtn[1].textContent = strings.secondHostBtn;  
-  ui.exploitRunBtn.title = strings.clickToStart;
-  ui.aboutBtn.title = strings.aboutMenu;
+  // --- Buttons ---
+  updateText(ui.secondHostBtn[0], 'secondHostBtn');
+  updateText(ui.secondHostBtn[1], 'secondHostBtn');
+  updateTitle(ui.exploitRunBtn, 'clickToStart')
+  updateTitle(ui.aboutBtn, 'aboutMenu');
 
-  document.querySelector('#exploit-status-panel h2').textContent = strings.exploitStatusHeader;
-  ui.payloadsSectionTitle.textContent = strings.payloadsHeader;
-  ui.toolsTab.textContent = strings.payloadsToolsHeader;
-  ui.linuxTab.textContent = strings.payloadsLinuxHeader;
-  ui.gamesTab.textContent = strings.payloadsGameHeader;
-  ui.consoleElement.querySelector('center').textContent = strings.waitingUserInput;
+  updateText(document.querySelector('#exploit-status-panel h2'), 'exploitStatusHeader');
+  updateText(ui.payloadsSectionTitle, 'payloadsHeader');
+  updateText(ui.toolsTab, 'payloadsToolsHeader');
+  updateText(ui.linuxTab, 'payloadsLinuxHeader');
+  updateText(ui.gamesTab, 'payloadsGameHeader');
+  updateText(ui.consoleElement.querySelector('center'), 'waitingUserInput');
 }
 
 
