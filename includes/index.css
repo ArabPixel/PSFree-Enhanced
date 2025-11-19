@@ -500,3 +500,8 @@ button{
 #initial-screen header{
     gap: 5px;
 }
+
+#defaultTempDiv{
+    width: 78%;
+    float: right;
+}
