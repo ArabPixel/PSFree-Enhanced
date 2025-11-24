@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # v1
-# Generated on 2025-11-19 23:41:11.162558
+# Generated on 2025-11-24 13:48:18.211470
 
 CACHE:
 index.html
@@ -66,6 +66,7 @@ includes/payloads/GoldHEN/goldhen_v2.4b18.4.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.5.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.6.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.bin
+includes/payloads/GoldHEN/goldhen_v2.4b18.7.bin
 includes/payloads/HEN/HEN.bin
 src/config.mjs
 src/lapse.mjs
