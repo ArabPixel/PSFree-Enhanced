@@ -26,7 +26,7 @@ export function GoldHEN() {
             window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.3_702L.bin";
             break;
         default:
-            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.6.bin";
+            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.7.bin";
             break;
     }
 }
