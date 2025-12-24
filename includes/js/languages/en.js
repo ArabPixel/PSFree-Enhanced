@@ -35,5 +35,11 @@ window.lang = {
     "fanTitle": "Fan Threshold",
     "fanDescription": "Sets the temperature threshold where the fan will kick into turbo",
     "selectTemp":   "Select a temperature",
-    "default":  "Default" // Fan default string
+    "default":  "Default", // Fan default string
+    "goldhenFirmwareSemiSupported": "* Loading payloads through GoldHEN's BinLoader is supported on all firmware.",
+    "southbridgeHeader":    "Southbridge and Model",
+    "southbridgeHelp":  "Need help?",
+    "southbridgeHelp1": "Load GoldHEN and go to Settings -> System -> System information and check Southbridge.",
+    "southbridgeHelp2": "Selecting wrong options may cause a kernel panic!",
+    "selectSouthbridge":    "Select your Southbridge and PS4 Model"
 }

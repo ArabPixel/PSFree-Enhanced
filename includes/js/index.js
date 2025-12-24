@@ -1,9 +1,15 @@
 // @ts-nocheck
-let currentLanguage = localStorage.getItem('language') || 'en';
-let currentJbFlavor = localStorage.getItem('jailbreakFlavor') || 'GoldHEN';
-let platform = "Unknown";
+var user = {
+  currentLanguage:  localStorage.getItem('language') || 'en',
+  currentJbFlavor:  localStorage.getItem('jailbreakFlavor') || 'GoldHEN',
+  southbridge:      localStorage.getItem('southbridge'),
+  ps4Model:         localStorage.getItem('ps4Model'), // Fat/Slim/Pro
+  platform:         "Unknown", // PS4/PC/Mobile etc..
+  lastTab:          localStorage.getItem('lastTab') || 'tools'
+}
 let lastScrollY = 0;
 let lastSection = "initial";
+var linuxPayloadsRendered = false;
 const ui = {
   mainContainer: document.querySelector('.mainContainer'),
 
@@ -385,54 +391,47 @@ const payloads = [
     specificFW: "",
     category: "games",
     funcName: "load_Oysters129"
-  },
-  {
-    id: "Linux1GB",
-    name: "Linux-1GB",
-    author: "Nazky",
-    description: "Linux payload for PS4",
-    specificFW: "9.00",
-    category: "linux",
-    funcName: "load_Linux"
-  },
-  {
-    id: "Linux2GB",
-    name: "Linux-2GB",
-    author: "Nazky",
-    description: "Linux payload for PS4",
-    specificFW: "9.00",
-    category: "linux",
-    funcName: "load_Linux2gb"
-  },
-  {
-    id: "Linux3GB",
-    name: "Linux-3GB",
-    author: "Nazky",
-    description: "Loads a 3GB Linux payload for dual-booting.",
-    specificFW: "9.00",
-    category: "linux",
-    funcName: "load_Linux3gb"
-  },
-  {
-    id: "Linux4GB",
-    name: "Linux-4GB",
-    author: "Nazky",
-    description: "Loads a 4GB Linux payload for dual-booting.",
-    specificFW: "9.00",
-    category: "linux",
-    funcName: "load_Linux4gb"
-  },
-  {
-    id: "Linux5GB",
-    name: "Linux-5GB",
-    author: "Nazky",
-    description: "Loads a 5GB Linux payload for dual-booting.",
-    specificFW: "9.00",
-    category: "linux",
-    funcName: "load_Linux5gb"
-  },
+  }
 ];
 
+var linuxPayloads = [
+  {
+    id: "Linux1gb",
+    name: "Linux Loader 1GB",
+    author: "ps4boot",
+    description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 1GB VRAM. Select for first install",
+    specificFW: "7.00 - 12.52",
+    category: "linux",
+    funcName: "load_Linux1"
+  },
+  {
+    id: "Linux2gb",
+    name: "Linux Loader 2GB",
+    author: "ps4boot",
+    description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 2GB VRAM.",
+    specificFW: "7.00 - 12.52",
+    category: "linux",
+    funcName: "load_Linux2"
+  },
+  {
+    id: "Linux3gb",
+    name: "Linux Loader 3GB",
+    author: "ps4boot",
+    description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 3GB VRAM.",
+    specificFW: "7.00 - 12.52",
+    category: "linux",
+    funcName: "load_Linux3"
+  },
+  {
+    id: "Linux4gb",
+    name: "Linux Loader 4GB",
+    author: "ps4boot",
+    description: "Linux Loader for {southbridge} Southbridge with 4GB VRAM.",
+    specificFW: "7.00 - 12.52",
+    category: "linux",
+    funcName: "load_Linux4"
+  }
+]
 // Events
 // Scroll snap for the PS4
 ui.mainContainer.addEventListener('scroll', () => {
@@ -468,8 +467,14 @@ ui.toolsTab.addEventListener('click', () =>{
     ui.toolsSection.classList.remove('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.gamesSection.classList.add('hidden');
+
+    ui.toolsTab.setAttribute("aria-selected", "true");
+    ui.linuxTab.setAttribute("aria-selected", "false");
+    ui.gamesTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
+  // Update lastTap
+  saveLastTab('tools');
 })
 
 ui.linuxTab.addEventListener('click', () =>{
@@ -477,8 +482,14 @@ ui.linuxTab.addEventListener('click', () =>{
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.remove('hidden');
     ui.gamesSection.classList.add('hidden');
+
+    ui.toolsTab.setAttribute("aria-selected", "false");
+    ui.linuxTab.setAttribute("aria-selected", "true");
+    ui.gamesTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
+  // Update lastTap
+  saveLastTab('linux');
 })
 
 ui.gamesTab.addEventListener('click', () =>{
@@ -486,9 +497,26 @@ ui.gamesTab.addEventListener('click', () =>{
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.gamesSection.classList.remove('hidden');
+
+    ui.toolsTab.setAttribute("aria-selected", "false");
+    ui.linuxTab.setAttribute("aria-selected", "false");
+    ui.gamesTab.setAttribute("aria-selected", "true");
   }
   ui.payloadsList.scrollTop = 0;
+  // Update lastTap
+  saveLastTab('games');
+  
 })
+// payloads tabs
+function loadLastTab(){
+  document.getElementById(user.lastTab).classList.remove('hidden');
+  document.getElementById(user.lastTab + '-tab').setAttribute("aria-selected", "true");
+}
+
+function saveLastTab(tab){
+  user.lastTab = tab;
+  localStorage.setItem('lastTab', tab);
+}
 
 // popups
 function aboutPopup() {
@@ -514,7 +542,7 @@ async function jailbreak() {
     ]);
     const JailbreakModule = modules[0];
 
-    if (currentJbFlavor == 'GoldHEN') {
+    if (user.currentJbFlavor == 'GoldHEN') {
       if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
         JailbreakModule.GoldHEN();
       } else {
@@ -580,24 +608,24 @@ function loadGoldHENVer(){
 
 
 function loadLanguage() {
-  document.querySelector(`input[name="language"][value="${currentLanguage}"]`).checked = true;
+  document.querySelector(`input[name="language"][value="${user.currentLanguage}"]`).checked = true;
   const langScript = document.getElementById("langScript");
   if(langScript) langScript.remove();
   // load language file
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
-    script.src = `./includes/js/languages/${currentLanguage}.js`;
+    script.src = `./includes/js/languages/${user.currentLanguage}.js`;
     script.onload = () => resolve(window.lang);
     script.id = "langScript";
-    script.onerror = () => reject(new Error(`Failed to load ${currentLanguage}`));
+    script.onerror = () => reject(new Error(`Failed to load ${user.currentLanguage}`));
     document.head.appendChild(script);
   });
 }
 // Apply lanuage after loading the language file
 async function initLanguage() {
   try {
-      await loadLanguage(currentLanguage);
-      applyLanguage(currentLanguage);
+      await loadLanguage();
+      applyLanguage(user.currentLanguage);
   } catch (e) {
       console.error(e);
   }
@@ -605,7 +633,7 @@ async function initLanguage() {
 
 // Update UI langauge
 function applyLanguage(lang) {
-  currentLanguage = lang;
+  user.currentLanguage = lang;
   const strings = window.lang
 
   if (!strings) {
@@ -640,8 +668,8 @@ function applyLanguage(lang) {
 
   // Document Properties
   document.title = strings.title || "PSFree Enhanced";
-  document.dir = (currentLanguage === 'ar') ? 'rtl' : 'ltr';
-  document.lang = currentLanguage;
+  document.dir = (user.currentLanguage === 'ar') ? 'rtl' : 'ltr';
+  document.lang = user.currentLanguage;
 
 
   // PS4 Firmware Status Check
@@ -650,7 +678,7 @@ function applyLanguage(lang) {
 
   if (ps4Fw === undefined) {
     if (strings.notPs4 && strings.notPs4.length > 0) {
-      ps4StatusElement.textContent = strings.notPs4 + platform;
+      ps4StatusElement.textContent = strings.notPs4 + user.platform;
     }
     ps4StatusElement.style.color = 'red';
   } else if (ps4Fw <= 9.60) {
@@ -679,6 +707,7 @@ function applyLanguage(lang) {
   
   updateText(ui.aboutPopup.querySelector('#PS4FWOK h3'), 'ps4FirmwareSupportedHeader');
   updateText(ui.aboutPopup.querySelector('#close-about'), 'closeButton');
+  updateText(ui.aboutPopup.querySelector('#goldhenFirmwareSemiSupported i'), 'goldhenFirmwareSemiSupported')
 
   // Fan Threshold
   updateText(ui.chooseFanThreshold.querySelector('#close-fanChoose'), 'closeButton');
@@ -694,6 +723,10 @@ function applyLanguage(lang) {
   updateText(ui.settingsPopup.querySelector('#ghVer'), 'ghVer');
   updateText(ui.settingsPopup.querySelector('#chooseGoldHEN summary'), 'otherVer'); 
   updateText(ui.settingsPopup.querySelector('#latestVer'), 'latestVer');
+  updateText(ui.settingsPopup.querySelector('#southbridgeHeader h3'), 'southbridgeHeader');
+  updateText(document.getElementById('southbridgeHelp'), 'southbridgeHelp');
+  updateText(document.getElementById('southbridgeHelp1'), 'southbridgeHelp1');
+  updateText(document.getElementById('southbridgeHelp2'), 'southbridgeHelp2');
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
@@ -727,7 +760,15 @@ function applyLanguage(lang) {
   updateText(ui.toolsTab, 'payloadsToolsHeader');
   updateText(ui.linuxTab, 'payloadsLinuxHeader');
   updateText(ui.gamesTab, 'payloadsGameHeader');
+  if (!linuxPayloadsRendered){
+    updateText(document.querySelector("#" + ui.linuxSection.id + " button") , 'selectSouthbridge');
+  }
   updateText(ui.consoleElement.querySelector('center'), 'waitingUserInput');
+
+  // Change direction of 'Default' option text for the fan threshold panel
+  if (user.currentLanguage == "ar"){
+    document.getElementById("defaultTempDiv").style.float = "left";
+  }else document.getElementById("defaultTempDiv").style.float = "right";
 }
 
 
@@ -735,11 +776,11 @@ function saveJbFlavor(name, value) {
   localStorage.setItem("jailbreakFlavor", value);
   // Apply hen selector to both inputs
   document.querySelector(`input[name="${name == "hen" ? "hen2" : "hen"}"][value="${value}"]`).checked = true;
-  currentJbFlavor = value;
+  user.currentJbFlavor = value;
 };
 
 function loadJbFlavor() {
-  const flavor = currentJbFlavor || 'GoldHEN';
+  const flavor = user.currentJbFlavor || 'GoldHEN';
   const henRadio = document.querySelector(`input[name="hen"][value="${flavor}"]`);
   const hen2Radio = document.querySelector(`input[name="hen2"][value="${flavor}"]`);
 
@@ -752,9 +793,18 @@ function loadJbFlavor() {
 function saveLanguage() {
   const language = document.querySelector('input[name="language"]:checked').value;
   localStorage.setItem('language', language);
-  currentLanguage = language;
+  user.currentLanguage = language;
   initLanguage();
 };
+
+function loadSouthbridge(){
+  if (user.southbridge){
+    document.querySelector(`input[name="southbridge"][value="${user.southbridge}"]`).checked = true;
+  }
+  if (user.ps4Model){
+    document.querySelector(`input[name="ps4Model"][value="${user.ps4Model}"]`).checked = true;
+  }
+}
 
 function CheckFW() {
   const userAgent = navigator.userAgent;
@@ -762,7 +812,7 @@ function CheckFW() {
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
   let elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'click-to-start-text', 'chooseGoldHEN'
+    'click-to-start-text', 'chooseGoldHEN', 'southbridgeHeader'
   ];
 
   if (ps4Regex.test(userAgent)) {
@@ -778,13 +828,14 @@ function CheckFW() {
         ui.secondHostBtn[0].style.display = "block";
       }else{
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's BinLoader
-        const toRemove = ['exploit-main-screen', 'scrollDown'];
+        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
         elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
         document.getElementById('exploitContainer').style.display = "block";
         // Sizing the payload's section
         ui.payloadsSection.style.width = "75%";
         ui.payloadsSection.style.margin = "auto";
+        document.getElementById('header2').classList.remove('hidden');
       }
 
       elementsToHide.forEach(id => {
@@ -817,13 +868,13 @@ function CheckFW() {
     });
 
   } else {
-    platform = 'Unknown platform';
+    user.platform = 'Unknown platform';
 
-    if (/Android/.test(userAgent)) platform = 'Android';
-    else if (/iPhone|iPad|iPod/.test(userAgent)) platform = 'iOS';
-    else if (/Macintosh/.test(userAgent)) platform = 'MacOS';
-    else if (/Windows/.test(userAgent)) platform = 'Windows';
-    else if (/Linux/.test(userAgent)) platform = 'Linux';
+    if (/Android/.test(userAgent)) user.platform = 'Android';
+    else if (/iPhone|iPad|iPod/.test(userAgent)) user.platform = 'iOS';
+    else if (/Macintosh/.test(userAgent)) user.platform = 'MacOS';
+    else if (/Windows/.test(userAgent)) user.platform = 'Windows';
+    else if (/Linux/.test(userAgent)) user.platform = 'Linux';
 
     document.getElementById('PS4FW').style.color = 'red';
     elementsToHide.forEach(id => {
@@ -838,8 +889,16 @@ function loadSettings() {
   try {
     CheckFW();
     loadJbFlavor();
-    initLanguage(currentLanguage);
-    renderPayloads();
+    loadSouthbridge();
+    initLanguage(user.currentLanguage);
+    renderPayloads(payloads);
+    loadLastTab();
+    // Render linux payloads
+  if (user.southbridge && user.ps4Model){
+    renderPayloads(linuxPayloads);
+    linuxPayloadsRendered = true;
+    document.querySelector("#" + ui.linuxSection.id + " button").remove();
+  }
     loadGoldHENVer();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
@@ -855,10 +914,8 @@ function getPayloadCategoryClass(category) {
   }
 }
 
-function renderPayloads() {
-  const payloadsToRender = payloads;
-
-  payloadsToRender.forEach(payload => {
+function renderPayloads(payloads) {
+  payloads.forEach(payload => {
     const payloadCard = document.createElement('div');
     payloadCard.id = payload.id;
     payloadCard.onclick = () => Loadpayloads(payload.funcName);
@@ -880,7 +937,7 @@ function renderPayloads() {
                   ${payload.category}
               </span>
           </div>
-          <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description}</p>
+          <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description.replace('{southbridge}', user.southbridge).replace('{model}', (user.ps4Model == "fs" ? "Fat/Slim" : "Pro"))}</p>
           <div class="flex items-center justify-between text-xs text-white/60">
           <p style="color: orange;">${payload.specificFW != '' ? payload.specificFW : ""} </p>
           </div>
@@ -918,3 +975,22 @@ function DisplayCacheProgress() {
       location.reload();
     }, 3000); 
   }
+
+  // Save southbridge and ps4 model data
+function ps4Info(southbridge, model){
+  if (southbridge) {
+    localStorage.setItem("southbridge", southbridge);
+    user.southbridge = southbridge;
+    window.southbridge = southbridge;
+  }
+  if (model){
+    localStorage.setItem("ps4Model", model);
+    user.ps4Model = model;
+  }
+  
+  // Update payloads list
+  if (user.southbridge && user.ps4Model){
+    ui.linuxSection.innerHTML = "";
+      renderPayloads(linuxPayloads)
+  }
+}

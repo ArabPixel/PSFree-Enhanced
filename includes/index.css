@@ -439,6 +439,7 @@ section { /* Apply to initial-screen and exploit-main-screen */
 .tabs button[aria-selected="true"] {
     border-color: var(--color-blue-500);
     color: var(--color-blue-500);
+    border-bottom: 1px solid var(--color-blue-500);
 }
 .tabs button:not([aria-selected="true"]):hover {
     color: var(--color-gray-600);
@@ -504,4 +505,12 @@ button{
 #defaultTempDiv{
     width: 78%;
     float: right;
+}
+
+#southbridgeHeader details summary{
+    cursor: pointer;
+}
+
+#southbridgeHelp{
+    text-decoration: underline;
 }
