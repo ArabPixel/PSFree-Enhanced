@@ -40,12 +40,12 @@ function Loadpayloadlocal(PLfile){ //Loading Payload via Payload Param.
 		req.onerror = function(){
             if (window.ps4Fw >= 7.00 && window.ps4Fw <= 9.60){
                 if (!isHttps()){
-                    if (confirm("Binloader is not running, load payload using the exploit instead?")){
+                    if (confirm(window.lang.disabledBinloader)){
                         Loadpayloadonline(PLfile);
                     }
                 }else Loadpayloadonline(PLfile); 
             }else {
-                alert("GoldHEN's BinLoader is not detected, is it enabled?!");
+                alert(window.lang.binLoaderNotDetected);
                 return;
             }
             
@@ -73,7 +73,7 @@ function Loadpayloadlocal(PLfile){ //Loading Payload via Payload Param.
                 }
 			});
 			} else {
-				alert("Cannot Load Payload Because The BinLoader Server Is Busy");//<<If server is busy, alert message.
+				alert(window.lang.busyBinLoader);//<<If server is busy, alert message.
 				return;
 		  }
 	  };
@@ -92,8 +92,9 @@ function Loadpayloadonline(PLfile) {
 
     // Check if Linux payload is selected
     }else if (isLinuxPayload){
-        window.payload_path = PLfile.replace('.elf', '.bin');
+        alert(window.lang.linuxOnlyWithGoldHEN);
         isLinuxPayload = false;
+        return;
 
     }else {
         window.payload_path = PLfile;
@@ -138,7 +139,7 @@ export function load_KernelDumper(){
 
 export function load_VTXDumper(){
     if (window.ps4Fw != 9.00){
-        alert(`Unsupported firmware ${window.ps4Fw}`);
+        alert(window.lang.unsupportedFirmware + window.ps4Fw);
     }else Loadpayloadlocal("./includes/payloads/Bins/Dumper/ps4-dumper-vtx-900.bin");
 }
 
@@ -152,7 +153,7 @@ export function load_ModuleDumper(){
 export function load_BinLoader(){
     if (window.ps4Fw >= 7.00 && window.ps4Fw <= 9.60){
         Loadpayloadonline(undefined);
-    }else alert(`Unsupported firmware ${window.ps4Fw}`);
+    }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
 export function load_PS4Debug(){
@@ -202,14 +203,14 @@ export function load_RIFRenamer(){
   
 export function load_Orbis(){
     if (window.ps4Fw != 5.05 || window.ps4Fw != 6.72 || window.ps4Fw != 7.02 || window.ps4Fw != 7.55 || window.ps4Fw != 9.00){
-        alert(`Unsupported firmware ${window.ps4Fw}`);
+        alert(window.lang.unsupportedFirmware + window.ps4Fw);
     }else Loadpayloadlocal("./includes/payloads/Bins/Tools/Orbis-Toolbox-900.bin");
 }
 
 export function load_WebRTE(){
     if (window.ps4Fw != 5.05 && window.ps4Fw != 6.72 && (window.ps4Fw < 7.00 || window.ps4Fw > 11.00)){
         //  5.05, 6.72 And 7.00 - 11.00
-        alert(`Unsupported firmware ${window.ps4Fw}`);
+        alert(window.lang.unsupportedFirmware + window.ps4Fw);
     }else Loadpayloadlocal("./includes/payloads/Bins/Tools/WebRTE.bin");
 }
 
@@ -253,7 +254,7 @@ export function load_Linux1(){
         var southbridge = localStorage.getItem('southbridge');
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-1gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
         isLinuxPayload = true;
-    }else alert(`Unsupported firmware ${window.ps4Fw}`);
+    }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
 export function load_Linux2(){
@@ -262,7 +263,7 @@ export function load_Linux2(){
         var southbridge = localStorage.getItem('southbridge');
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-2gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
         isLinuxPayload = true;
-    }else alert(`Unsupported firmware ${window.ps4Fw}`);
+    }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
 export function load_Linux3(){
@@ -271,7 +272,7 @@ export function load_Linux3(){
         var southbridge = localStorage.getItem('southbridge');
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-3gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
         isLinuxPayload = true;
-    }else alert(`Unsupported firmware ${window.ps4Fw}`);
+    }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
 export function load_Linux4(){
@@ -280,7 +281,7 @@ export function load_Linux4(){
         var southbridge = localStorage.getItem('southbridge');
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-4gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
         isLinuxPayload = true;
-    }else alert(`Unsupported firmware ${window.ps4Fw}`);
+    }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
 

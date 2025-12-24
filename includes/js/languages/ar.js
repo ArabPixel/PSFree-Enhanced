@@ -41,5 +41,10 @@ window.lang = {
   "southbridgeHelp":  "أتحتاج للمساعدة؟",
   "southbridgeHelp1": "قم بتفعيل GoldHEN و إذهب إلى الإعدادات -> النظام -> معلومات النظام وستجد الـ Southbridge الخاص بجهازك",
   "southbridgeHelp2": "قد يؤدي اختيار خيارات خاطئة إلى حدوث إنطفاء مباشر للجهاز!",
-  "selectSouthbridge":   "حدد Southbridge و نوع الـPS4 الخاص بك"
+  "selectSouthbridge":   "حدد Southbridge و نوع الـPS4 الخاص بك",
+  "linuxOnlyWithGoldHEN": "تفعيل إضافة لينكس مسموح فقط عن طريق خادم إضافات (BinLoader)GoldHEN!",
+  "busyBinLoader":    "لا يمكن تفعيل الإضافات لأن الخادم الخاص بـ GoldHEN مشغول!",
+  "binLoaderNotDetected": "لم يتم العثور على خادم إضافات GoldHEN, هي قمت بتفعيله؟",
+  "disabledBinloader":    "سيرفر الإضافات الخاص بـ GoldHEN غير مفعل, تفعيل الإضافه عن طريق الثغرة؟",
+  "unsupportedFirmware":  "نظام غير مدعوم  "
 }
