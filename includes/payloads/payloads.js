@@ -115,7 +115,8 @@ function getLinuxFolder() {
         11.02: "fw1102",
         11.50: "fw1150", 11.52: "fw1150",
         12.00: "fw1200", 12.02: "fw1200",
-        12.50: "fw1250", 12.52: "fw1250"
+        12.50: "fw1250", 12.52: "fw1250",
+        13.00: "fw1300", 13.02: "fw1302",
     };
 
     // If it's not found, it returns undefined
