@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # v1
-# Generated on 2025-12-24 17:57:12.121840
+# Generated on 2025-12-31 22:23:38.452404
 
 CACHE:
 index.html
@@ -79,7 +79,6 @@ includes/payloads/Linux/fw700/payload-700-4gb.elf
 includes/payloads/Linux/fw700/payload-700-4gb-pro.elf
 includes/payloads/Linux/fw700/payload-700-4gb-baikal.elf
 includes/payloads/Linux/fw700/payload-700-4gb-pro-baikal.elf
-includes/payloads/Linux/fw900/payload-900-1gb.elf
 includes/payloads/Linux/fw900/payload-900-1gb-pro.elf
 includes/payloads/Linux/fw900/payload-900-1gb-baikal.elf
 includes/payloads/Linux/fw900/payload-900-1gb-pro-baikal.elf
@@ -95,6 +94,7 @@ includes/payloads/Linux/fw900/payload-900-4gb.elf
 includes/payloads/Linux/fw900/payload-900-4gb-pro.elf
 includes/payloads/Linux/fw900/payload-900-4gb-baikal.elf
 includes/payloads/Linux/fw900/payload-900-4gb-pro-baikal.elf
+includes/payloads/Linux/fw900/payload-900-1gb.elf
 includes/payloads/Linux/fw903/payload-903-1gb.elf
 includes/payloads/Linux/fw903/payload-903-1gb-pro.elf
 includes/payloads/Linux/fw903/payload-903-1gb-baikal.elf
@@ -223,22 +223,54 @@ includes/payloads/Linux/fw1200/payload-1200-4gb.elf
 includes/payloads/Linux/fw1200/payload-1200-4gb-pro.elf
 includes/payloads/Linux/fw1200/payload-1200-4gb-baikal.elf
 includes/payloads/Linux/fw1200/payload-1200-4gb-pro-baikal.elf
-includes/payloads/Linux/fw1250/payload-1250-1gb-pro.elf
+includes/payloads/Linux/fw1250/payload-1250-1gb.elf
 includes/payloads/Linux/fw1250/payload-1250-1gb-baikal.elf
+includes/payloads/Linux/fw1250/payload-1250-1gb-pro.elf
 includes/payloads/Linux/fw1250/payload-1250-1gb-pro-baikal.elf
 includes/payloads/Linux/fw1250/payload-1250-2gb.elf
-includes/payloads/Linux/fw1250/payload-1250-2gb-pro.elf
 includes/payloads/Linux/fw1250/payload-1250-2gb-baikal.elf
+includes/payloads/Linux/fw1250/payload-1250-2gb-pro.elf
 includes/payloads/Linux/fw1250/payload-1250-2gb-pro-baikal.elf
 includes/payloads/Linux/fw1250/payload-1250-3gb.elf
-includes/payloads/Linux/fw1250/payload-1250-3gb-pro.elf
 includes/payloads/Linux/fw1250/payload-1250-3gb-baikal.elf
+includes/payloads/Linux/fw1250/payload-1250-3gb-pro.elf
 includes/payloads/Linux/fw1250/payload-1250-3gb-pro-baikal.elf
 includes/payloads/Linux/fw1250/payload-1250-4gb.elf
-includes/payloads/Linux/fw1250/payload-1250-4gb-pro.elf
 includes/payloads/Linux/fw1250/payload-1250-4gb-baikal.elf
+includes/payloads/Linux/fw1250/payload-1250-4gb-pro.elf
 includes/payloads/Linux/fw1250/payload-1250-4gb-pro-baikal.elf
-includes/payloads/Linux/fw1250/payload-1250-1gb.elf
+includes/payloads/Linux/fw1300/payload-1300-1gb.elf
+includes/payloads/Linux/fw1300/payload-1300-1gb-pro.elf
+includes/payloads/Linux/fw1300/payload-1300-1gb-baikal.elf
+includes/payloads/Linux/fw1300/payload-1300-1gb-pro-baikal.elf
+includes/payloads/Linux/fw1300/payload-1300-2gb.elf
+includes/payloads/Linux/fw1300/payload-1300-2gb-pro.elf
+includes/payloads/Linux/fw1300/payload-1300-2gb-baikal.elf
+includes/payloads/Linux/fw1300/payload-1300-2gb-pro-baikal.elf
+includes/payloads/Linux/fw1300/payload-1300-3gb.elf
+includes/payloads/Linux/fw1300/payload-1300-3gb-pro.elf
+includes/payloads/Linux/fw1300/payload-1300-3gb-baikal.elf
+includes/payloads/Linux/fw1300/payload-1300-3gb-pro-baikal.elf
+includes/payloads/Linux/fw1300/payload-1300-4gb.elf
+includes/payloads/Linux/fw1300/payload-1300-4gb-pro.elf
+includes/payloads/Linux/fw1300/payload-1300-4gb-baikal.elf
+includes/payloads/Linux/fw1300/payload-1300-4gb-pro-baikal.elf
+includes/payloads/Linux/fw1302/payload-1302-1gb.elf
+includes/payloads/Linux/fw1302/payload-1302-1gb-pro.elf
+includes/payloads/Linux/fw1302/payload-1302-1gb-baikal.elf
+includes/payloads/Linux/fw1302/payload-1302-1gb-pro-baikal.elf
+includes/payloads/Linux/fw1302/payload-1302-2gb.elf
+includes/payloads/Linux/fw1302/payload-1302-2gb-pro.elf
+includes/payloads/Linux/fw1302/payload-1302-2gb-baikal.elf
+includes/payloads/Linux/fw1302/payload-1302-2gb-pro-baikal.elf
+includes/payloads/Linux/fw1302/payload-1302-3gb.elf
+includes/payloads/Linux/fw1302/payload-1302-3gb-pro.elf
+includes/payloads/Linux/fw1302/payload-1302-3gb-baikal.elf
+includes/payloads/Linux/fw1302/payload-1302-3gb-pro-baikal.elf
+includes/payloads/Linux/fw1302/payload-1302-4gb.elf
+includes/payloads/Linux/fw1302/payload-1302-4gb-pro.elf
+includes/payloads/Linux/fw1302/payload-1302-4gb-baikal.elf
+includes/payloads/Linux/fw1302/payload-1302-4gb-pro-baikal.elf
 src/alert.mjs
 src/config.mjs
 src/lapse.mjs
