@@ -608,19 +608,32 @@ function loadGoldHENVer(){
 
 
 function loadLanguage() {
-  document.querySelector(`input[name="language"][value="${user.currentLanguage}"]`).checked = true;
+  const radio = document.querySelector(
+    `input[name="language"][value="${user.currentLanguage}"]`
+  );
+
+  // prevent crash if radios aren't created yet
+  if (radio) {
+    radio.checked = true;
+  }
+
   const langScript = document.getElementById("langScript");
-  if(langScript) langScript.remove();
+  if (langScript) langScript.remove();
+
   // load language file
   return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     script.src = `./includes/js/languages/${user.currentLanguage}.js`;
-    script.onload = () => resolve(window.lang);
     script.id = "langScript";
-    script.onerror = () => reject(new Error(`Failed to load ${user.currentLanguage}`));
+
+    script.onload = () => resolve(window.lang);
+    script.onerror = () =>
+      reject(new Error(`Failed to load ${user.currentLanguage}`));
+
     document.head.appendChild(script);
   });
 }
+
 // Apply lanuage after loading the language file
 async function initLanguage() {
   try {
@@ -668,7 +681,7 @@ function applyLanguage(lang) {
 
   // Document Properties
   document.title = strings.title || "PSFree Enhanced";
-  document.dir = (user.currentLanguage === 'ar') ? 'rtl' : 'ltr';
+  document.dir = window.lang?.type === "rtl" ? "rtl" : "ltr";
   document.lang = user.currentLanguage;
 
 
