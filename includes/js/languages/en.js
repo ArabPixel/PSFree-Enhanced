@@ -1,4 +1,6 @@
 window.lang = {
+    "langname": "English",
+  "type": "ltr",
     "title": "PSFree Enhanced",
     "ps4FwCompatible": `PS4 FW: {ps4fw} | Compatible`,
     "ps4FwIncompatible": `PS4 FW: {ps4fw} | Incompatible`,

@@ -1,4 +1,6 @@
 window.lang = {
+  "langname": "العربية",
+  "type": "rtl",
   "title": "PSFree محسن",
   "ps4FwCompatible": `بلايستايشن 4 إصدار {ps4fw} | مدعوم`,
   "ps4FwIncompatible": `بلايستايشن 4 إصدار {ps4fw} | غير مدعوم`,

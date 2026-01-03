@@ -233,23 +233,10 @@
             <h2 class="text-2xl font-bold mb-4">PSFree settings</h2>
             <!-- Language chooser -->
             <div id="chooselang" class="mb-6">
-                <h3 class="text-lg font-semibold mb-2">Language</h3>
-                <div class="radio-group space-y-2">
-                    <!-- Language options -->
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="en" class="ml-2" onchange="saveLanguage(this.value);">
-                        <p>English</p>
-                    </label>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="ar" class="ml-2" onchange="saveLanguage(this.value); ">
-                        <p>العربية</p>
-                    </label>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="ru" class="ml-2" onchange="saveLanguage(this.value); ">
-                        <p>Русский</p>
-                    </label>
-                </div>
-            </div>
+    		<h3 class="text-lg font-semibold mb-2">Language</h3>
+   		<div id="language-list" class="radio-group space-y-2"></div>
+	     </div>
+
             <!-- Choose GoldHEN version -->
             <div id="chooseGoldHEN" class="mb-6">
                 <h3 class="text-lg font-semibold mb-2" id="ghVer">GoldHEN versions</h3>
@@ -378,6 +365,8 @@
     </script>
     <!-- Main JS file -->
     <script src='./includes/js/index.js'></script>
+    <!-- If you're planning to make a translation, edit this file. -->
+    <script src='./includes/js/langhandler.js'></script>
 </body>
 
 </html>

@@ -1,4 +1,6 @@
 window.lang = {
+    "langname": "Русский",
+  "type": "ltr",
     "title": "PSFree Enhanced",
     "ps4FwCompatible": `Версия ПО: {ps4fw} | Совместима`,
     "ps4FwIncompatible": `ерсия ПО: {ps4fw} | Несовместима`,
