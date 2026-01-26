@@ -1,7 +1,7 @@
 window.lang = {
     "title": "PSFree Enhanced",
     "ps4FwCompatible": `Версия ПО: {ps4fw} | Совместима`,
-    "ps4FwIncompatible": `ерсия ПО: {ps4fw} | Несовместима`,
+    "ps4FwIncompatible": `Версия ПО: {ps4fw} | Несовместима`,
     "notPs4": "Вы не на PS4, Платформа: ",
     "clickToStart": "Нажмите для старта",
     "chooseHEN": "Выберите Hen",
@@ -31,5 +31,21 @@ window.lang = {
     "httpsHost": "Загрузка payload через GoldHEN BinLoader в данный момент недоступна, нажмите на синюю кнопку внизу для перехода на поддерживаемый хост",
     "ghVer" : "Версии GoldHEN",
     "otherVer": "Другие версии",
-    "latestVer":   "Последняя"
+    "latestVer":   "Последняя",
+    "fanTitle": "Порог температуры",
+    "fanDescription": "Устанавливает температуру которую система PS4 будет старться удерживать",
+    "selectTemp":   "Выберите температуру",
+    "default":  "Стандартная", // Fan default string
+    "goldhenFirmwareSemiSupported": "* Загрузка payload через GoldHEN Binloader поддерживается на всех версиях ПО.",
+    "southbridgeHeader":    "Модель PS4 и Южного моста",
+    "southbridgeHelp":  "Нужна помощь?",
+    "southbridgeHelp1": "Запустите GoldHEN И перейдите в Настройки -> Система -> Информация о системе и посмотрите Southbridge.",
+    "southbridgeHelp2": "Выбор неправильных опций может привести к крашу системы!",
+    "selectSouthbridge":    "Выберите ваш Южный мост и модель PS4",
+    // payloads.js
+    "linuxOnlyWithGoldHEN": "Linux стоит загружать только через GoldHEN Binloader",
+    "busyBinLoader":    "Невозможно запустить Payload так как Binloader занят",
+    "binLoaderNotDetected": "GoldHEN BinLoader не найден, он точно включен?!", // For no-webkit firmware
+    "disabledBinloader":    "GoldHEN Binloader не найден, запустить payload через эксплоит?",
+    "unsupportedFirmware":  "Неподдерживаемая версия ПО ",
 }
