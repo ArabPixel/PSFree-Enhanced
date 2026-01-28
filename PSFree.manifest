@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-01-28 20:11:02.605386
+# Generated on 2026-01-28 21:38:30.034606
 
 CACHE:
 index.html
@@ -54,7 +54,6 @@ includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold60.bin
 includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold70.bin
 includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold80.bin
 includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold85.bin
-includes/payloads/GoldHEN/goldhen_v2.4b18.8.bin
 includes/payloads/GoldHEN/goldhen_v2.3_702L.bin
 includes/payloads/GoldHEN/goldhen_v2.3_755L.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.2.bin
@@ -63,6 +62,7 @@ includes/payloads/GoldHEN/goldhen_v2.4b18.5.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.6.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.7.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.bin
+includes/payloads/GoldHEN/goldhen_v2.4b18.8.bin
 includes/payloads/HEN/HEN.bin
 includes/payloads/Linux/fw700/payload-700-1gb.elf
 includes/payloads/Linux/fw700/payload-700-1gb-pro.elf
