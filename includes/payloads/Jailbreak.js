@@ -1,6 +1,9 @@
 export function GoldHEN() {
     let goldHenVersion = localStorage.getItem('GHVer');
     switch (goldHenVersion){
+        case "GHv2.4b18.8":
+            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.8.bin";
+            break;
         case "GHv2.4b18.7":
             window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.7.bin";
             break;
@@ -26,7 +29,7 @@ export function GoldHEN() {
             window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.3_702L.bin";
             break;
         default:
-            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.7.bin";
+            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.8.bin";
             break;
     }
 }
