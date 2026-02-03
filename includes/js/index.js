@@ -5,7 +5,8 @@ var user = {
   southbridge:      localStorage.getItem('southbridge'),
   ps4Model:         localStorage.getItem('ps4Model'), // Fat/Slim/Pro
   platform:         "Unknown", // PS4/PC/Mobile etc..
-  lastTab:          localStorage.getItem('lastTab') || 'tools'
+  lastTab:          localStorage.getItem('lastTab') || 'tools',
+  advancedPayloads: localStorage.getItem("advancedPayloads") || false // True/false
 }
 let lastScrollY = 0;
 let lastSection = "initial";
@@ -33,6 +34,10 @@ const ui = {
   gamesTab: document.getElementById('games-tab'),
   linuxSection: document.getElementById('linux'),
   linuxTab: document.getElementById('linux-tab'),
+  advancedPayloadsSection: document.getElementById('advanced'),
+  advancedPayloadsTab: document.getElementById('advanced-tab'),
+  advancedPayloadsContainer: document.querySelector('.advancedPayloadsTab'),
+  advancedPayloadsInput:  document.getElementById('advancedPayloadsInput'),
   payloadsSection: document.getElementById('payloadsSection'),
   payloadsList: document.getElementById("payloadsGrid"),
   payloadsSectionTitle: document.getElementById('payloads-section-title'),
@@ -71,7 +76,7 @@ const payloads = [
   {
     id: "FTP",
     name: "FTP",
-    author: "xvortex",
+    author: "Scene Collective",
     description: "Enables FTP server access for file transfers.",
     specificFW: "",
     category: "tools",
@@ -81,37 +86,10 @@ const payloads = [
     id: "DisableUpdates",
     name: "Disable-Updates",
     author: "Scene Collective",
-    description: "Disables automatic system software updates.",
+    description: "Disables automatic system software updates. Recommended to apply after a kernel panic",
     specificFW: "",
     category: "tools",
     funcName: "load_DisableUpdates"
-  },
-  {
-    id: "PS4Debug",
-    name: "PS4-Debug",
-    author: "CTN & SiSTR0",
-    description: "Debugging tools for PS4.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_PS4Debug"
-  },
-  {
-    id: "KernelDumper",
-    name: "Kernel-Dumper",
-    author: "Eversion",
-    description: "Dumps the PS4 kernel.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_KernelDumper"
-  },
-  {
-    id: "PS4DumperVTX",
-    name: "PS4-Dumper-VTX",
-    author: "xvortex",
-    description: "All-in-one game dumper for PS4.",
-    specificFW: "9.00",
-    category: "tools",
-    funcName: "load_VTXDumper"
   },
   {
     id: "FanThreshold",
@@ -132,58 +110,13 @@ const payloads = [
     funcName: "load_HistoryBlocker"
   },
   {
-    id: "EnableBrowser",
-    name: "Enable-Browser",
+    id: "ExitIDU",
+    name: "ExitIDU",
     author: "Scene Collective",
-    description: "Permanently activates the browser without needing to sign into PSN.",
+    description: "Exits IDU mode and restarts the console.",
     specificFW: "",
     category: "tools",
-    funcName: "load_EnableBrowser"
-  },
-  {
-    id: "OrbisToolbox",
-    name: "Orbis-Toolbox",
-    author: "OSM-Made",
-    description: "A modification of the playstation UI to help with launching and developing homebrew..",
-    specificFW: "5.05, 6.72, 7.02, 7.55, 9.00",
-    category: "tools",
-    funcName: "load_Orbis"
-  },
-  {
-    id: "ToDex",
-    name: "ToDex",
-    author: "zecoxao",
-    description: "Spoofs the target ID to match that of a test-kit, enables some extra options, etc.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ToDex"
-  },
-  {
-    id: "ToDev",
-    name: "ToDev",
-    author: "SonysNightmare",
-    description: "unlocks some PS4 Debug / TestKit Features.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ToDev"
-  },
-  {
-    id: "ToKratos",
-    name: "ToKratos",
-    author: "Various",
-    description: "Custom firmware conversion tool.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ToKratos"
-  },
-  {
-    id: "ToCex",
-    name: "ToCex",
-    author: "Various",
-    description: "Converts console to CEX mode.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ToCex"
+    funcName: "load_ExitIDU"
   },
   {
     id: "BackupDB",
@@ -204,42 +137,6 @@ const payloads = [
     funcName: "load_RestoreDB"
   },
   {
-    id: "RIFRenamer",
-    name: "RIF-Renamer",
-    author: "Al Azif",
-    description: "Renames 'fake' RIFs to 'free' RIFs for better HEN compatibility. Use this if your PKGs only work with Mira+HEN.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_RIFRenamer"
-  },
-  {
-    id: "ExitIDU",
-    name: "ExitIDU",
-    author: "Scene Collective",
-    description: "Exits IDU mode and restarts the console.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ExitIDU"
-  },
-  {
-    id: "DisableASLR", 
-    name: "Disable-ASLR",
-    author: "Scene Collective",
-    description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_DisableASLR"
-  },
-  {
-    id: "ModuleDumper",
-    name: "Module-Dumper",
-    author: "SocraticBliss",
-    description: "Dumps the decrypted modules from /system, /system_ex, /update and the root of the filesystem to a USB device.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ModuleDumper"
-  },
-  {
     id: "WebRTE",
     name: "WebRTE",
     author: "Made by golden<br>updated by EchoStretch",
@@ -256,15 +153,6 @@ const payloads = [
     specificFW: "",
     category: "tools",
     funcName: "load_PermanentUART"
-  },
-  {
-    id: "PUPDecrypt",
-    name: "PUP-Decrypt",
-    author: "andy-man",
-    description: "Payload to decrypt the contents of a firmware update file (PUP) on the PS4",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_PUPDecrypt"
   },
   {
     id: "GTAVArabicGuy127",
@@ -393,6 +281,71 @@ const payloads = [
     funcName: "load_Oysters129"
   }
 ];
+const advancedPayloads = [
+  {
+    id: "PS4Debug",
+    name: "PS4-Debug",
+    author: "CTN & SiSTR0",
+    description: "Debugging tools for PS4.",
+    specificFW: "12.02",
+    category: "advanced",
+    funcName: "load_PS4Debug"
+  },
+  {
+    id: "KernelDumper",
+    name: "Kernel-Dumper",
+    author: "Eversion",
+    description: "Dumps the PS4 kernel to a USB device.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_KernelDumper"
+  },
+  {
+    id: "ModuleDumper",
+    name: "Module-Dumper",
+    author: "SocraticBliss",
+    description: "Dumps the decrypted modules from /system, /system_ex, /update and the root of the filesystem to a USB device.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_ModuleDumper"
+  },
+  {
+    id: "OrbisToolbox",
+    name: "Orbis-Toolbox",
+    author: "OSM-Made",
+    description: "A modification of the playstation UI to help with launching and developing homebrew..",
+    specificFW: "5.05, 6.72, 7.02, 7.55, 9.00",
+    category: "advanced",
+    funcName: "load_Orbis"
+  },
+  {
+    id: "DisableASLR", 
+    name: "Disable-ASLR",
+    author: "Scene Collective",
+    description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_DisableASLR"
+  },
+  {
+    id: "RIFRenamer",
+    name: "RIF-Renamer",
+    author: "Al Azif",
+    description: "Renames 'fake' RIFs to 'free' RIFs for better HEN compatibility. Use this if your PKGs only work with Mira+HEN.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_RIFRenamer"
+  },
+  {
+    id: "PUPDecrypt",
+    name: "PUP-Decrypt",
+    author: "andy-man",
+    description: "Payload to decrypt the contents of a firmware update file (PUP) on the PS4",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_PUPDecrypt"
+  },
+]
 
 var linuxPayloads = [
   {
@@ -467,10 +420,12 @@ ui.toolsTab.addEventListener('click', () =>{
     ui.toolsSection.classList.remove('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.gamesSection.classList.add('hidden');
+    ui.advancedPayloadsSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "true");
     ui.linuxTab.setAttribute("aria-selected", "false");
     ui.gamesTab.setAttribute("aria-selected", "false");
+    ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -482,10 +437,12 @@ ui.linuxTab.addEventListener('click', () =>{
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.remove('hidden');
     ui.gamesSection.classList.add('hidden');
+    ui.advancedPayloadsSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "false");
     ui.linuxTab.setAttribute("aria-selected", "true");
     ui.gamesTab.setAttribute("aria-selected", "false");
+    ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -497,18 +454,43 @@ ui.gamesTab.addEventListener('click', () =>{
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.gamesSection.classList.remove('hidden');
+    ui.advancedPayloadsSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "false");
     ui.linuxTab.setAttribute("aria-selected", "false");
     ui.gamesTab.setAttribute("aria-selected", "true");
+    ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
   saveLastTab('games');
   
 })
+
+ui.advancedPayloadsTab.addEventListener('click', () =>{
+  if (ui.advancedPayloadsSection.classList.contains('hidden')){
+    ui.toolsSection.classList.add('hidden');
+    ui.linuxSection.classList.add('hidden');
+    ui.gamesSection.classList.add('hidden');
+    ui.advancedPayloadsSection.classList.remove('hidden');
+
+    ui.toolsTab.setAttribute("aria-selected", "false");
+    ui.linuxTab.setAttribute("aria-selected", "false");
+    ui.gamesTab.setAttribute("aria-selected", "false");
+    ui.advancedPayloadsTab.setAttribute("aria-selected", "true");
+  }
+  ui.payloadsList.scrollTop = 0;
+  // Update lastTap
+  saveLastTab('advanced');
+  
+})
 // payloads tabs
 function loadLastTab(){
+  if (user.lastTab == "advanced" && user.advancedPayloads != "true"){
+    // set last tab to tools
+    user.lastTab = "tools";
+    ui.toolsSection.click();
+  }
   document.getElementById(user.lastTab).classList.remove('hidden');
   document.getElementById(user.lastTab + '-tab').setAttribute("aria-selected", "true");
 }
@@ -727,6 +709,8 @@ function applyLanguage(lang) {
   updateText(document.getElementById('southbridgeHelp'), 'southbridgeHelp');
   updateText(document.getElementById('southbridgeHelp1'), 'southbridgeHelp1');
   updateText(document.getElementById('southbridgeHelp2'), 'southbridgeHelp2');
+  updateText(document.getElementById('showAdvancedPayloads'), 'showAdvancedPayloads');
+  updateText(document.getElementById('advancedPayloadHeader'), 'advancedPayloadHeader')
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
@@ -740,14 +724,6 @@ function applyLanguage(lang) {
     if (items[2] && strings.warnings.note3 && strings.warnings.note3.length > 0) items[2].textContent = strings.warnings.note3;
   }
   updateText(warningHeader, 'alert');
-  
-  if (isHttps()){
-    const httpsHostElement = document.getElementById("httpsHost");
-    if (httpsHostElement && strings.httpsHost && strings.httpsHost.length > 0){
-        httpsHostElement.innerText = strings.httpsHost;
-    }
-    ui.secondHostBtn[1].style.display = "block";
-  }
 
   // --- Buttons ---
   updateText(ui.secondHostBtn[0], 'secondHostBtn');
@@ -760,6 +736,7 @@ function applyLanguage(lang) {
   updateText(ui.toolsTab, 'payloadsToolsHeader');
   updateText(ui.linuxTab, 'payloadsLinuxHeader');
   updateText(ui.gamesTab, 'payloadsGameHeader');
+  updateText(ui.advancedPayloadsTab, 'advanced');
   if (!linuxPayloadsRendered){
     updateText(document.querySelector("#" + ui.linuxSection.id + " button") , 'selectSouthbridge');
   }
@@ -812,7 +789,7 @@ function CheckFW() {
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
   let elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'click-to-start-text', 'chooseGoldHEN', 'southbridgeHeader'
+    'click-to-start-text', 'chooseGoldHEN', 'southbridgeHeader', 'advancedPayloads'
   ];
 
   if (ps4Regex.test(userAgent)) {
@@ -828,7 +805,7 @@ function CheckFW() {
         ui.secondHostBtn[0].style.display = "block";
       }else{
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's BinLoader
-        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader'];
+        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
         elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
         document.getElementById('exploitContainer').style.display = "block";
@@ -900,6 +877,7 @@ function loadSettings() {
     document.querySelector("#" + ui.linuxSection.id + " button").remove();
   }
     loadGoldHENVer();
+    loadAdvancedPayloads();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
   }
@@ -910,6 +888,7 @@ function getPayloadCategoryClass(category) {
     case 'tools': return 'category-tools';
     case 'games': return 'category-games';
     case 'linux': return 'category-linux';
+    case 'advanced': return 'category-advanced';
     default: return '';
   }
 }
@@ -954,6 +933,9 @@ function renderPayloads(payloads) {
       case "linux":
         ui.linuxSection.appendChild(payloadCard);
         break;
+      case "advanced":
+        ui.advancedPayloadsSection.appendChild(payloadCard);
+        break;
       default:
         ui.toolsSection.appendChild(payloadCard);
         break;
@@ -992,5 +974,29 @@ function ps4Info(southbridge, model){
   if (user.southbridge && user.ps4Model){
     ui.linuxSection.innerHTML = "";
       renderPayloads(linuxPayloads)
+  }
+}
+
+function setAdvancedPayloads(inputState){
+  // Update variable/localstorage value
+  user.advancedPayloads = inputState;
+  localStorage.setItem("advancedPayloads", inputState)
+  if (inputState == true){
+    // Its true, show tab and render payloads
+    ui.advancedPayloadsContainer.classList.remove('hidden')
+    renderPayloads(advancedPayloads);
+  }else {
+    // its false, hide payloads' tab and move to tools' tab
+    ui.advancedPayloadsContainer.classList.add('hidden')
+    ui.toolsTab.click();
+  }
+}
+
+function loadAdvancedPayloads(){
+  if (user.advancedPayloads == "true"){
+    // its true, check the box, show tab and load the payloads
+    ui.advancedPayloadsInput.checked = true;
+    ui.advancedPayloadsContainer.classList.remove('hidden')
+    renderPayloads(advancedPayloads);
   }
 }

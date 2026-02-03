@@ -117,7 +117,6 @@
                     <!-- Payloads section -->
                     <div id="payloadsSection" class="bg-gray-800 p-6 rounded-lg flex flex-col h-full">
                         <h2 class="text-xl font-semibold mb-4" id="payloads-section-title">Payloads</h2>
-                        <p id="httpsHost"></p>
                         <div
                             class="mb-4 border-b border-gray-200 border-gray-700 w-full sticky top-0 bg-gray-800 z-10 tabs">
                             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center w-full"
@@ -137,7 +136,13 @@
                                     <button
                                         class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
                                         id="games-tab" data-tabs-target="#games" type="button" role="tab"
-                                        aria-controls="rdr2" aria-selected="false">Games</button>
+                                        aria-controls="games" aria-selected="false">Games</button>
+                                </li>
+                                <li class="hidden flex-1 advancedPayloadsTab" role="presentation">
+                                    <button
+                                        class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                        id="advanced-tab" data-tabs-target="#advanced" type="button" role="tab"
+                                        aria-controls="advanced" aria-selected="false">Advanced</button>
                                 </li>
                             </ul>
                         </div>
@@ -154,6 +159,9 @@
                                 </div>
                                 <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="games" role="tabpanel"
                                     aria-labelledby="games-tab">
+                                </div>
+                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="advanced" role="tabpanel"
+                                    aria-labelledby="advanced-tab">
                                 </div>
                             </div>
                         </div>
@@ -333,6 +341,16 @@
                     <small><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                             <i id="southbridgeHelp2">Selecting wrong options may cause a kernel panic!</i></small>
                 </details>
+            </div>
+            <!-- Choose southbridge and console type -->
+            <div id="advancedPayloads" class="mb-6">
+                <h3 class="text-lg font-semibold mb-2" id="advancedPayloadHeader">Advanced payloads</h3>
+                <div class="radio-group flex flex-wrap mb-4">
+                    <label class="flex items-center text-white/80">
+                        <input type="checkbox" id="advancedPayloadsInput" onclick="setAdvancedPayloads(this.checked)">
+                        <p id="showAdvancedPayloads">Show Advanced Payloads</p>
+                    </label>
+                </div>
             </div>
             <button onclick="settingsPopup()"
                 class="mt-6 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
