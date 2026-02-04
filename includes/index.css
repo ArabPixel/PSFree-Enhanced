@@ -110,11 +110,6 @@ input[type="radio"]:checked {
     background-color: rgba(139, 92, 246, 0.2);
     color: #a78bfa;
 }
-
-.category-advanced {
-    background-color: rgba(246, 92, 97, 0.2);
-    color: #fa8b96;
-}
 .category-games, .category-tools, .category-linux{
     border: none !important;
 }
@@ -459,16 +454,14 @@ button{
 #tools,
 #games,
 #linux,
-#testing,
-#advanced {
+#testing {
     background-color: transparent;
 }
 
 #tools-tab,
 #games-tab,
 #linux-tab,
-#testing-tab,
-#advanced-tab {
+#testing-tab {
     background-color: transparent;
 }
 

@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-02-03 22:45:25.340502
+# Generated on 2026-01-28 21:38:30.034606
 
 CACHE:
 index.html
@@ -12,6 +12,7 @@ includes/js/languages/ru.js
 includes/payloads/Jailbreak.js
 includes/payloads/payloads.js
 includes/payloads/Bins/Dumper/ps4-app-dumper.bin
+includes/payloads/Bins/Dumper/ps4-dumper-vtx-900.bin
 includes/payloads/Bins/Dumper/ps4-kernel-dumper.bin
 includes/payloads/Bins/Dumper/ps4-module-dumper.bin
 includes/payloads/Bins/GTA/ArabicGuy-1.0-1.27-rfoodxmodz.bin
@@ -29,12 +30,16 @@ includes/payloads/Bins/RDR2/OystersMenu-1.19-FREE.bin
 includes/payloads/Bins/RDR2/OystersMenu-1.24-FREE.bin
 includes/payloads/Bins/RDR2/OystersMenu-1.29-FREE.bin
 includes/payloads/Bins/Tools/Orbis-Toolbox-900.bin
+includes/payloads/Bins/Tools/ToCex.bin
+includes/payloads/Bins/Tools/ToDev.bin
+includes/payloads/Bins/Tools/ToKratos.bin
 includes/payloads/Bins/Tools/WebRTE.bin
 includes/payloads/Bins/Tools/appcache-install.bin
 includes/payloads/Bins/Tools/ps4-app2usb.bin
 includes/payloads/Bins/Tools/ps4-backup.bin
 includes/payloads/Bins/Tools/ps4-disable-aslr.bin
 includes/payloads/Bins/Tools/ps4-disable-updates.bin
+includes/payloads/Bins/Tools/ps4-enable-browser.bin
 includes/payloads/Bins/Tools/ps4-enable-updates.bin
 includes/payloads/Bins/Tools/ps4-exit-idu.bin
 includes/payloads/Bins/Tools/ps4-ftp.bin
@@ -42,6 +47,7 @@ includes/payloads/Bins/Tools/ps4-history-blocker.bin
 includes/payloads/Bins/Tools/ps4-permanent-uart.bin
 includes/payloads/Bins/Tools/ps4-restore.bin
 includes/payloads/Bins/Tools/ps4-rif-renamer.bin
+includes/payloads/Bins/Tools/ps4-todex.bin
 includes/payloads/Bins/Tools/ps4debug.bin
 includes/payloads/Bins/Tools/pup-decrypt.bin
 includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold60.bin

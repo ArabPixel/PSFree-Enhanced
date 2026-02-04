@@ -28,6 +28,7 @@ window.lang = {
     "alert": "Важная информация",
     "waitingUserInput": "Ожидание команды",
     "cache": "Установка кэша: ",
+    "httpsHost": "Загрузка payload через GoldHEN BinLoader в данный момент недоступна, нажмите на синюю кнопку внизу для перехода на поддерживаемый хост",
     "ghVer" : "Версии GoldHEN",
     "otherVer": "Другие версии",
     "latestVer":   "Последняя",
