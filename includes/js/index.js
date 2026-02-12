@@ -29,8 +29,6 @@ const ui = {
   consoleElement: document.getElementById('console'),
   toolsSection: document.getElementById('tools'),
   toolsTab: document.getElementById('tools-tab'),
-  gamesSection: document.getElementById('games'),
-  gamesTab: document.getElementById('games-tab'),
   linuxSection: document.getElementById('linux'),
   linuxTab: document.getElementById('linux-tab'),
   payloadsSection: document.getElementById('payloadsSection'),
@@ -63,15 +61,24 @@ const payloads = [
     id: "BinLoader",
     name: "BinLoader",
     author: "PSFree Exploit",
-    description: "Launches BinLoader server on port 9020 to send payloads.",
+    description: "Launches BinLoader server on port 9020 to send bin payloads.",
     specificFW: "7.00 - 9.60",
     category: "tools",
     funcName: "load_BinLoader"
   },
+   {
+    id: "ElfLoader",
+    name: "ElfLoader",
+    author: "John Tornblom",
+    description: "Launches ElfLoader server on port 9021 to send elf payloads.",
+    specificFW: "7.00 - 9.60",
+    category: "tools",
+    funcName: "load_Elfldr"
+  },
   {
     id: "FTP",
     name: "FTP",
-    author: "xvortex",
+    author: "Scene Collective",
     description: "Enables FTP server access for file transfers.",
     specificFW: "",
     category: "tools",
@@ -91,7 +98,7 @@ const payloads = [
     name: "PS4-Debug",
     author: "CTN & SiSTR0",
     description: "Debugging tools for PS4.",
-    specificFW: "",
+    specificFW: "12.02",
     category: "tools",
     funcName: "load_PS4Debug"
   },
@@ -103,15 +110,6 @@ const payloads = [
     specificFW: "",
     category: "tools",
     funcName: "load_KernelDumper"
-  },
-  {
-    id: "PS4DumperVTX",
-    name: "PS4-Dumper-VTX",
-    author: "xvortex",
-    description: "All-in-one game dumper for PS4.",
-    specificFW: "9.00",
-    category: "tools",
-    funcName: "load_VTXDumper"
   },
   {
     id: "FanThreshold",
@@ -132,15 +130,6 @@ const payloads = [
     funcName: "load_HistoryBlocker"
   },
   {
-    id: "EnableBrowser",
-    name: "Enable-Browser",
-    author: "Scene Collective",
-    description: "Permanently activates the browser without needing to sign into PSN.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_EnableBrowser"
-  },
-  {
     id: "OrbisToolbox",
     name: "Orbis-Toolbox",
     author: "OSM-Made",
@@ -148,42 +137,6 @@ const payloads = [
     specificFW: "5.05, 6.72, 7.02, 7.55, 9.00",
     category: "tools",
     funcName: "load_Orbis"
-  },
-  {
-    id: "ToDex",
-    name: "ToDex",
-    author: "zecoxao",
-    description: "Spoofs the target ID to match that of a test-kit, enables some extra options, etc.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ToDex"
-  },
-  {
-    id: "ToDev",
-    name: "ToDev",
-    author: "SonysNightmare",
-    description: "unlocks some PS4 Debug / TestKit Features.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ToDev"
-  },
-  {
-    id: "ToKratos",
-    name: "ToKratos",
-    author: "Various",
-    description: "Custom firmware conversion tool.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ToKratos"
-  },
-  {
-    id: "ToCex",
-    name: "ToCex",
-    author: "Various",
-    description: "Converts console to CEX mode.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ToCex"
   },
   {
     id: "BackupDB",
@@ -265,132 +218,6 @@ const payloads = [
     specificFW: "",
     category: "tools",
     funcName: "load_PUPDecrypt"
-  },
-  {
-    id: "GTAVArabicGuy127",
-    name: "GTAV-ArabicGuy-1.27",
-    author: "ArabicGuy",
-    description: "GTA V mod menu by ArabicGuy.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTAArbic"
-  },
-  {
-    id: "GTAVArabicGuy132",
-    name: "GTAV-ArabicGuy-1.32",
-    author: "ArabicGuy",
-    description: "GTA V mod menu by ArabicGuy.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTAArbic3"
-  },
-  {
-    id: "GTAVArabicGuy133",
-    name: "GTAV-ArabicGuy-1.33",
-    author: "ArabicGuy",
-    description: "GTA V mod menu by ArabicGuy.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTAArbic33"
-  },
-  {
-    id: "GTAVBeefQueefMod133",
-    name: "GTAV-BeefQueefMod-1.33",
-    author: "BeefQueef",
-    description: "GTA V mod menu by BeefQueef.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTABQ133"
-  },
-  {
-    id: "GTAVBeefQueefMod134",
-    name: "GTAV-BeefQueefMod-1.34",
-    author: "BeefQueef",
-    description: "GTA V mod menu by BeefQueef.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTABQ134"
-  },
-  {
-    id: "GTAVBeefQueefMod138",
-    name: "GTAV-BeefQueefMod-1.38",
-    author: "BeefQueef",
-    description: "GTA V mod menu by BeefQueef.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTABQ138"
-  },
-  {
-    id: "GTAVWildeModz132",
-    name: "GTAV-WildeModz-1.32",
-    author: "WildeModz",
-    description: "GTA V mod menu by WildeModz.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTAWM132"
-  },
-  {
-    id: "GTAVWildeModz133",
-    name: "GTAV-WildeModz-1.33",
-    author: "WildeModz",
-    description: "GTA V mod menu by WildeModz.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTAWM133"
-  },
-  {
-    id: "GTAVWildeModz138",
-    name: "GTAV-WildeModz-1.38",
-    author: "WildeModz",
-    description: "GTA V mod menu by WildeModz.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_GTAWM138"
-  },
-  {
-    id: "RDR2OystersMenu100",
-    name: "RDR2-OystersMenu-0",
-    author: "Oysters",
-    description: "RDR2 mod menu by Oysters.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_Oysters100"
-  },
-  {
-    id: "RDR2OystersMenu113",
-    name: "RDR2-OystersMenu-1.13",
-    author: "Oysters",
-    description: "RDR2 mod menu by Oysters.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_Oysters113"
-  },
-  {
-    id: "RDR2OystersMenu119",
-    name: "RDR2-OystersMenu-1.19",
-    author: "Oysters",
-    description: "RDR2 mod menu by Oysters.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_Oysters119"
-  },
-  {
-    id: "RDR2OystersMenu124",
-    name: "RDR2-OystersMenu-1.24",
-    author: "Oysters",
-    description: "RDR2 mod menu by Oysters.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_Oysters124"
-  },
-  {
-    id: "RDR2OystersMenu129",
-    name: "RDR2-OystersMenu-1.29",
-    author: "Oysters",
-    description: "RDR2 mod menu by Oysters.",
-    specificFW: "",
-    category: "games",
-    funcName: "load_Oysters129"
   }
 ];
 
@@ -466,11 +293,9 @@ ui.toolsTab.addEventListener('click', () =>{
   if (ui.toolsSection.classList.contains('hidden')){
     ui.toolsSection.classList.remove('hidden');
     ui.linuxSection.classList.add('hidden');
-    ui.gamesSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "true");
     ui.linuxTab.setAttribute("aria-selected", "false");
-    ui.gamesTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -481,32 +306,15 @@ ui.linuxTab.addEventListener('click', () =>{
   if (ui.linuxSection.classList.contains('hidden')){
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.remove('hidden');
-    ui.gamesSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "false");
     ui.linuxTab.setAttribute("aria-selected", "true");
-    ui.gamesTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
   saveLastTab('linux');
 })
 
-ui.gamesTab.addEventListener('click', () =>{
-  if (ui.gamesSection.classList.contains('hidden')){
-    ui.toolsSection.classList.add('hidden');
-    ui.linuxSection.classList.add('hidden');
-    ui.gamesSection.classList.remove('hidden');
-
-    ui.toolsTab.setAttribute("aria-selected", "false");
-    ui.linuxTab.setAttribute("aria-selected", "false");
-    ui.gamesTab.setAttribute("aria-selected", "true");
-  }
-  ui.payloadsList.scrollTop = 0;
-  // Update lastTap
-  saveLastTab('games');
-  
-})
 // payloads tabs
 function loadLastTab(){
   document.getElementById(user.lastTab).classList.remove('hidden');
@@ -602,7 +410,7 @@ function setGoldHENVer(value){
 }
 
 function loadGoldHENVer(){
-  const goldHenVer = localStorage.getItem("GHVer") || "GHv2.4b18.8";
+  const goldHenVer = localStorage.getItem("GHVer") || "GHv2.4b18.9";
   document.querySelector(`input[name="goldhen"][value="${goldHenVer}"]`).checked = true;
 }
 
@@ -742,10 +550,6 @@ function applyLanguage(lang) {
   updateText(warningHeader, 'alert');
   
   if (isHttps()){
-    const httpsHostElement = document.getElementById("httpsHost");
-    if (httpsHostElement && strings.httpsHost && strings.httpsHost.length > 0){
-        httpsHostElement.innerText = strings.httpsHost;
-    }
     ui.secondHostBtn[1].style.display = "block";
   }
 
@@ -759,7 +563,6 @@ function applyLanguage(lang) {
   updateText(ui.payloadsSectionTitle, 'payloadsHeader');
   updateText(ui.toolsTab, 'payloadsToolsHeader');
   updateText(ui.linuxTab, 'payloadsLinuxHeader');
-  updateText(ui.gamesTab, 'payloadsGameHeader');
   if (!linuxPayloadsRendered){
     updateText(document.querySelector("#" + ui.linuxSection.id + " button") , 'selectSouthbridge');
   }
@@ -797,6 +600,14 @@ function saveLanguage() {
   initLanguage();
 };
 
+function loadLinuxPayloads(){
+  if (user.southbridge && user.ps4Model){
+    renderPayloads(linuxPayloads);
+    linuxPayloadsRendered = true;
+    document.querySelector("#" + ui.linuxSection.id + " button").remove();
+  }
+}
+
 function loadSouthbridge(){
   if (user.southbridge){
     document.querySelector(`input[name="southbridge"][value="${user.southbridge}"]`).checked = true;
@@ -827,7 +638,7 @@ function CheckFW() {
       if (isHttps()){
         ui.secondHostBtn[0].style.display = "block";
       }else{
-        // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's BinLoader
+        // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's PayLoader
         const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
         elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
@@ -844,29 +655,6 @@ function CheckFW() {
       });
     }
     window.ps4Fw = fwVersion;
-    // Display only Compatible GoldHENs
-    const GoldHENsOption = {
-      "9.60": ["GHv2.3Fw755", "GHv2.3Fw702"],
-      "9.00": ["GHv2.3Fw755", "GHv2.3Fw702"],
-      "9.03": ["GHv2.3Fw755", "GHv2.3Fw702", "GHv2.4b18", "GHv2.4b18.2"],
-      "7.55": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"],
-      "7.02": ["GHv2.4b18.4", "GHv2.4b18.2", "GHv2.4b18"]
-    };
-    // To remove all of them with one line in case the firmware is not listed
-    const allElements = [
-      "GHv2.3Fw755",
-      "GHv2.3Fw702",
-      "GHv2.4b18",
-      "GHv2.4b18.4",
-      "GHv2.4b18.2"
-    ];
-    const idsToRemove = GoldHENsOption[fwVersion] || allElements;
-
-    idsToRemove.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.remove();
-    });
-
   } else {
     user.platform = 'Unknown platform';
 
@@ -893,12 +681,7 @@ function loadSettings() {
     initLanguage(user.currentLanguage);
     renderPayloads(payloads);
     loadLastTab();
-    // Render linux payloads
-  if (user.southbridge && user.ps4Model){
-    renderPayloads(linuxPayloads);
-    linuxPayloadsRendered = true;
-    document.querySelector("#" + ui.linuxSection.id + " button").remove();
-  }
+    loadLinuxPayloads()
     loadGoldHENVer();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
@@ -908,7 +691,6 @@ function loadSettings() {
 function getPayloadCategoryClass(category) {
   switch (category) {
     case 'tools': return 'category-tools';
-    case 'games': return 'category-games';
     case 'linux': return 'category-linux';
     default: return '';
   }
@@ -948,9 +730,6 @@ function renderPayloads(payloads) {
       case "tools":
         ui.toolsSection.appendChild(payloadCard);
         break;
-      case "games":
-        ui.gamesSection.appendChild(payloadCard);
-        break;
       case "linux":
         ui.linuxSection.appendChild(payloadCard);
         break;
@@ -973,7 +752,7 @@ function DisplayCacheProgress() {
   }, 1000);
     setTimeout(function () { 
       location.reload();
-    }, 3000); 
+    }, 2000); 
   }
 
   // Save southbridge and ps4 model data

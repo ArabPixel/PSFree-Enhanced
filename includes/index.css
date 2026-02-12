@@ -101,16 +101,13 @@ input[type="radio"]:checked {
     color: #4ade80;
 }
 
-.category-games {
-    background-color: rgba(234, 179, 8, 0.2);
-    color: #facc15;
-}
+/* Good color for future tab: #facc15 */
 
 .category-linux {
     background-color: rgba(139, 92, 246, 0.2);
     color: #a78bfa;
 }
-.category-games, .category-tools, .category-linux{
+.category-tools, .category-linux{
     border: none !important;
 }
 
@@ -422,7 +419,6 @@ section { /* Apply to initial-screen and exploit-main-screen */
 
 /* --- Custom classes for payload categories (from your JS) --- */
 .category-tools { border-color: #a78bfa; /* Example purple */ }
-.category-games { border-color: #f87171; /* Example red */ }
 .category-linux { border-color: #34d399; /* Example green */ }
 .category-testing { border-color: red; /* Example red */ }
 
@@ -452,14 +448,12 @@ button{
 }
 
 #tools,
-#games,
 #linux,
 #testing {
     background-color: transparent;
 }
 
 #tools-tab,
-#games-tab,
 #linux-tab,
 #testing-tab {
     background-color: transparent;

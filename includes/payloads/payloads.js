@@ -29,7 +29,7 @@ var sendPayload = function(url, data, onLoadEndCallback) {
 function Loadpayloadlocal(PLfile){ //Loading Payload via Payload Param.
     var PS4IP = "127.0.0.1";
 
-	// First do an initial check to see if the BinLoader server is running, ready or busy.
+	// First do an initial check to see if the PayLoader server is running, ready or busy.
 	var req = new XMLHttpRequest();
     if (PS4IP == "127.0.0.1") {
       req.open("POST", `http://${PS4IP}:9090/status`);
@@ -50,7 +50,7 @@ function Loadpayloadlocal(PLfile){ //Loading Payload via Payload Param.
             }
             
 			//alert("Cannot Load Payload Because The BinLoader Server Is Not Running");//<<If server is not running, alert message.
-            //ServerStatus("Cannot Load Payload Because The BinLoader Server Is Not Running");
+            //ServerStatus("Cannot Load Payload Because The PayLoader Server Is Not Running");
 			return;
 		};
 		req.onload = function(){
@@ -138,16 +138,10 @@ export function load_KernelDumper(){
     Loadpayloadlocal("./includes/payloads/Bins/Dumper/ps4-kernel-dumper.bin");
 }
 
-export function load_VTXDumper(){
-    if (window.ps4Fw != 9.00){
-        alert(window.lang.unsupportedFirmware + window.ps4Fw);
-    }else Loadpayloadlocal("./includes/payloads/Bins/Dumper/ps4-dumper-vtx-900.bin");
-}
 
 export function load_ModuleDumper(){
     Loadpayloadlocal("./includes/payloads/Bins/Dumper/ps4-module-dumper.bin");
 }
-
 
 // Tools
 
@@ -157,8 +151,14 @@ export function load_BinLoader(){
     }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
+export function load_Elfldr(){
+    Loadpayloadlocal("./includes/payloads/Bins/Tools/elfldr.bin")
+}
+
 export function load_PS4Debug(){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4debug.bin");
+    if (window.ps4Fw <= 12.02){
+        Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4debug.bin");
+    }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
 export function load_App2USB(){
@@ -215,22 +215,6 @@ export function load_WebRTE(){
     }else Loadpayloadlocal("./includes/payloads/Bins/Tools/WebRTE.bin");
 }
 
-export function load_ToDex(){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-todex.bin");
-}
-
-export function load_ToDev(){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ToDev.bin");
-}
-
-export function load_ToKratos(){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ToKratos.bin");
-}
-
-export function load_ToCex(){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ToCex.bin");
-}
-
 export function load_PermanentUART(){
     Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-permanent-uart.bin");
 }
@@ -242,10 +226,6 @@ export function load_PUPDecrypt(){
 export function load_FanThreshold(){
     const temp = sessionStorage.getItem('fanTemp');
     Loadpayloadlocal(`./includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold${temp}.bin`);
-}
-
-export function load_EnableBrowser(){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-enable-browser.bin");
 }
 
 // Linux
@@ -283,69 +263,4 @@ export function load_Linux4(){
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-4gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
         isLinuxPayload = true;
     }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
-}
-
-
-// Mod Menu
-
-// GTA
-
-export function load_GTAArbic127(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/ArabicGuy-1.0-1.27-rfoodxmodz.bin");
-}
-
-export function load_GTAArbic132(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/ArabicGuy-1.0-1.32-rfoodxmodz.bin");
-}
-
-export function load_GTAArbic133(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/ArabicGuy-1.0-1.33-rfoodxmodz.bin");
-}
-
-
-export function load_GTABQ133(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/BeefQueefMod-1.33.bin");
-}
-
-export function load_GTABQ134(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/BeefQueefMod-1.34.bin");
-}
-
-export function load_GTABQ138(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/BeefQueefMod-1.38.bin");
-}
-
-export function load_GTAWM132(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/WildeModz-1.32.bin");
-}
-
-export function load_GTAWM134(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/WildeModz-1.34.bin");
-}
-
-export function load_GTAWM138(){
-    Loadpayloadlocal("./includes/payloads/Bins/GTA/WildeModz-1.38.bin");
-}
-
-// RDR2
-
-export function load_Oysters100(){
-    Loadpayloadlocal("./includes/payloads/Bins/RDR2/OystersMenu-1.00-FREE.bin");
-}
-
-
-export function load_Oysters113(){
-    Loadpayloadlocal("./includes/payloads/Bins/RDR2/OystersMenu-1.13-FREE.bin");
-}
-
-export function load_Oysters119(){
-    Loadpayloadlocal("./includes/payloads/Bins/RDR2/OystersMenu-1.19-FREE.bin");
-}
-
-export function load_Oysters124(){
-    Loadpayloadlocal("./includes/payloads/Bins/RDR2/OystersMenu-1.24-FREE.bin");
-}
-
-export function load_Oysters129(){
-    Loadpayloadlocal("./includes/payloads/Bins/RDR2/OystersMenu-1.29-FREE.bin");
 }

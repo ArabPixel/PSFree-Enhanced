@@ -24,11 +24,10 @@ window.lang = {
         "note2": "Allow the caching process to complete for better stability",
         "note3": "It might take you multiple tries to achieve the jailbreak",
     },
-    "secondHostBtn": "Load payloads using GoldHEN's BinLoader - External link",
+    "secondHostBtn": "Load payloads using GoldHEN's PayLoader - External link",
     "alert": "Important notice",
     "waitingUserInput": "Waiting for user action",
     "cache": "Installing Cache: ",
-    "httpsHost": "Loading payloads through GoldHEN's BinLoader is not possible at the moment, click the blue button below to use the supported host.",
     "ghVer": "GoldHEN Versions",
     "otherVer": "Other versions",
     "latestVer": "Latest",
@@ -36,16 +35,16 @@ window.lang = {
     "fanDescription": "Sets the temperature threshold where the fan will kick into turbo",
     "selectTemp":   "Select a temperature",
     "default":  "Default", // Fan default string
-    "goldhenFirmwareSemiSupported": "* Loading payloads through GoldHEN's BinLoader is supported on all firmware.",
+    "goldhenFirmwareSemiSupported": "* Loading payloads through GoldHEN's PayLoader is supported on all firmware.",
     "southbridgeHeader":    "Southbridge and Model",
     "southbridgeHelp":  "Need help?",
     "southbridgeHelp1": "Load GoldHEN and go to Settings -> System -> System information and check Southbridge.",
     "southbridgeHelp2": "Selecting wrong options may cause a kernel panic!",
     "selectSouthbridge":    "Select your Southbridge and PS4 Model",
     // payloads.js
-    "linuxOnlyWithGoldHEN": "Linux payloads should only be loaded through GoldHEN's BinLoader!",
-    "busyBinLoader":    "Cannot Load Payload Because The BinLoader Server Is Busy",
-    "binLoaderNotDetected": "GoldHEN's BinLoader is not detected, is it enabled?!", // For no-webkit firmware
-    "disabledBinloader":    "GoldHEN's Binloader is not running, load payload using the exploit instead?",
+    "linuxOnlyWithGoldHEN": "Linux payloads should only be loaded through GoldHEN's PayLoader!",
+    "busyBinLoader":    "Cannot Load Payload Because The PayLoader Server Is Busy",
+    "binLoaderNotDetected": "GoldHEN's PayLoader is not detected, is it enabled?!", // For no-webkit firmware
+    "disabledBinloader":    "GoldHEN's PayLoader is not running, load payload using the exploit instead?",
     "unsupportedFirmware":  "Unsupported firmware ",
 }

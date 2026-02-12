@@ -44,7 +44,7 @@
         <!-- Compatibility message -->
         <p id="PS4FW" class="text-white/70 text-lg mt-4 mb-6">-</p>
         <a hidden href="http://psfree-enhanced.free.nf" style="text-decoration: none;" class="secondHostBtn w bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center" >
-            Load payloads using GoldHEN's BinLoader - External link
+            Load payloads using GoldHEN's PayLoader - External link
         </a>
 
         <!-- Jailbreak flavor options -->
@@ -117,7 +117,6 @@
                     <!-- Payloads section -->
                     <div id="payloadsSection" class="bg-gray-800 p-6 rounded-lg flex flex-col h-full">
                         <h2 class="text-xl font-semibold mb-4" id="payloads-section-title">Payloads</h2>
-                        <p id="httpsHost"></p>
                         <div
                             class="mb-4 border-b border-gray-200 border-gray-700 w-full sticky top-0 bg-gray-800 z-10 tabs">
                             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center w-full"
@@ -133,12 +132,6 @@
                                         id="linux-tab" data-tabs-target="#linux" type="button" role="tab"
                                         aria-controls="linux" aria-selected="false">Linux</button>
                                 </li>
-                                <li class="flex-1" role="presentation">
-                                    <button
-                                        class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
-                                        id="games-tab" data-tabs-target="#games" type="button" role="tab"
-                                        aria-controls="rdr2" aria-selected="false">Games</button>
-                                </li>
                             </ul>
                         </div>
                         <div id="payloadsGrid" class="space-y-3 overflow-y-auto flex-grow max-h-[calc(100vh-250px)]" style="overflow-x: hidden !important;">
@@ -151,9 +144,6 @@
                                     <button onclick="settingsPopup();" id="selectSouthbridgeTemp"
                                         class="mt-6 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors "
                                         >Select your Southbridge and PS4 Model</button>
-                                </div>
-                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="games" role="tabpanel"
-                                    aria-labelledby="games-tab">
                                 </div>
                             </div>
                         </div>
@@ -176,7 +166,7 @@
                             </button>
                         </div>
                         <a hidden href="http://psfree-enhanced.free.nf" style="text-decoration: none;" class="secondHostBtn w bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center" >
-                            Load payloads using GoldHEN's BinLoader - External link
+                            Load payloads using GoldHEN's PayLoader - External link
                         </a>
                     </div>
                 </div>
@@ -217,7 +207,7 @@
                 </div>
             </div>
             <small id="goldhenFirmwareSemiSupported">
-                <i class="text-white/70">* Loading payloads through GoldHEN's BinLoader is supported.</i>
+                <i class="text-white/70">* Loading payloads through GoldHEN's PayLoader is supported.</i>
             </small>
             <button onclick="aboutPopup()"
                 class="mt-6 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
@@ -255,11 +245,15 @@
                 <h3 class="text-lg font-semibold mb-2" id="ghVer">GoldHEN versions</h3>
                 <div class="radio-group space-y-2">
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="goldhen" value="GHv2.4b18.8" onchange="setGoldHENVer(this.value);">
-                        <p>GoldHEN v2.4b18.8 - </p><pre id="latestVer"> Latest</pre>
+                        <input type="radio" name="goldhen" value="GHv2.4b18.9" onchange="setGoldHENVer(this.value);">
+                        <p>GoldHEN v2.4b18.9 - </p><pre id="latestVer"> Latest</pre>
                     </label>
                     <details>
                         <summary>Other versions</summary>
+                        <label class="flex items-center text-white/80">
+                            <input type="radio" name="goldhen" value="GHv2.4b18.8" onchange="setGoldHENVer(this.value);">
+                            <p>GoldHEN v2.4b18.8</p>
+                        </label>
                         <label class="flex items-center text-white/80">
                             <input type="radio" name="goldhen" value="GHv2.4b18.7" onchange="setGoldHENVer(this.value);">
                             <p>GoldHEN v2.4b18.7</p>
@@ -271,26 +265,6 @@
                         <label class="flex items-center text-white/80">
                             <input type="radio" name="goldhen" value="GHv2.4b18.5" onchange="setGoldHENVer(this.value);">
                             <p>GoldHEN v2.4b18.5</p>
-                        </label>
-                        <label id="GHv2.4b18.4" class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.4" onchange="setGoldHENVer(this.value); ">
-                            <p>GoldHEN v2.4b18.4</p>
-                        </label>
-                        <label id="GHv2.4b18.2" class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.2" onchange="setGoldHENVer(this.value); ">
-                            <p>GoldHEN v2.4b18.2</p>
-                        </label>
-                        <label id="GHv2.4b18" class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18" onchange="setGoldHENVer(this.value); ">
-                            <p>GoldHEN v2.4b18</p>
-                        </label>
-                        <label id="GHv2.3Fw755" class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.3Fw755" onchange="setGoldHENVer(this.value); ">
-                            <p>GoldHEN v2.3 FW 7.55</p>
-                        </label>
-                        <label id="GHv2.3Fw702" class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.3Fw702" onchange="setGoldHENVer(this.value); ">
-                            <p>GoldHEN v2.3 FW 7.02</p>
                         </label>
                     </details>
                 </div>

@@ -28,7 +28,6 @@ window.lang = {
     "alert": "Важная информация",
     "waitingUserInput": "Ожидание команды",
     "cache": "Установка кэша: ",
-    "httpsHost": "Загрузка payload через GoldHEN BinLoader в данный момент недоступна, нажмите на синюю кнопку внизу для перехода на поддерживаемый хост",
     "ghVer" : "Версии GoldHEN",
     "otherVer": "Другие версии",
     "latestVer":   "Последняя",
@@ -36,16 +35,16 @@ window.lang = {
     "fanDescription": "Устанавливает температуру которую система PS4 будет старться удерживать",
     "selectTemp":   "Выберите температуру",
     "default":  "Стандартная", // Fan default string
-    "goldhenFirmwareSemiSupported": "* Загрузка payload через GoldHEN Binloader поддерживается на всех версиях ПО.",
+    "goldhenFirmwareSemiSupported": "* Загрузка payload через GoldHEN PayLoader поддерживается на всех версиях ПО.",
     "southbridgeHeader":    "Модель PS4 и Южного моста",
     "southbridgeHelp":  "Нужна помощь?",
     "southbridgeHelp1": "Запустите GoldHEN И перейдите в Настройки -> Система -> Информация о системе и посмотрите Southbridge.",
     "southbridgeHelp2": "Выбор неправильных опций может привести к крашу системы!",
     "selectSouthbridge":    "Выберите ваш Южный мост и модель PS4",
     // payloads.js
-    "linuxOnlyWithGoldHEN": "Linux стоит загружать только через GoldHEN Binloader",
-    "busyBinLoader":    "Невозможно запустить Payload так как Binloader занят",
-    "binLoaderNotDetected": "GoldHEN BinLoader не найден, он точно включен?!", // For no-webkit firmware
-    "disabledBinloader":    "GoldHEN Binloader не найден, запустить payload через эксплоит?",
+    "linuxOnlyWithGoldHEN": "Linux стоит загружать только через GoldHEN PayLoader",
+    "busyBinLoader":    "Невозможно запустить Payload так как PayLoader занят",
+    "binLoaderNotDetected": "GoldHEN PayLoader не найден, он точно включен?!", // For no-webkit firmware
+    "disabledBinloader":    "GoldHEN PayLoader не найден, запустить payload через эксплоит?",
     "unsupportedFirmware":  "Неподдерживаемая версия ПО ",
 }
