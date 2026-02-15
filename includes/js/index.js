@@ -71,7 +71,7 @@ const payloads = [
     name: "ElfLoader",
     author: "John Tornblom",
     description: "Launches ElfLoader server on port 9021 to send elf payloads.",
-    specificFW: "7.00 - 9.60",
+    specificFW: "",
     category: "tools",
     funcName: "load_Elfldr"
   },
@@ -98,7 +98,7 @@ const payloads = [
     name: "PS4-Debug",
     author: "CTN & SiSTR0",
     description: "Debugging tools for PS4.",
-    specificFW: "12.02",
+    specificFW: "up to 12.02",
     category: "tools",
     funcName: "load_PS4Debug"
   },
