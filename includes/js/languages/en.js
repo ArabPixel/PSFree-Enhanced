@@ -22,7 +22,7 @@ window.lang = {
     "warnings": {
         "note1": "Make sure to delete cache data before running the exploit for the first time",
         "note2": "Allow the caching process to complete for better stability",
-        "note3": "It might take you multiple tries to achieve the jailbreak",
+        "note3": "It might take you multiple attemps to achieve the jailbreak",
     },
     "secondHostBtn": "Load payloads using GoldHEN's PayLoader - External link",
     "alert": "Important notice",
@@ -41,6 +41,9 @@ window.lang = {
     "southbridgeHelp1": "Load GoldHEN and go to Settings -> System -> System information and check Southbridge.",
     "southbridgeHelp2": "Selecting wrong options may cause a kernel panic!",
     "selectSouthbridge":    "Select your Southbridge and PS4 Model",
+    "showAdvancedPayloads": "Show Advanced Payloads",
+    "advancedPayloadHeader":    "Advanced Payloads",
+    "advanced": "Advanced",
     // payloads.js
     "linuxOnlyWithGoldHEN": "Linux payloads should only be loaded through GoldHEN's PayLoader!",
     "busyBinLoader":    "Cannot Load Payload Because The PayLoader Server Is Busy",

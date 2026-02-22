@@ -102,7 +102,10 @@ input[type="radio"]:checked {
 }
 
 /* Good color for future tab: #facc15 */
-
+.category-advanced {
+    background-color: rgba(246, 92, 97, 0.2);
+    color: #fa8b96;
+}
 .category-linux {
     background-color: rgba(139, 92, 246, 0.2);
     color: #a78bfa;
@@ -449,13 +452,13 @@ button{
 
 #tools,
 #linux,
-#testing {
+#advanced {
     background-color: transparent;
 }
 
 #tools-tab,
 #linux-tab,
-#testing-tab {
+#advanced-tab {
     background-color: transparent;
 }
 

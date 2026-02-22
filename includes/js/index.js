@@ -5,7 +5,8 @@ var user = {
   southbridge:      localStorage.getItem('southbridge'),
   ps4Model:         localStorage.getItem('ps4Model'), // Fat/Slim/Pro
   platform:         "Unknown", // PS4/PC/Mobile etc..
-  lastTab:          localStorage.getItem('lastTab') || 'tools'
+  lastTab:          localStorage.getItem('lastTab') || 'tools',
+  advancedPayloads: localStorage.getItem("advancedPayloads") || false // True/false
 }
 let lastScrollY = 0;
 let lastSection = "initial";
@@ -31,6 +32,10 @@ const ui = {
   toolsTab: document.getElementById('tools-tab'),
   linuxSection: document.getElementById('linux'),
   linuxTab: document.getElementById('linux-tab'),
+  advancedPayloadsSection: document.getElementById('advanced'),
+  advancedPayloadsTab: document.getElementById('advanced-tab'),
+  advancedPayloadsContainer: document.querySelector('.advancedPayloadsTab'),
+  advancedPayloadsInput:  document.getElementById('advancedPayloadsInput'),
   payloadsSection: document.getElementById('payloadsSection'),
   payloadsList: document.getElementById("payloadsGrid"),
   payloadsSectionTitle: document.getElementById('payloads-section-title'),
@@ -49,15 +54,15 @@ const ui = {
 };
 const payloads = [
   {
-    id: "App2USB",
-    name: "App2USB",
-    author: "Stooged",
-    description: "Unofficially Moves installed applications to an external USB drive.",
+    id: "FTP",
+    name: "FTP",
+    author: "Scene Collective",
+    description: "Enables FTP server access for file transfers.",
     specificFW: "",
     category: "tools",
-    funcName: "load_App2USB"
+    funcName: "load_FTP"
   },
-    {
+  {
     id: "BinLoader",
     name: "BinLoader",
     author: "PSFree Exploit",
@@ -76,15 +81,6 @@ const payloads = [
     funcName: "load_Elfldr"
   },
   {
-    id: "FTP",
-    name: "FTP",
-    author: "Scene Collective",
-    description: "Enables FTP server access for file transfers.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_FTP"
-  },
-  {
     id: "DisableUpdates",
     name: "Disable-Updates",
     author: "Scene Collective",
@@ -92,24 +88,6 @@ const payloads = [
     specificFW: "",
     category: "tools",
     funcName: "load_DisableUpdates"
-  },
-  {
-    id: "PS4Debug",
-    name: "PS4-Debug",
-    author: "CTN & SiSTR0",
-    description: "Debugging tools for PS4.",
-    specificFW: "up to 12.02",
-    category: "tools",
-    funcName: "load_PS4Debug"
-  },
-  {
-    id: "KernelDumper",
-    name: "Kernel-Dumper",
-    author: "Eversion",
-    description: "Dumps the PS4 kernel.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_KernelDumper"
   },
   {
     id: "FanThreshold",
@@ -157,15 +135,6 @@ const payloads = [
     funcName: "load_RestoreDB"
   },
   {
-    id: "RIFRenamer",
-    name: "RIF-Renamer",
-    author: "Al Azif",
-    description: "Renames 'fake' RIFs to 'free' RIFs for better HEN compatibility. Use this if your PKGs only work with Mira+HEN.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_RIFRenamer"
-  },
-  {
     id: "ExitIDU",
     name: "ExitIDU",
     author: "Scene Collective",
@@ -173,24 +142,6 @@ const payloads = [
     specificFW: "",
     category: "tools",
     funcName: "load_ExitIDU"
-  },
-  {
-    id: "DisableASLR", 
-    name: "Disable-ASLR",
-    author: "Scene Collective",
-    description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_DisableASLR"
-  },
-  {
-    id: "ModuleDumper",
-    name: "Module-Dumper",
-    author: "SocraticBliss",
-    description: "Dumps the decrypted modules from /system, /system_ex, /update and the root of the filesystem to a USB device.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ModuleDumper"
   },
   {
     id: "WebRTE",
@@ -202,23 +153,14 @@ const payloads = [
     funcName: "load_WebRTE"
   },
   {
-    id: "PermanentUART",
-    name: "Permanent-UART",
-    author: "JTAG7371",
-    description: "Enabled hardware based UART without a kernel patch, persists though updates.",
+    id: "App2USB",
+    name: "App2USB",
+    author: "Stooged",
+    description: "Unofficially Moves installed applications to an external USB drive.",
     specificFW: "",
     category: "tools",
-    funcName: "load_PermanentUART"
+    funcName: "load_App2USB"
   },
-  {
-    id: "PUPDecrypt",
-    name: "PUP-Decrypt",
-    author: "andy-man",
-    description: "Payload to decrypt the contents of a firmware update file (PUP) on the PS4",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_PUPDecrypt"
-  }
 ];
 
 var linuxPayloads = [
@@ -258,7 +200,73 @@ var linuxPayloads = [
     category: "linux",
     funcName: "load_Linux4"
   }
-]
+];
+
+const advancedPayloads = [
+  {
+    id: "PS4Debug",
+    name: "PS4-Debug",
+    author: "CTN & SiSTR0",
+    description: "Debugging tools for PS4.",
+    specificFW: "up to 12.02",
+    category: "advanced",
+    funcName: "load_PS4Debug"
+  },
+  {
+    id: "PUPDecrypt",
+    name: "PUP-Decrypt",
+    author: "andy-man",
+    description: "Payload to decrypt the contents of a firmware update file (PUP) on the PS4",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_PUPDecrypt"
+  },
+  {
+    id: "ModuleDumper",
+    name: "Module-Dumper",
+    author: "SocraticBliss",
+    description: "Dumps the decrypted modules from /system, /system_ex, /update and the root of the filesystem to a USB device.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_ModuleDumper"
+  },
+  {
+    id: "KernelDumper",
+    name: "Kernel-Dumper",
+    author: "Eversion",
+    description: "Dumps the PS4 kernel.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_KernelDumper"
+  },
+  {
+    id: "DisableASLR", 
+    name: "Disable-ASLR",
+    author: "Scene Collective",
+    description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_DisableASLR"
+  },
+  {
+    id: "PermanentUART",
+    name: "Permanent-UART",
+    author: "JTAG7371",
+    description: "Enabled hardware based UART without a kernel patch, persists though updates.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_PermanentUART"
+  },
+  {
+    id: "RIFRenamer",
+    name: "RIF-Renamer",
+    author: "Al Azif",
+    description: "Renames 'fake' RIFs to 'free' RIFs for better HEN compatibility. Use this if your PKGs only work with Mira+HEN.",
+    specificFW: "",
+    category: "advanced",
+    funcName: "load_RIFRenamer"
+  }
+];
 // Events
 // Scroll snap for the PS4
 ui.mainContainer.addEventListener('scroll', () => {
@@ -285,7 +293,6 @@ ui.exploitRunBtn.addEventListener('click', () => {
 
 ui.psLogoContainer.addEventListener('click', () => {
   jailbreak()
-  ui.exploitScreen.scrollIntoView({ block: "end" })
 });
 
 // tabs switching
@@ -293,9 +300,12 @@ ui.toolsTab.addEventListener('click', () =>{
   if (ui.toolsSection.classList.contains('hidden')){
     ui.toolsSection.classList.remove('hidden');
     ui.linuxSection.classList.add('hidden');
+    ui.advancedPayloadsSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "true");
     ui.linuxTab.setAttribute("aria-selected", "false");
+        ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
+
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -306,17 +316,40 @@ ui.linuxTab.addEventListener('click', () =>{
   if (ui.linuxSection.classList.contains('hidden')){
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.remove('hidden');
+    ui.advancedPayloadsSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "false");
     ui.linuxTab.setAttribute("aria-selected", "true");
+    ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
   saveLastTab('linux');
+});
+
+ui.advancedPayloadsTab.addEventListener('click', () =>{
+  if (ui.advancedPayloadsSection.classList.contains('hidden')){
+    ui.toolsSection.classList.add('hidden');
+    ui.linuxSection.classList.add('hidden');
+    ui.advancedPayloadsSection.classList.remove('hidden');
+
+    ui.toolsTab.setAttribute("aria-selected", "false");
+    ui.linuxTab.setAttribute("aria-selected", "false");
+    ui.advancedPayloadsTab.setAttribute("aria-selected", "true");
+  }
+  ui.payloadsList.scrollTop = 0;
+  // Update lastTap
+  saveLastTab('advanced');
+  
 })
 
 // payloads tabs
 function loadLastTab(){
+  if (user.lastTab == "advanced" && user.advancedPayloads != "true"){
+    // set last tab to tools
+    user.lastTab = "tools";
+    ui.toolsSection.click();
+  }
   document.getElementById(user.lastTab).classList.remove('hidden');
   document.getElementById(user.lastTab + '-tab').setAttribute("aria-selected", "true");
 }
@@ -342,6 +375,7 @@ function chooseFanThreshold(){
 
 // Jailbreak-related functions
 async function jailbreak() {
+  ui.initialScreen.remove();
   sessionStorage.removeItem('binloader');
   try {
     const modules = await loadMultipleModules([
@@ -535,6 +569,8 @@ function applyLanguage(lang) {
   updateText(document.getElementById('southbridgeHelp'), 'southbridgeHelp');
   updateText(document.getElementById('southbridgeHelp1'), 'southbridgeHelp1');
   updateText(document.getElementById('southbridgeHelp2'), 'southbridgeHelp2');
+  updateText(document.getElementById('showAdvancedPayloads'), 'showAdvancedPayloads');
+  updateText(document.getElementById('advancedPayloadHeader'), 'advancedPayloadHeader')
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
@@ -563,6 +599,7 @@ function applyLanguage(lang) {
   updateText(ui.payloadsSectionTitle, 'payloadsHeader');
   updateText(ui.toolsTab, 'payloadsToolsHeader');
   updateText(ui.linuxTab, 'payloadsLinuxHeader');
+  updateText(ui.advancedPayloadsTab, 'advanced');
   if (!linuxPayloadsRendered){
     updateText(document.querySelector("#" + ui.linuxSection.id + " button") , 'selectSouthbridge');
   }
@@ -623,7 +660,7 @@ function CheckFW() {
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
   let elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'click-to-start-text', 'chooseGoldHEN', 'southbridgeHeader'
+    'click-to-start-text', 'chooseGoldHEN', 'southbridgeHeader', 'advancedPayloads'
   ];
 
   if (ps4Regex.test(userAgent)) {
@@ -639,7 +676,7 @@ function CheckFW() {
         ui.secondHostBtn[0].style.display = "block";
       }else{
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's PayLoader
-        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader'];
+        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
         elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
         document.getElementById('exploitContainer').style.display = "block";
@@ -665,10 +702,10 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) user.platform = 'Linux';
 
     document.getElementById('PS4FW').style.color = 'red';
-    elementsToHide.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
+    // elementsToHide.forEach(id => {
+    //   const el = document.getElementById(id);
+    //   if (el) el.style.display = 'none';
+    // });
   }
 }
 
@@ -680,6 +717,7 @@ function loadSettings() {
     loadSouthbridge();
     initLanguage(user.currentLanguage);
     renderPayloads(payloads);
+    loadAdvancedPayloads();
     loadLastTab();
     loadLinuxPayloads()
     loadGoldHENVer();
@@ -692,6 +730,7 @@ function getPayloadCategoryClass(category) {
   switch (category) {
     case 'tools': return 'category-tools';
     case 'linux': return 'category-linux';
+    case 'advanced': return 'category-advanced';
     default: return '';
   }
 }
@@ -733,6 +772,9 @@ function renderPayloads(payloads) {
       case "linux":
         ui.linuxSection.appendChild(payloadCard);
         break;
+      case "advanced":
+        ui.advancedPayloadsSection.appendChild(payloadCard);
+        break;
       default:
         ui.toolsSection.appendChild(payloadCard);
         break;
@@ -771,5 +813,29 @@ function ps4Info(southbridge, model){
   if (user.southbridge && user.ps4Model){
     ui.linuxSection.innerHTML = "";
       renderPayloads(linuxPayloads)
+  }
+}
+
+function setAdvancedPayloads(inputState){
+  // Update variable/localstorage value
+  user.advancedPayloads = inputState;
+  localStorage.setItem("advancedPayloads", inputState)
+  if (inputState == true){
+    // Its true, show tab and render payloads
+    ui.advancedPayloadsContainer.classList.remove('hidden')
+    renderPayloads(advancedPayloads);
+  }else {
+    // its false, hide payloads' tab and move to tools' tab
+    ui.advancedPayloadsContainer.classList.add('hidden')
+    ui.toolsTab.click();
+  }
+}
+
+function loadAdvancedPayloads(){
+  if (user.advancedPayloads == "true"){
+    // its true, check the box, show tab and load the payloads
+    ui.advancedPayloadsInput.checked = true;
+    ui.advancedPayloadsContainer.classList.remove('hidden')
+    renderPayloads(advancedPayloads);
   }
 }

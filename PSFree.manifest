@@ -1,14 +1,14 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-02-14 20:05:44.023200
+# Generated on 2026-02-22 22:39:54.564238
 
 CACHE:
 index.html
 includes/index.css
 includes/js/index.js
+includes/js/languages/ru.js
 includes/js/languages/ar.js
 includes/js/languages/en.js
-includes/js/languages/ru.js
 includes/payloads/Jailbreak.js
 includes/payloads/payloads.js
 includes/payloads/Bins/Dumper/ps4-app-dumper.bin
