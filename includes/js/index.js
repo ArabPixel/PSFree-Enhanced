@@ -702,10 +702,10 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) user.platform = 'Linux';
 
     document.getElementById('PS4FW').style.color = 'red';
-    // elementsToHide.forEach(id => {
-    //   const el = document.getElementById(id);
-    //   if (el) el.style.display = 'none';
-    // });
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
   }
 }
 
