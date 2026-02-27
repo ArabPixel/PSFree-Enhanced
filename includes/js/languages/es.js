@@ -45,7 +45,7 @@ window.lang = {
     "advancedPayloadHeader":    "Payloads Avanzados",
     "advanced": "Avanzado",
     // payloads.js
-    "linuxOnlyWithGoldHEN": "Los payloads de Linux solo deben cargarse a traves del GoldHEN's PayLoader!",
+    "payloadOnlyWithGoldHEN": "Los payloads .elf deben cargarse a traves del GoldHEN's PayLoader!",
     "busyBinLoader":    "Imposble cargar el Payload porque el servidor de Payloads esta ocupado",
     "binLoaderNotDetected": "GoldHEN's PayLoader no detectado, esta habilitado?!", // For no-webkit firmware
     "disabledBinloader":    "El GoldHEN's PayLoader no esta ejecutandose, cargar el payload usando el exploit?",
