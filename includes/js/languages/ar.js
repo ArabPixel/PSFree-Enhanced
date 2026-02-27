@@ -41,7 +41,7 @@ window.lang = {
   "southbridgeHelp1": "قم بتفعيل GoldHEN و إذهب إلى الإعدادات -> النظام -> معلومات النظام وستجد الـ Southbridge الخاص بجهازك",
   "southbridgeHelp2": "قد يؤدي اختيار خيارات خاطئة إلى حدوث إنطفاء مباشر للجهاز!",
   "selectSouthbridge":   "حدد Southbridge و نوع الـPS4 الخاص بك",
-  "linuxOnlyWithGoldHEN": "تفعيل إضافة لينكس مسموح فقط عن طريق خادم إضافات (PayLoader)GoldHEN!",
+  "payloadOnlyWithGoldHEN": "تفعيل إضافة .elf مسموح فقط عن طريق خادم إضافات (PayLoader)GoldHEN!",
   "showAdvancedPayloads": "عرض الإضافات المتقدمة",
   "advancedPayloadHeader":  "الإضافات المتقدمة",
   "advanced": "المتقدم",

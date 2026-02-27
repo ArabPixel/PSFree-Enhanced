@@ -2,7 +2,7 @@
 // @ts-nocheck
 var linuxFwFolder =  getLinuxFolder(window.ps4Fw);
 var decimalFw =      Number(window.ps4Fw).toFixed(2).replace('.',''); // e.g. 11.00 -> 1100
-var isLinuxPayload = false;   // check if a linux payload is being loaded
+var needsGoldHEN = false;   // check if a the payload required GoldHEN's PayLoader because of .elf format
 
 var getPayload = function(payload, onLoadEndCallback) {
   var req = new XMLHttpRequest();
@@ -91,9 +91,9 @@ function Loadpayloadonline(PLfile) {
         sessionStorage.setItem('binloader', 1);
 
     // Check if Linux payload is selected
-    }else if (isLinuxPayload){
-        alert(window.lang.linuxOnlyWithGoldHEN);
-        isLinuxPayload = false;
+    }else if (needsGoldHEN){
+        alert(window.lang.payloadOnlyWithGoldHEN);
+        needsGoldHEN = false;
         return;
 
     }else {
@@ -191,7 +191,7 @@ export function load_ExitIDU(){
 }
   
 export function load_FTP(){
-    Loadpayloadlocal("./includes/payloads//Bins/Tools/ps4-ftp.bin");
+    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-ftp.bin");
 }
   
 export function load_HistoryBlocker(){
@@ -234,7 +234,7 @@ export function load_Linux1(){
         var ps4Model = localStorage.getItem('ps4Model');
         var southbridge = localStorage.getItem('southbridge');
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-1gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
-        isLinuxPayload = true;
+        needsGoldHEN = true;
     }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
@@ -243,7 +243,7 @@ export function load_Linux2(){
         var ps4Model = localStorage.getItem('ps4Model');
         var southbridge = localStorage.getItem('southbridge');
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-2gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
-        isLinuxPayload = true;
+        needsGoldHEN = true;
     }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
@@ -252,7 +252,7 @@ export function load_Linux3(){
         var ps4Model = localStorage.getItem('ps4Model');
         var southbridge = localStorage.getItem('southbridge');
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-3gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
-        isLinuxPayload = true;
+        needsGoldHEN = true;
     }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
 }
 
@@ -261,6 +261,11 @@ export function load_Linux4(){
         var ps4Model = localStorage.getItem('ps4Model');
         var southbridge = localStorage.getItem('southbridge');
         Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-4gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf" );
-        isLinuxPayload = true;
+        needsGoldHEN = true;
     }else alert(window.lang.unsupportedFirmware + window.ps4Fw);
+}
+
+export function load_npFakeSignin(){
+    needsGoldHEN = true;
+    Loadpayloadlocal("./includes/payloads/Bins/Tools/np-fake-signin-ps4.elf");
 }

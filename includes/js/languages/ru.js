@@ -42,7 +42,7 @@ window.lang = {
     "southbridgeHelp2": "Выбор неправильных опций может привести к крашу системы!",
     "selectSouthbridge":    "Выберите ваш Южный мост и модель PS4",
     // payloads.js
-    "linuxOnlyWithGoldHEN": "Linux стоит загружать только через GoldHEN PayLoader",
+    "payloadOnlyWithGoldHEN": "Активация .elf должна осуществляться исключительно через программу GoldHEN PayLoader.",
     "busyBinLoader":    "Невозможно запустить Payload так как PayLoader занят",
     "binLoaderNotDetected": "GoldHEN PayLoader не найден, он точно включен?!", // For no-webkit firmware
     "disabledBinloader":    "GoldHEN PayLoader не найден, запустить payload через эксплоит?",
