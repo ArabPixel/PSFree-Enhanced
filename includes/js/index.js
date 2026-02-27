@@ -11,6 +11,7 @@ var user = {
 let lastScrollY = 0;
 let lastSection = "initial";
 var linuxPayloadsRendered = false;
+var devMode = true;   // Dev mode for PC debugging
 const ui = {
   mainContainer: document.querySelector('.mainContainer'),
 
@@ -106,6 +107,15 @@ const payloads = [
     specificFW: "",
     category: "tools",
     funcName: "load_HistoryBlocker"
+  },
+  {
+    id: "NpFakeSignin",
+    name: "NP Fake Signin",
+    author: "earthonion",
+    description: "Sets PSN state to 'signed in' on PS4, use after fake activation. Useful for vue after free",
+    specificFW: "",
+    category: "tools",
+    funcName: "load_npFakeSignin"
   },
   {
     id: "OrbisToolbox",
@@ -375,7 +385,7 @@ function chooseFanThreshold(){
 
 // Jailbreak-related functions
 async function jailbreak() {
-  ui.initialScreen.remove();
+  if (window.ps4Fw) ui.initialScreen.remove();
   sessionStorage.removeItem('binloader');
   try {
     const modules = await loadMultipleModules([
@@ -702,10 +712,12 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) user.platform = 'Linux';
 
     document.getElementById('PS4FW').style.color = 'red';
-    elementsToHide.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
+    if (!devMode){
+      elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+    }
   }
 }
 
