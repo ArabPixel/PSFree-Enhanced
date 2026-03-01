@@ -287,6 +287,7 @@ body {
 /* Positioning */
 .relative { position: relative; }
 .absolute { position: absolute; }
+.inherit { position: inherit; }
 .fixed { position: fixed; }
 .top-6 { top: 1.5rem; /* 24px */ }
 .left-6 { left: 1.5rem; /* 24px */ }
@@ -381,6 +382,7 @@ section { /* Apply to initial-screen and exploit-main-screen */
 .hover\:text-white:hover { color: var(--color-white); }
 .hover\:bg-white\/10:hover { background-color: rgba(255, 255, 255, 0.1); }
 .hover\:scale-105:hover { transform: scale(1.05); }
+.hover\:scale-102:hover { transform: scale(1.02); }
 .hover\:bg-blue-700:hover { background-color: var(--color-blue-700); }
 .hover\:text-gray-600:hover { color: var(--color-gray-600); }
 .hover\:border-gray-300:hover { border-color: #d1d5db; } /* Approximation for gray-300 */

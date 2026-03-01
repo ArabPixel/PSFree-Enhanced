@@ -4,14 +4,16 @@ var user = {
   currentJbFlavor:  localStorage.getItem('jailbreakFlavor') || 'GoldHEN',
   southbridge:      localStorage.getItem('southbridge'),
   ps4Model:         localStorage.getItem('ps4Model'), // Fat/Slim/Pro
-  platform:         "Unknown", // PS4/PC/Mobile etc..
+  platform:         "PS4", // PS4/PC/Mobile etc..
   lastTab:          localStorage.getItem('lastTab') || 'tools',
-  advancedPayloads: localStorage.getItem("advancedPayloads") || false // True/false
+  advancedPayloads: localStorage.getItem('advancedPayloads') || false, // True/false
+  ip:               localStorage.getItem('PayLoaderIp') || "127.0.0.1",
+  ps4Fw:            localStorage.getItem('ps4Fw')  // Used for the case of sending the payload over the network
 }
 let lastScrollY = 0;
 let lastSection = "initial";
 var linuxPayloadsRendered = false;
-var devMode = true;   // Dev mode for PC debugging
+var devMode = false;   // Dev mode for PC debugging
 const ui = {
   mainContainer: document.querySelector('.mainContainer'),
 
@@ -42,6 +44,8 @@ const ui = {
   payloadsSectionTitle: document.getElementById('payloads-section-title'),
   exploitRunBtn: document.getElementById('exploitRun'),
   secondHostBtn: document.querySelectorAll('.secondHostBtn'),
+  ps4IpInput: document.getElementById('ps4IpInput'),
+  ps4FwSelect: document.getElementById('ps4FwSelect'),
   // Popups
   aboutPopupOverlay: document.getElementById('about-popup-overlay'),
   aboutPopup: document.getElementById('about-popup'),
@@ -49,6 +53,7 @@ const ui = {
   settingsPopup: document.getElementById('settings-popup'),
   chooseFanThresholdOverlay: document.getElementById('choose-fanThreshold-overlay'),
   chooseFanThreshold: document.getElementById('choose-fanThreshold'),
+  scanGoldHENPayLoader: document.getElementById('scanPayLoader'),
 
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
@@ -72,7 +77,7 @@ const payloads = [
     category: "tools",
     funcName: "load_BinLoader"
   },
-   {
+  {
     id: "ElfLoader",
     name: "ElfLoader",
     author: "John Tornblom",
@@ -80,6 +85,15 @@ const payloads = [
     specificFW: "",
     category: "tools",
     funcName: "load_Elfldr"
+  },
+  {
+    id: "WebSrv",
+    name: "PS4-Websrv",
+    author: "ArabPixel",
+    description: "Launches a web server on port 80 on the PS4 to load payloads using external devices on the fly.",
+    specificFW: "",
+    category: "tools",
+    funcName: "load_WebSrv"
   },
   {
     id: "DisableUpdates",
@@ -280,6 +294,8 @@ const advancedPayloads = [
 // Events
 // Scroll snap for the PS4
 ui.mainContainer.addEventListener('scroll', () => {
+  // Only apply if using a PS4
+  if (user.platform != "PS4") return;
   if (ui.mainContainer.scrollTop > lastScrollY) {
     // scrolling down
     if (lastSection !== "exploit") {
@@ -426,6 +442,18 @@ function isHttps() {
 }
 
 async function Loadpayloads(payload) {
+  if (user.platform != "PS4"){
+     var inputIp = ui.ps4IpInput.value.trim();
+  if (inputIp == null || inputIp == undefined || inputIp == ""){
+    alert("Empty IP");
+    return;
+  }
+  if(/\s/.test(inputIp)){
+    alert("PS4 IP cant be empty and cant contain white spaces!");
+    return
+  }
+  user.ip = inputIp;
+  }
   try {
     let modules;
     sessionStorage.removeItem('binloader');
@@ -675,13 +703,13 @@ function CheckFW() {
 
   if (ps4Regex.test(userAgent)) {
     if (fwVersion >= 7.00 && fwVersion <= 9.60) {
-      document.getElementById('PS4FW').style.color = 'green';
+      ui.ps4FwStatus.style.color = 'green';
 
       // Highlight firmware in about popup
       let fwElement = "fw"+fwVersion.replace('.','');
       document.getElementById(fwElement).classList.add('fwSelected');
     } else {
-      document.getElementById('PS4FW').style.color = 'red';
+      ui.ps4FwStatus.style.color = 'red';
       if (isHttps()){
         ui.secondHostBtn[0].style.display = "block";
       }else{
@@ -704,20 +732,41 @@ function CheckFW() {
     window.ps4Fw = fwVersion;
   } else {
     user.platform = 'Unknown platform';
-
     if (/Android/.test(userAgent)) user.platform = 'Android';
     else if (/iPhone|iPad|iPod/.test(userAgent)) user.platform = 'iOS';
     else if (/Macintosh/.test(userAgent)) user.platform = 'MacOS';
     else if (/Windows/.test(userAgent)) user.platform = 'Windows';
     else if (/Linux/.test(userAgent)) user.platform = 'Linux';
 
-    document.getElementById('PS4FW').style.color = 'red';
-    if (!devMode){
-      elementsToHide.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
-    }
+    // For user selected firmware
+    user.ps4Fw;
+    if (user.ps4Fw) ui.ps4FwSelect.value = user.ps4Fw;
+    // Show only if on a local server
+    if (!isLocalIP(window.location.hostname)) return
+    ui.ps4IpInput.classList.remove('hidden');
+    ui.ps4FwSelect.classList.remove('hidden');
+    ui.scanGoldHENPayLoader.classList.remove('hidden');
+    ui.ps4IpInput.value = user.ip;
+
+
+    const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads'];
+    elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
+    elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
+    document.getElementById('exploitContainer').style.display = "block";
+    // Sizing the payload's section
+    ui.payloadsSection.style.width = "99%";
+    ui.payloadsSection.style.margin = "auto";
+    // Moving the settings icon to a better place
+    document.getElementById('header2').classList.remove('hidden', 'left-6');
+    document.getElementById('header2').classList.add('flex', 'inherit');
+    document.getElementById('header2').querySelectorAll('button').forEach((item) => item.classList.add('border', 'border-white/20', 'rounded-xl'))
+    ui.ps4FwStatus.style.color = 'red';
+  if (!devMode && isLocalIP(window.location.hostname)){
+    elementsToHide.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+  }
   }
 }
 
@@ -752,7 +801,7 @@ function renderPayloads(payloads) {
     const payloadCard = document.createElement('div');
     payloadCard.id = payload.id;
     payloadCard.onclick = () => Loadpayloads(payload.funcName);
-    payloadCard.className = `payload payload-card relative group cursor-pointer transition-all duration-300 hover:scale-105`;
+    payloadCard.className = `payload payload-card relative group cursor-pointer transition-all hover:scale-102`;
     payloadCard.dataset.payloadId = payload.id;
 
     payloadCard.innerHTML = `
@@ -851,3 +900,98 @@ function loadAdvancedPayloads(){
     renderPayloads(advancedPayloads);
   }
 }
+
+// keep base ip and chop the user IP
+// e.g. 192.168.20.156 => 192.168.20
+function baseIp(ip) {
+  return ip.substring(0, ip.lastIndexOf('.'));
+}
+
+function findPs4FromBaseIP(ip) {
+  return new Promise((resolve, reject) => {
+    const base = baseIp(ip);
+    let checked = 0;
+    const total = 254;
+    let found = false;
+
+    function onDone() {
+      checked++;
+      if (checked === total && !found) {
+        reject(new Error('BinLoader not found on subnet'));
+        alert("Scanning failed, is the PayLoader server running?")
+      }
+    }
+
+    for (let i = 1; i <= total; i++) {
+      const checkIp = `${base}.${i}`;
+      const req = new XMLHttpRequest();
+      req.open('POST', `http://${checkIp}:9090/status`);
+      req.timeout = 1000;
+
+      req.onload = function () {
+        if (found) { onDone(); return; }
+        try {
+          const json = JSON.parse(req.responseText);
+          if (json.status === 'ready') {
+            found = true;
+            user.ip = checkIp;
+            try { localStorage.setItem('PayLoaderIp', checkIp); } catch (_) {}
+            if (ui.ps4IpInput && !ui.ps4IpInput.classList.contains('hidden')) {
+              ui.ps4IpInput.value = checkIp;
+            }
+            alert('PayLoader server found at ' + checkIp);
+            resolve(checkIp);
+          }
+        } catch (_) {}
+        onDone();
+      };
+
+      req.onerror = function () { onDone(); };
+      req.ontimeout = function () { onDone(); };
+
+      req.send();
+    }
+  });
+}
+
+function isLocalIP(ip) {
+  return /^(127\.|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/.test(ip);
+}
+
+function ipGuess() {
+    const host = window.location.hostname;
+    const isPS4 = (user.platform === "PS4" || typeof window.ps4Fw !== 'undefined');
+    
+    // 1. is it a local network ? (192.168.x.x, 10.x.x.x, etc.)
+    if (isLocalIP(host)) {
+        if (isPS4) {
+          user.ip = "127.0.0.1";
+          if (!ui.ps4IpInput.classList.contains("hidden")){
+            ui.ps4IpInput.value = user.ip;
+          }
+            return; // PS4 browsing its own local server
+        } else {
+            // PC browsing a hosted site.
+            findPs4FromBaseIP(host);
+            return;
+        }
+    }
+
+    // 2. is it localhost or 127.0.0.1
+    const isLoopback = (host === "localhost" || host === "127.0.0.1");
+    if (isLoopback) {
+        if (isPS4) {
+            return host;
+        } else {
+            alert("Can't scan for ip since its not provided")
+            // PC browsing a PC-hosted site.
+            // Cant scan for a PayLoader server because we only have localhost or 127.0.0.1
+            return;
+        }
+    }
+}
+// Save ps4Fw from select element (Only for communicating external device -> PS4 for local network)
+ui.ps4FwSelect.addEventListener('change', function (){
+  window.ps4Fw = ui.ps4FwSelect.value;
+  localStorage.setItem('ps4Fw', ui.ps4FwSelect.value);
+})
