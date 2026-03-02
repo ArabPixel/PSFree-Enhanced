@@ -44,6 +44,8 @@ window.lang = {
     "showAdvancedPayloads": "Show Advanced Payloads",
     "advancedPayloadHeader":    "Advanced Payloads",
     "advanced": "Advanced",
+    "scanPayLoader":    "Scan for GoldHEN's PayLoader",
+    "infoProtip":   "ProTip: New functions become available if hosted locally or on a PS4 using the PS4-Websrv payload.",
     // payloads.js
     "payloadOnlyWithGoldHEN": ".elf payloads should only be loaded through GoldHEN's PayLoader!",
     "busyBinLoader":    "Cannot Load Payload Because The PayLoader Server Is Busy",

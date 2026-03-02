@@ -587,7 +587,9 @@ function applyLanguage(lang) {
   
   updateText(ui.aboutPopup.querySelector('#PS4FWOK h3'), 'ps4FirmwareSupportedHeader');
   updateText(ui.aboutPopup.querySelector('#close-about'), 'closeButton');
-  updateText(ui.aboutPopup.querySelector('#goldhenFirmwareSemiSupported i'), 'goldhenFirmwareSemiSupported')
+  updateText(ui.aboutPopup.querySelector('#goldhenFirmwareSemiSupported i'), 'goldhenFirmwareSemiSupported');
+  updateText(ui.settingsPopup.querySelector('#scanPayLoader'), 'scanPayLoader');
+  updateText(ui.aboutPopup.querySelector('#infoProtip'), 'infoProtip');
 
   // Fan Threshold
   updateText(ui.chooseFanThreshold.querySelector('#close-fanChoose'), 'closeButton');
@@ -739,29 +741,31 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) user.platform = 'Linux';
 
     // For user selected firmware
-    user.ps4Fw;
-    if (user.ps4Fw) ui.ps4FwSelect.value = user.ps4Fw;
-    // Show only if on a local server
-    if (!isLocalIP(window.location.hostname)) return
-    ui.ps4IpInput.classList.remove('hidden');
-    ui.ps4FwSelect.classList.remove('hidden');
-    ui.scanGoldHENPayLoader.classList.remove('hidden');
-    ui.ps4IpInput.value = user.ip;
+      user.ps4Fw;
+      if (user.ps4Fw) ui.ps4FwSelect.value = user.ps4Fw;
+      // Show only if on a local server
+      if (isLocalIP(window.location.hostname) && !devMode){
+        ui.ps4IpInput.classList.remove('hidden');
+        ui.ps4FwSelect.classList.remove('hidden');
+        ui.scanGoldHENPayLoader.classList.remove('hidden');
+        ui.ps4IpInput.value = user.ip;
+        
+        
+        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads'];
+        elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
+        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
+        document.getElementById('exploitContainer').style.display = "block";
+        // Sizing the payload's section
+        ui.payloadsSection.style.width = "99%";
+        ui.payloadsSection.style.margin = "auto";
+        // Moving the settings icon to a better place
+        document.getElementById('header2').classList.remove('hidden', 'left-6');
+        document.getElementById('header2').classList.add('flex', 'inherit');
+        document.getElementById('header2').querySelectorAll('button').forEach((item) => item.classList.add('border', 'border-white/20', 'rounded-xl'))
+        ui.ps4FwStatus.style.color = 'red';
+      }
 
-
-    const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads'];
-    elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-    elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
-    document.getElementById('exploitContainer').style.display = "block";
-    // Sizing the payload's section
-    ui.payloadsSection.style.width = "99%";
-    ui.payloadsSection.style.margin = "auto";
-    // Moving the settings icon to a better place
-    document.getElementById('header2').classList.remove('hidden', 'left-6');
-    document.getElementById('header2').classList.add('flex', 'inherit');
-    document.getElementById('header2').querySelectorAll('button').forEach((item) => item.classList.add('border', 'border-white/20', 'rounded-xl'))
-    ui.ps4FwStatus.style.color = 'red';
-  if (!devMode && isLocalIP(window.location.hostname)){
+  if (!devMode){
     elementsToHide.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';

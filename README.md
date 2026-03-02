@@ -43,6 +43,9 @@ _Note: Support for other firmwares listed in the "Vulnerability Scope" table may
 - Descriptive payload selection
 - Unsuported payload loading protection
 - Load payloads with GoldHEN's PayLoader through a mirrored [http host](http://psfree-enhanced.free.nf/)
+- Offers more features when hosted locally on a PC or a PS4 using [PS4-Websrv](https://github.com/ArabPixel/ps4-websrv)
+  - Send payloads from any smart device to the PS4 
+  - Scans the network to find the PS
 - Up to date
 
 ## Contribution

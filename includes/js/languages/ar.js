@@ -45,6 +45,8 @@ window.lang = {
   "showAdvancedPayloads": "عرض الإضافات المتقدمة",
   "advancedPayloadHeader":  "الإضافات المتقدمة",
   "advanced": "المتقدم",
+  "scanPayLoader":    "العثور على خادم PayLoader الخاص بـ GoldHEN",
+  "infoProtip":   "نصيحة: تتوفر مميزات جديدة إذا تم استضافتها محليًا أو على PS4 باستخدام إضافة PS4-Websrv.",
   "busyBinLoader":    "لا يمكن تفعيل الإضافات لأن الخادم الخاص بـ GoldHEN مشغول!",
   "binLoaderNotDetected": "لم يتم العثور على خادم إضافات GoldHEN, هي قمت بتفعيله؟",
   "disabledBinloader":    "سيرفر الإضافات الخاص بـ GoldHEN غير مفعل, تفعيل الإضافه عن طريق الثغرة؟",
