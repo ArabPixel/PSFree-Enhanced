@@ -122,10 +122,10 @@
                                 </button>
                             </header>
                             </div>
-                            <div class="flex items-center">
-                                <input type="text" id="ps4IpInput" class="hidden bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors text-white border-transparent" style="height: 30px; width: 8rem;text-align: center;" placeholder="PS4 IP Address">
-                                <select style="text-align: center;" id="ps4FwSelect" class="hidden bg-blue-600 hover:bg-blue-700 p-2 rounded font-semibold transition-colors text-white border-transparent">
-                                    <option value="" selected hidden>Select Firmware</option>
+                            <div class="flex items-center flex-col gap-2">
+                                <input type="text" id="ps4IpInput" class="hidden bg-blue-600 hover:bg-blue-700 p-1 rounded font-semibold transition-colors text-white border-transparent text-center" placeholder="PS4 IP Address">
+                                <select style="background: transparent;" id="ps4FwSelect" class="hidden p-1 text-center rounded font-semibold transition-colors text-white">
+                                    <option selected hidden>PS4 FW</option>
                                     <option value="7.00">7.00</option>
                                     <option value="7.01">7.01</option>
                                     <option value="7.02">7.02</option>
@@ -181,6 +181,12 @@
                                         id="advanced-tab" data-tabs-target="#advanced" type="button" role="tab"
                                         aria-controls="advanced" aria-selected="false">Advanced</button>
                                 </li>
+                                <li class="hidden flex-1 customPayloadsTab" role="presentation">
+                                    <button
+                                        class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                        id="custom-tab" data-tabs-target="#custom" type="button" role="tab"
+                                        aria-controls="custom" aria-selected="false">Custom</button>
+                                </li>
                             </ul>
                         </div>
                         <div id="payloadsGrid" class="space-y-3 overflow-y-auto flex-grow max-h-[calc(100vh-250px)]" style="overflow-x: hidden !important;">
@@ -196,6 +202,16 @@
                                 </div>
                                 <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="advanced" role="tabpanel"
                                     aria-labelledby="advanced-tab">
+                                </div>
+                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="custom" role="tabpanel"
+                                    aria-labelledby="custom-tab">
+                                    <p class="text-sm text-white/80 mb-2">Upload a custom payload file.</p>
+                                    <div class="flex gap-2">
+                                        <input type="file" id="customPayloadInput" style="width: 150px;" class="bg-gray-700 p-2 rounded flex-grow text-white border-transparent focus:ring-2 focus:ring-blue-500" accept=".bin,.elf">
+                                        <button id="sendCustomPayloadBtn" onclick="Loadpayloads('custom')" class="hover:bg-blue-700 p-1 rounded font-semibold transition-colors text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512.006"><path fill="#fff" fill-rule="nonzero" d="M11.671 160.968L498.394.692c8.503-3.038 15.951 4.41 12.915 12.915L351.027 500.328c-5.264 15.865-27.364 15.388-32.617-.357l-71.675-234.703-234.703-71.675c-15.889-5.275-16.073-27.373-.361-32.625zm13.952 16.188l226.175 69.064L465.84 32.177 25.623 177.156z"/></svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

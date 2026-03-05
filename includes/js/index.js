@@ -7,8 +7,9 @@ var user = {
   platform:         "PS4", // PS4/PC/Mobile etc..
   lastTab:          localStorage.getItem('lastTab') || 'tools',
   advancedPayloads: localStorage.getItem('advancedPayloads') || false, // True/false
-  ip:               localStorage.getItem('PayLoaderIp') || "127.0.0.1",
-  ps4Fw:            localStorage.getItem('ps4Fw')  // Used for the case of sending the payload over the network
+  ip:               localStorage.getItem('PayLoaderIp') || window.location.hostname,
+  ps4Fw:            localStorage.getItem('ps4Fw'),  // Used for the case of sending the payload over the network
+  clearLog:         true
 }
 let lastScrollY = 0;
 let lastSection = "initial";
@@ -39,6 +40,11 @@ const ui = {
   advancedPayloadsTab: document.getElementById('advanced-tab'),
   advancedPayloadsContainer: document.querySelector('.advancedPayloadsTab'),
   advancedPayloadsInput:  document.getElementById('advancedPayloadsInput'),
+  customPayloadsSection: document.getElementById('custom'),
+  customPayloadsTab: document.getElementById('custom-tab'),
+  customPayloadInput: document.getElementById('customPayloadInput'),
+  sendCustomPayloadBtn: document.getElementById('sendCustomPayloadBtn'),
+  
   payloadsSection: document.getElementById('payloadsSection'),
   payloadsList: document.getElementById("payloadsGrid"),
   payloadsSectionTitle: document.getElementById('payloads-section-title'),
@@ -327,11 +333,12 @@ ui.toolsTab.addEventListener('click', () =>{
     ui.toolsSection.classList.remove('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.advancedPayloadsSection.classList.add('hidden');
+    ui.customPayloadsSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "true");
     ui.linuxTab.setAttribute("aria-selected", "false");
-        ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
-
+    ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
+    ui.customPayloadsTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -343,10 +350,12 @@ ui.linuxTab.addEventListener('click', () =>{
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.remove('hidden');
     ui.advancedPayloadsSection.classList.add('hidden');
+    ui.customPayloadsSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "false");
     ui.linuxTab.setAttribute("aria-selected", "true");
     ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
+    ui.customPayloadsTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -358,16 +367,36 @@ ui.advancedPayloadsTab.addEventListener('click', () =>{
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.advancedPayloadsSection.classList.remove('hidden');
+    ui.customPayloadsSection.classList.add('hidden');
 
     ui.toolsTab.setAttribute("aria-selected", "false");
     ui.linuxTab.setAttribute("aria-selected", "false");
     ui.advancedPayloadsTab.setAttribute("aria-selected", "true");
+    ui.customPayloadsTab.setAttribute("aria-selected", "false");
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
   saveLastTab('advanced');
   
-})
+});
+
+ui.customPayloadsTab.addEventListener('click', () =>{
+  if (ui.customPayloadsSection.classList.contains('hidden')){
+    ui.toolsSection.classList.add('hidden');
+    ui.linuxSection.classList.add('hidden');
+    ui.advancedPayloadsSection.classList.add('hidden');
+    ui.customPayloadsSection.classList.remove('hidden');
+
+    ui.toolsTab.setAttribute("aria-selected", "false");
+    ui.linuxTab.setAttribute("aria-selected", "false");
+    ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
+    ui.customPayloadsTab.setAttribute("aria-selected", "true");
+  }
+  ui.payloadsList.scrollTop = 0;
+  // Update lastTap
+  saveLastTab('custom');
+  
+});
 
 // payloads tabs
 function loadLastTab(){
@@ -441,16 +470,17 @@ function isHttps() {
   return window.location.protocol === 'https:';
 }
 
-async function Loadpayloads(payload) {
+async function Loadpayloads(payload, name) {
   if (user.platform != "PS4"){
      var inputIp = ui.ps4IpInput.value.trim();
-  if (inputIp == null || inputIp == undefined || inputIp == ""){
-    alert("Empty IP");
+  if (inputIp == null || inputIp == undefined || inputIp == "" || /\s/.test(inputIp)){
+    alert(window.lang.ps4IpInvalid);
     return;
   }
-  if(/\s/.test(inputIp)){
-    alert("PS4 IP cant be empty and cant contain white spaces!");
-    return
+
+  if (user.ps4Fw == null || user.ps4Fw == 'undefined'){
+    ui.ps4FwSelect.style.border = "2px solid red";
+    return;
   }
   user.ip = inputIp;
   }
@@ -461,6 +491,11 @@ async function Loadpayloads(payload) {
       chooseFanThreshold();
       return;
     }
+
+    if (payload == "custom"){
+      const payloadFile = ui.customPayloadInput.files[0];
+      if (!payloadFile) return;
+    }
       modules = await loadMultipleModules([
         '../payloads/payloads.js'
       ]);
@@ -468,7 +503,12 @@ async function Loadpayloads(payload) {
 
     const payloadModule = modules[0];
     if (payloadModule && typeof payloadModule[payload] === 'function') {
-      payloadModule[payload]();
+      // Load custom uploaded payload
+      if (payload == "custom"){
+        payloadModule[payload](ui.customPayloadInput.files[0]);
+        return;
+      }
+      payloadModule[payload](name);
     } else {
       alert(`${payload} function not found in payloads.js module`);
     }
@@ -549,6 +589,7 @@ function applyLanguage(lang) {
   // Document Properties
   document.title = strings.title || "PSFree Enhanced";
   document.dir = (user.currentLanguage === 'ar') ? 'rtl' : 'ltr';
+  ui.consoleElement.dir = document.dir;
   document.lang = user.currentLanguage;
 
 
@@ -732,6 +773,8 @@ function CheckFW() {
       });
     }
     window.ps4Fw = fwVersion;
+    user.ip = "127.0.0.1"
+    user.ps4Fw = fwVersion;
   } else {
     user.platform = 'Unknown platform';
     if (/Android/.test(userAgent)) user.platform = 'Android';
@@ -741,22 +784,29 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) user.platform = 'Linux';
 
     // For user selected firmware
-      user.ps4Fw;
       if (user.ps4Fw) ui.ps4FwSelect.value = user.ps4Fw;
       // Show only if on a local server
       if (isLocalIP(window.location.hostname) && !devMode){
+        // Show IP input and firmware selector for local server users on smart devices
         ui.ps4IpInput.classList.remove('hidden');
         ui.ps4FwSelect.classList.remove('hidden');
         ui.scanGoldHENPayLoader.classList.remove('hidden');
+        document.querySelector('.customPayloadsTab').classList.remove('hidden');
         ui.ps4IpInput.value = user.ip;
         
-        
-        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads'];
+        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads', 'custom-tab'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
-        document.getElementById('exploitContainer').style.display = "block";
+        elementsToHide.push('initial-screen', 'henSelection', 'warningBox');
+
         // Sizing the payload's section
-        ui.payloadsSection.style.width = "99%";
+        // Full screen for phones, centered for desktop
+        if (user.platform == "Android" || user.platform == "iOS"){
+          // hide console
+          elementsToHide.push('exploit-status-panel');
+          document.getElementById('exploitContainer').style.display = "block";
+          ui.exploitScreen.style.padding = "0";
+        }
+        ui.payloadsSection.style.width = "100%";
         ui.payloadsSection.style.margin = "auto";
         // Moving the settings icon to a better place
         document.getElementById('header2').classList.remove('hidden', 'left-6');
@@ -765,12 +815,13 @@ function CheckFW() {
         ui.ps4FwStatus.style.color = 'red';
       }
 
-  if (!devMode){
-    elementsToHide.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-  }
+    // Hide elements for non supported devices unless in dev mode
+    if (!devMode){
+      elementsToHide.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+    }
   }
 }
 
@@ -804,7 +855,7 @@ function renderPayloads(payloads) {
   payloads.forEach(payload => {
     const payloadCard = document.createElement('div');
     payloadCard.id = payload.id;
-    payloadCard.onclick = () => Loadpayloads(payload.funcName);
+    payloadCard.onclick = () => Loadpayloads(payload.funcName, payload.name);
     payloadCard.className = `payload payload-card relative group cursor-pointer transition-all hover:scale-102`;
     payloadCard.dataset.payloadId = payload.id;
 
@@ -922,7 +973,7 @@ function findPs4FromBaseIP(ip) {
       checked++;
       if (checked === total && !found) {
         reject(new Error('BinLoader not found on subnet'));
-        alert("Scanning failed, is the PayLoader server running?")
+        alert(window.lang.payLoaderNotFound);
       }
     }
 
@@ -942,8 +993,9 @@ function findPs4FromBaseIP(ip) {
             try { localStorage.setItem('PayLoaderIp', checkIp); } catch (_) {}
             if (ui.ps4IpInput && !ui.ps4IpInput.classList.contains('hidden')) {
               ui.ps4IpInput.value = checkIp;
+              localStorage.setItem('ps4Ip', checkIp);
             }
-            alert('PayLoader server found at ' + checkIp);
+            alert(window.lang.payLoaderFound + checkIp);
             resolve(checkIp);
           }
         } catch (_) {}
@@ -996,6 +1048,17 @@ function ipGuess() {
 }
 // Save ps4Fw from select element (Only for communicating external device -> PS4 for local network)
 ui.ps4FwSelect.addEventListener('change', function (){
-  window.ps4Fw = ui.ps4FwSelect.value;
+  user.ps4Fw = ui.ps4FwSelect.value;
   localStorage.setItem('ps4Fw', ui.ps4FwSelect.value);
+  ui.ps4FwSelect.style.border = "1px solid white";
 })
+
+function log(message) {
+  if (user.clearLog) {
+    ui.consoleElement.textContent = '';
+    user.clearLog = false;
+  }
+  ui.consoleElement.textContent += message + '\n';
+}
+
+// TODO: Logs

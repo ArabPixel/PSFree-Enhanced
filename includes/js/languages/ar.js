@@ -47,8 +47,15 @@ window.lang = {
   "advanced": "المتقدم",
   "scanPayLoader":    "العثور على خادم PayLoader الخاص بـ GoldHEN",
   "infoProtip":   "نصيحة: تتوفر مميزات جديدة إذا تم استضافتها محليًا أو على PS4 باستخدام إضافة PS4-Websrv.",
+  "payLoaderFound ": "تم العثور على الخادم PayLoader في ",
+  "payLoaderNotFound": "لم يتم العثور على خادم PayLoader, هل هو مفعل؟",
+  "ps4IpInvalid": "عنوان IP غير صالح لجهاز PS4",
+
   "busyBinLoader":    "لا يمكن تفعيل الإضافات لأن الخادم الخاص بـ GoldHEN مشغول!",
   "binLoaderNotDetected": "لم يتم العثور على خادم إضافات GoldHEN, هي قمت بتفعيله؟",
   "disabledBinloader":    "سيرفر الإضافات الخاص بـ GoldHEN غير مفعل, تفعيل الإضافه عن طريق الثغرة؟",
-  "unsupportedFirmware":  "نظام غير مدعوم  "
+  "unsupportedFirmware":  "نظام غير مدعوم  ",
+  "failedToSendToPayLoader": "فشل في إرسال {payload} إلى PayLoader في ",
+  "payloadSentToPayLoader": "{payload} تم إرساله إلى PayLoader في ",
+  "customPayloadLoaded": "تم رفع الإضافة الخاصة بك: ",
 }

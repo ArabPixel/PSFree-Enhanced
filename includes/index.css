@@ -226,6 +226,7 @@ body {
 .justify-evenly { justify-content: space-evenly; }
 
 /* Spacing (Padding & Margin) */
+.p-1 { padding: 0.25rem; /* 4px */ }
 .p-2 { padding: 0.5rem; /* 8px */ }
 .p-3 { padding: 0.75rem; /* 12px */ }
 .p-4 { padding: 1rem; /* 16px */ }
@@ -455,18 +456,29 @@ button{
 
 #tools,
 #linux,
-#advanced {
+#advanced,
+#custom {
     background-color: transparent;
 }
 
 #tools-tab,
 #linux-tab,
-#advanced-tab {
+#advanced-tab,
+#custom-tab {
     background-color: transparent;
+}
+
+#ps4FwSelect{
+    text-align-last: center;
 }
 
 #default-tab-content div div{
     cursor: pointer;
+}
+@media  (max-width: 352px) {
+    #default-tab li button{
+        font-size: 10px;
+    }
 }
 
 #console center{
