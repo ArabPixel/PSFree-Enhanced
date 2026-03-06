@@ -46,7 +46,7 @@ window.lang = {
     "advanced": "Avanzado",
 	"scanPayLoader":    "Buscar GoldHEN's PayLoader",
     "infoProtip":   "ProTip: Nuevas funciones estaran disponibles si se aloja localmente o en una PS4 mediante el payload PS4-Websrv.",
-	"payLoaderFound ": "Servidor de PayLoader encontrado en ",
+	"payLoaderFound": "Servidor de PayLoader encontrado en ",
     "payLoaderNotFound": "Servidor de PayLoader no encontrado, esta ejecutandose?!",
     "ps4IpInvalid": "Direccion IP de PS4 no valida",
     // payloads.js

@@ -47,7 +47,7 @@ window.lang = {
   "advanced": "المتقدم",
   "scanPayLoader":    "العثور على خادم PayLoader الخاص بـ GoldHEN",
   "infoProtip":   "نصيحة: تتوفر مميزات جديدة إذا تم استضافتها محليًا أو على PS4 باستخدام إضافة PS4-Websrv.",
-  "payLoaderFound ": "تم العثور على الخادم PayLoader في ",
+  "payLoaderFound": "تم العثور على الخادم PayLoader في ",
   "payLoaderNotFound": "لم يتم العثور على خادم PayLoader, هل هو مفعل؟",
   "ps4IpInvalid": "عنوان IP غير صالح لجهاز PS4",
 

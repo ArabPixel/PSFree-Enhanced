@@ -46,7 +46,7 @@ window.lang = {
     "advanced": "Advanced",
     "scanPayLoader":    "Scan for GoldHEN's PayLoader",
     "infoProtip":   "ProTip: New functions become available if hosted locally or on a PS4 using the PS4-Websrv payload.",
-    "payLoaderFound ": "PayLoader server found at ",
+    "payLoaderFound": "PayLoader server found at ",
     "payLoaderNotFound": "PayLoader server not found, is it running?!",
     "ps4IpInvalid": "Invalid PS4 IP address",
     // payloads.js
