@@ -35,7 +35,6 @@ function Loadpayloadlocal(PLfile, name){ //Loading Payload via Payload Param.
     }
 		req.send();
 		req.onerror = function(){
-            alert(user.ps4Fw)
             if (user.ps4Fw >= 7.00 && user.ps4Fw <= 9.60){
                 if (!isHttps()){
                     if (confirm(window.lang.disabledBinloader)){
