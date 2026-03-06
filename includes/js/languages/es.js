@@ -46,10 +46,16 @@ window.lang = {
     "advanced": "Avanzado",
 	"scanPayLoader":    "Buscar GoldHEN's PayLoader",
     "infoProtip":   "ProTip: Nuevas funciones estaran disponibles si se aloja localmente o en una PS4 mediante el payload PS4-Websrv.",
+	"payLoaderFound ": "Servidor de PayLoader encontrado en ",
+    "payLoaderNotFound": "Servidor de PayLoader no encontrado, esta ejecutandose?!",
+    "ps4IpInvalid": "Direccion IP de PS4 no valida",
     // payloads.js
     "payloadOnlyWithGoldHEN": "Los payloads .elf deben cargarse a traves del GoldHEN's PayLoader!",
     "busyBinLoader":    "Imposble cargar el Payload porque el servidor de Payloads esta ocupado",
     "binLoaderNotDetected": "GoldHEN's PayLoader no detectado, esta habilitado?!", // For no-webkit firmware
     "disabledBinloader":    "El GoldHEN's PayLoader no esta ejecutandose, cargar el payload usando el exploit?",
     "unsupportedFirmware":  "Firmware no soportado ",
+	"failedToSendToPayLoader": "Fallo al enviar {payload} al PayLoader en ",
+    "payloadSentToPayLoader": "{payload} enviado al PayLoader en ",
+    "customPayloadLoaded": "Payload personalizado cargado: ",
 }
