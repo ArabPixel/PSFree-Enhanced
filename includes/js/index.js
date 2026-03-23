@@ -201,7 +201,7 @@ var linuxPayloads = [
     description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 1GB VRAM. Select for first install",
     specificFW: "7.00 - 13.02",
     category: "linux",
-    funcName: "load_Linux1"
+    funcName: "load_Linux"
   },
   {
     id: "Linux2gb",
@@ -210,7 +210,7 @@ var linuxPayloads = [
     description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 2GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
-    funcName: "load_Linux2"
+    funcName: "load_Linux"
   },
   {
     id: "Linux3gb",
@@ -219,7 +219,7 @@ var linuxPayloads = [
     description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 3GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
-    funcName: "load_Linux3"
+    funcName: "load_Linux"
   },
   {
     id: "Linux4gb",
@@ -228,7 +228,25 @@ var linuxPayloads = [
     description: "Linux Loader for {southbridge} Southbridge with 4GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
-    funcName: "load_Linux4"
+    funcName: "load_Linux"
+  },
+  {
+    id: "Linux256mb",
+    name: "Linux Loader 256MB",
+    author: "ps4boot",
+    description: "Linux Loader for {southbridge} Southbridge with 4GB VRAM.",
+    specificFW: "7.00 - 13.02",
+    category: "linux",
+    funcName: "load_Linux"
+  },
+  {
+    id: "Linux512mb",
+    name: "Linux Loader 512MB",
+    author: "ps4boot",
+    description: "Linux Loader for {southbridge} Southbridge with 512mb VRAM.",
+    specificFW: "7.00 - 13.02",
+    category: "linux",
+    funcName: "load_Linux"
   }
 ];
 

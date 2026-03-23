@@ -230,42 +230,14 @@ export function load_FanThreshold(name){
 }
 
 // Linux
-export function load_Linux1(name){
+export function load_Linux(name){
+    const sliceIndex = name.includes('MB') ? -6 : -4;
+    const size = name.slice(sliceIndex).replace(" ", "-").toLowerCase();
     const linuxFwFolder = getLinuxFolder(user.ps4Fw);
     if (linuxFwFolder){
         var ps4Model = localStorage.getItem('ps4Model');
         var southbridge = localStorage.getItem('southbridge');
-        Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-1gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf", name);
-        needsGoldHEN = true;
-    }else alert(window.lang.unsupportedFirmware + user.ps4Fw);
-}
-
-export function load_Linux2(name){
-    const linuxFwFolder = getLinuxFolder(user.ps4Fw);
-    if (linuxFwFolder){
-        var ps4Model = localStorage.getItem('ps4Model');
-        var southbridge = localStorage.getItem('southbridge');
-        Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-2gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf", name);
-        needsGoldHEN = true;
-    }else alert(window.lang.unsupportedFirmware + user.ps4Fw);
-}
-
-export function load_Linux3(name){
-    const linuxFwFolder = getLinuxFolder(user.ps4Fw);
-    if (linuxFwFolder){
-        var ps4Model = localStorage.getItem('ps4Model');
-        var southbridge = localStorage.getItem('southbridge');
-        Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-3gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf", name);
-        needsGoldHEN = true;
-    }else alert(window.lang.unsupportedFirmware + user.ps4Fw);
-}
-
-export function load_Linux4(name){
-    const linuxFwFolder = getLinuxFolder(user.ps4Fw);
-    if (linuxFwFolder){
-        var ps4Model = localStorage.getItem('ps4Model');
-        var southbridge = localStorage.getItem('southbridge');
-        Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + "-4gb" + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf", name);
+        Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + size + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf", name);
         needsGoldHEN = true;
     }else alert(window.lang.unsupportedFirmware + user.ps4Fw);
 }
