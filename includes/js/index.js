@@ -234,7 +234,7 @@ var linuxPayloads = [
     id: "Linux256mb",
     name: "Linux Loader 256MB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} Southbridge with 4GB VRAM.",
+    description: "Linux Loader for {southbridge} Southbridge with 256MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -243,7 +243,7 @@ var linuxPayloads = [
     id: "Linux512mb",
     name: "Linux Loader 512MB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} Southbridge with 512mb VRAM.",
+    description: "Linux Loader for {southbridge} Southbridge with 512MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
