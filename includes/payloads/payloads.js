@@ -106,7 +106,10 @@ function Loadpayloadonline(PLfile) {
 // Linux payloads are in firmware groups and not for each
 function getLinuxFolder() {
     const fwMap = {
-        7.00: "fw700", 7.02: "fw700",
+        7.00: "fw700", 7.01: "fw700", 7.02: "fw700",
+        7.50: "fw750", 7.51: "fw750", 7.55: "fw750",
+        8.00: "fw800", 8.01: "fw800", 8.03: "fw800",
+        8.50: "fw850",
         9.00: "fw900",
         9.03: "fw903", 9.04: "fw903",
         9.50: "fw960", 9.51: "fw960", 9.60: "fw960",
@@ -230,14 +233,22 @@ export function load_FanThreshold(name){
 }
 
 // Linux
-export function load_Linux(name){
-    const sliceIndex = name.includes('MB') ? -6 : -4;
-    const size = name.slice(sliceIndex).replace(" ", "-").toLowerCase();
+export function load_Linux(name, payloadId){
+    var sliceIndex = name.includes('MB');
+    var size;
+    // name contains MB? slice it to grab the size, otherwise from payloadId
+    if (sliceIndex){
+        sliceIndex = -6;
+        size = name.slice(sliceIndex).replace(" ", "-").toLowerCase();
+    }else {
+        sliceIndex = -7;
+        size = payloadId.slice(sliceIndex).replace("x", "-").toLowerCase();
+    }
+
     const linuxFwFolder = getLinuxFolder(user.ps4Fw);
     if (linuxFwFolder){
-        var ps4Model = localStorage.getItem('ps4Model');
         var southbridge = localStorage.getItem('southbridge');
-        Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + size + (ps4Model == "pro" ? "-pro" : '') + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf", name);
+        Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + size + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf", name);
         needsGoldHEN = true;
     }else alert(window.lang.unsupportedFirmware + user.ps4Fw);
 }

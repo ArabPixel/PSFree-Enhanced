@@ -3,7 +3,6 @@ var user = {
   currentLanguage:  localStorage.getItem('language') || 'en',
   currentJbFlavor:  localStorage.getItem('jailbreakFlavor') || 'GoldHEN',
   southbridge:      localStorage.getItem('southbridge'),
-  ps4Model:         localStorage.getItem('ps4Model'), // Fat/Slim/Pro
   platform:         "PS4", // PS4/PC/Mobile etc..
   lastTab:          localStorage.getItem('lastTab') || 'tools',
   advancedPayloads: localStorage.getItem('advancedPayloads') || false, // True/false
@@ -195,37 +194,46 @@ const payloads = [
 
 var linuxPayloads = [
   {
-    id: "Linux1gb",
+    id: "Linux1024mb",
     name: "Linux Loader 1GB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 1GB VRAM. Select for first install",
+    description: "Linux Loader for {southbridge} PS4 Southbridge with 1GB VRAM. Select for first install",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
   },
   {
-    id: "Linux2gb",
+    id: "Linux2048mb",
     name: "Linux Loader 2GB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 2GB VRAM.",
+    description: "Linux Loader for {southbridge} PS4 Southbridge with 2GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
   },
   {
-    id: "Linux3gb",
+    id: "Linux3072mb",
     name: "Linux Loader 3GB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} PS4 {model} Southbridge with 3GB VRAM.",
+    description: "Linux Loader for {southbridge} PS4 Southbridge with 3GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
   },
   {
-    id: "Linux4gb",
+    id: "Linux4096mb",
     name: "Linux Loader 4GB",
     author: "ps4boot",
     description: "Linux Loader for {southbridge} Southbridge with 4GB VRAM.",
+    specificFW: "7.00 - 13.02",
+    category: "linux",
+    funcName: "load_Linux"
+  },
+  {
+    id: "Linux128mb",
+    name: "Linux Loader 128MB",
+    author: "ps4boot",
+    description: "Linux Loader for {southbridge} Southbridge with 128MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -488,7 +496,7 @@ function isHttps() {
   return window.location.protocol === 'https:';
 }
 
-async function Loadpayloads(payload, name) {
+async function Loadpayloads(payload, name, payloadId) {
   if (user.platform != "PS4"){
      var inputIp = ui.ps4IpInput.value.trim();
   if (inputIp == null || inputIp == undefined || inputIp == "" || /\s/.test(inputIp)){
@@ -526,7 +534,7 @@ async function Loadpayloads(payload, name) {
         payloadModule[payload](ui.customPayloadInput.files[0]);
         return;
       }
-      payloadModule[payload](name);
+      payloadModule[payload](name, payloadId);
     } else {
       alert(`${payload} function not found in payloads.js module`);
     }
@@ -737,7 +745,7 @@ function saveLanguage() {
 };
 
 function loadLinuxPayloads(){
-  if (user.southbridge && user.ps4Model){
+  if (user.southbridge){
     renderPayloads(linuxPayloads);
     linuxPayloadsRendered = true;
     document.querySelector("#" + ui.linuxSection.id + " button").remove();
@@ -747,9 +755,6 @@ function loadLinuxPayloads(){
 function loadSouthbridge(){
   if (user.southbridge){
     document.querySelector(`input[name="southbridge"][value="${user.southbridge}"]`).checked = true;
-  }
-  if (user.ps4Model){
-    document.querySelector(`input[name="ps4Model"][value="${user.ps4Model}"]`).checked = true;
   }
 }
 
@@ -873,7 +878,7 @@ function renderPayloads(payloads) {
   payloads.forEach(payload => {
     const payloadCard = document.createElement('div');
     payloadCard.id = payload.id;
-    payloadCard.onclick = () => Loadpayloads(payload.funcName, payload.name);
+    payloadCard.onclick = () => Loadpayloads(payload.funcName, payload.name, payload.id);
     payloadCard.className = `payload payload-card relative group cursor-pointer transition-all hover:scale-102`;
     payloadCard.dataset.payloadId = payload.id;
 
@@ -892,7 +897,7 @@ function renderPayloads(payloads) {
                   ${payload.category}
               </span>
           </div>
-          <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description.replace('{southbridge}', user.southbridge).replace('{model}', (user.ps4Model == "fs" ? "Fat/Slim" : "Pro"))}</p>
+          <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description.replace('{southbridge}', user.southbridge)}</p>
           <div class="flex items-center justify-between text-xs text-white/60">
           <p style="color: orange;">${payload.specificFW != '' ? payload.specificFW : ""} </p>
           </div>
@@ -938,13 +943,9 @@ function ps4Info(southbridge, model){
     user.southbridge = southbridge;
     window.southbridge = southbridge;
   }
-  if (model){
-    localStorage.setItem("ps4Model", model);
-    user.ps4Model = model;
-  }
   
   // Update payloads list
-  if (user.southbridge && user.ps4Model){
+  if (user.southbridge){
     ui.linuxSection.innerHTML = "";
       renderPayloads(linuxPayloads)
   }
