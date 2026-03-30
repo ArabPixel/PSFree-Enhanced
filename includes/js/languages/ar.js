@@ -46,6 +46,8 @@ window.lang = {
   "advancedPayloadHeader":  "الإضافات المتقدمة",
   "advanced": "المتقدم",
   "scanPayLoader":    "العثور على خادم PayLoader الخاص بـ GoldHEN",
+  "shutdownServerConfirm": "هل أنت متأكد من أنك تريد إغلاق الخادم؟ ستحتاج إلى إعادة إدخال الإضافة لبدء تشغيله مرة أخرى.",
+  "shutdownServerBtn": "إغلاق الخادم",
   "infoProtip":   "نصيحة: تتوفر مميزات جديدة إذا تم استضافتها محليًا أو على PS4 باستخدام إضافة PS4-Websrv.",
   "payLoaderFound": "تم العثور على الخادم PayLoader في ",
   "payLoaderNotFound": "لم يتم العثور على خادم PayLoader, هل هو مفعل؟",

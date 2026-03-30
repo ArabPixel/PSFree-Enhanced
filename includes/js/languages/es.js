@@ -45,6 +45,8 @@ window.lang = {
     "advancedPayloadHeader":    "Payloads Avanzados",
     "advanced": "Avanzado",
 	"scanPayLoader":    "Buscar GoldHEN's PayLoader",
+    "shutdownServerConfirm": "¿Estas seguro de que quieres apagar el servidor? Necesitaras re-inyectar el payload para volver a encenderlo.",
+    "shutdownServerBtn": "Apagar Servidor",
     "infoProtip":   "ProTip: Nuevas funciones estaran disponibles si se aloja localmente o en una PS4 mediante el payload PS4-Websrv.",
 	"payLoaderFound": "Servidor de PayLoader encontrado en ",
     "payLoaderNotFound": "Servidor de PayLoader no encontrado, esta ejecutandose?!",

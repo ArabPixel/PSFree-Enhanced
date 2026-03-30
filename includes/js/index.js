@@ -59,6 +59,7 @@ const ui = {
   chooseFanThresholdOverlay: document.getElementById('choose-fanThreshold-overlay'),
   chooseFanThreshold: document.getElementById('choose-fanThreshold'),
   scanGoldHENPayLoader: document.getElementById('scanPayLoader'),
+  shutdownServerBtn: document.getElementById('shutdownServerBtn'),
 
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
@@ -656,6 +657,7 @@ function applyLanguage(lang) {
   updateText(ui.aboutPopup.querySelector('#close-about'), 'closeButton');
   updateText(ui.aboutPopup.querySelector('#goldhenFirmwareSemiSupported i'), 'goldhenFirmwareSemiSupported');
   updateText(ui.settingsPopup.querySelector('#scanPayLoader'), 'scanPayLoader');
+  updateText(ui.settingsPopup.querySelector('#shutdownServerBtn'), 'shutdownServerBtn');
   updateText(ui.aboutPopup.querySelector('#infoProtip'), 'infoProtip');
 
   // Fan Threshold
@@ -814,6 +816,7 @@ function CheckFW() {
         ui.ps4IpInput.classList.remove('hidden');
         ui.ps4FwSelect.classList.remove('hidden');
         ui.scanGoldHENPayLoader.classList.remove('hidden');
+        ui.shutdownServerBtn.classList.remove('hidden');
         document.querySelector('.customPayloadsTab').classList.remove('hidden');
         ui.ps4IpInput.value = user.ip;
         
@@ -1080,4 +1083,18 @@ function log(message) {
   ui.consoleElement.textContent += message + '\n';
 }
 
-// TODO: Logs
+// To be only used when this project is served on a PS4-Websrv payload on a PS4.
+// Send shutdown request to the server
+function shutdownServer() {
+    if (!confirm(window.lang.shutdownServerConfirm)) return;
+
+    fetch('/shutdown')
+        .then(() => {
+            alert("Server is shutting down. The page will now reload.");
+            window.location.reload();
+        })
+        .catch(err => {
+            alert("Server stopped? (connection lost).");
+            window.location.reload();
+        });
+}

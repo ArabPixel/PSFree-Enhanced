@@ -143,6 +143,8 @@ body {
     --color-blue-700: #1d4ed8;
     --color-blue-500: #3b82f6;
     --color-blue-400: #60a5fa;
+    --color-red-600: #dc2626;
+    --color-red-700: #901717;
     --color-yellow-600: #ca8a04;
     --color-yellow-500: #eab308;
     --color-yellow-400: #facc15;
@@ -163,6 +165,8 @@ body {
 .bg-white\/10 { background-color: rgba(255, 255, 255, 0.1); } /* 10% opacity */
 .bg-yellow-600\/20 { background-color: rgba(202, 138, 4, 0.2); } /* 20% opacity */
 .bg-blue-600 { background-color: var(--color-blue-600); }
+.bg-red-600 { background-color: var(--color-red-600); }
+.bg-red-700 { background-color: var(--color-red-700); }
 .bg-gray-50 { background-color: var(--color-gray-50); } /* Used in tabs, though often overridden */
 
 

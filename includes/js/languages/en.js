@@ -45,6 +45,8 @@ window.lang = {
     "advancedPayloadHeader":    "Advanced Payloads",
     "advanced": "Advanced",
     "scanPayLoader":    "Scan for GoldHEN's PayLoader",
+    "shutdownServerConfirm": "Are you sure you want to shutdown the server? You will need to re-inject the payload to start it again.",
+    "shutdownServerBtn": "Shutdown Server",
     "infoProtip":   "ProTip: New functions become available if hosted locally or on a PS4 using the PS4-Websrv payload.",
     "payLoaderFound": "PayLoader server found at ",
     "payLoaderNotFound": "PayLoader server not found, is it running?!",
