@@ -522,11 +522,3 @@ button{
     width: 78%;
     float: right;
 }
-
-#southbridgeHeader details summary{
-    cursor: pointer;
-}
-
-#southbridgeHelp{
-    text-decoration: underline;
-}

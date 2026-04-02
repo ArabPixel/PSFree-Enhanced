@@ -2,7 +2,6 @@
 var user = {
   currentLanguage:  localStorage.getItem('language') || 'en',
   currentJbFlavor:  localStorage.getItem('jailbreakFlavor') || 'GoldHEN',
-  southbridge:      localStorage.getItem('southbridge'),
   platform:         "PS4", // PS4/PC/Mobile etc..
   lastTab:          localStorage.getItem('lastTab') || 'tools',
   advancedPayloads: localStorage.getItem('advancedPayloads') || false, // True/false
@@ -12,7 +11,6 @@ var user = {
 }
 let lastScrollY = 0;
 let lastSection = "initial";
-var linuxPayloadsRendered = false;
 var devMode = false;   // Dev mode for PC debugging
 const ui = {
   mainContainer: document.querySelector('.mainContainer'),
@@ -191,14 +189,11 @@ const payloads = [
     category: "tools",
     funcName: "load_App2USB"
   },
-];
-
-var linuxPayloads = [
   {
     id: "Linux1024mb",
     name: "Linux Loader 1GB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} PS4 Southbridge with 1GB VRAM. Select for first install",
+    description: "Linux Loader for all consoles. 1GB VRAM. Select for first install",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -207,7 +202,7 @@ var linuxPayloads = [
     id: "Linux2048mb",
     name: "Linux Loader 2GB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} PS4 Southbridge with 2GB VRAM.",
+    description: "Linux Loader for all consoles. 2GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -216,7 +211,7 @@ var linuxPayloads = [
     id: "Linux3072mb",
     name: "Linux Loader 3GB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} PS4 Southbridge with 3GB VRAM.",
+    description: "Linux Loader for all consoles. 3GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -225,7 +220,7 @@ var linuxPayloads = [
     id: "Linux4096mb",
     name: "Linux Loader 4GB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} Southbridge with 4GB VRAM.",
+    description: "Linux Loader for all consoles. 4GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -234,7 +229,7 @@ var linuxPayloads = [
     id: "Linux128mb",
     name: "Linux Loader 128MB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} Southbridge with 128MB VRAM.",
+    description: "Linux Loader for all consoles. 128MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -243,7 +238,7 @@ var linuxPayloads = [
     id: "Linux256mb",
     name: "Linux Loader 256MB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} Southbridge with 256MB VRAM.",
+    description: "Linux Loader for all consoles. 256MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -252,7 +247,7 @@ var linuxPayloads = [
     id: "Linux512mb",
     name: "Linux Loader 512MB",
     author: "ps4boot",
-    description: "Linux Loader for {southbridge} Southbridge with 512MB VRAM.",
+    description: "Linux Loader for all consoles. 512MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
     funcName: "load_Linux"
@@ -674,10 +669,6 @@ function applyLanguage(lang) {
   updateText(ui.settingsPopup.querySelector('#ghVer'), 'ghVer');
   updateText(ui.settingsPopup.querySelector('#chooseGoldHEN summary'), 'otherVer'); 
   updateText(ui.settingsPopup.querySelector('#latestVer'), 'latestVer');
-  updateText(ui.settingsPopup.querySelector('#southbridgeHeader h3'), 'southbridgeHeader');
-  updateText(document.getElementById('southbridgeHelp'), 'southbridgeHelp');
-  updateText(document.getElementById('southbridgeHelp1'), 'southbridgeHelp1');
-  updateText(document.getElementById('southbridgeHelp2'), 'southbridgeHelp2');
   updateText(document.getElementById('showAdvancedPayloads'), 'showAdvancedPayloads');
   updateText(document.getElementById('advancedPayloadHeader'), 'advancedPayloadHeader')
 
@@ -709,9 +700,6 @@ function applyLanguage(lang) {
   updateText(ui.toolsTab, 'payloadsToolsHeader');
   updateText(ui.linuxTab, 'payloadsLinuxHeader');
   updateText(ui.advancedPayloadsTab, 'advanced');
-  if (!linuxPayloadsRendered){
-    updateText(document.querySelector("#" + ui.linuxSection.id + " button") , 'selectSouthbridge');
-  }
   updateText(ui.consoleElement.querySelector('center'), 'waitingUserInput');
 
   // Change direction of 'Default' option text for the fan threshold panel
@@ -746,27 +734,13 @@ function saveLanguage() {
   initLanguage();
 };
 
-function loadLinuxPayloads(){
-  if (user.southbridge){
-    renderPayloads(linuxPayloads);
-    linuxPayloadsRendered = true;
-    document.querySelector("#" + ui.linuxSection.id + " button").remove();
-  }
-}
-
-function loadSouthbridge(){
-  if (user.southbridge){
-    document.querySelector(`input[name="southbridge"][value="${user.southbridge}"]`).checked = true;
-  }
-}
-
 function CheckFW() {
   const userAgent = navigator.userAgent;
   const ps4Regex = /PlayStation 4/;
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
   let elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'click-to-start-text', 'chooseGoldHEN', 'southbridgeHeader', 'advancedPayloads'
+    'click-to-start-text', 'chooseGoldHEN', 'advancedPayloads'
   ];
 
   if (ps4Regex.test(userAgent)) {
@@ -782,7 +756,7 @@ function CheckFW() {
         ui.secondHostBtn[0].style.display = "block";
       }else{
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's PayLoader
-        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads'];
+        const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
         elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
         document.getElementById('exploitContainer').style.display = "block";
@@ -820,7 +794,7 @@ function CheckFW() {
         document.querySelector('.customPayloadsTab').classList.remove('hidden');
         ui.ps4IpInput.value = user.ip;
         
-        const toRemove = ['exploit-main-screen', 'scrollDown', 'southbridgeHeader', 'advancedPayloads', 'custom-tab'];
+        const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads', 'custom-tab'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
         elementsToHide.push('initial-screen', 'henSelection', 'warningBox');
 
@@ -856,12 +830,10 @@ function loadSettings() {
   try {
     CheckFW();
     loadJbFlavor();
-    loadSouthbridge();
     initLanguage(user.currentLanguage);
     renderPayloads(payloads);
     loadAdvancedPayloads();
     loadLastTab();
-    loadLinuxPayloads()
     loadGoldHENVer();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
@@ -900,7 +872,7 @@ function renderPayloads(payloads) {
                   ${payload.category}
               </span>
           </div>
-          <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description.replace('{southbridge}', user.southbridge)}</p>
+          <p class="text-start text-white/70 text-sm leading-relaxed">${payload.description}</p>
           <div class="flex items-center justify-between text-xs text-white/60">
           <p style="color: orange;">${payload.specificFW != '' ? payload.specificFW : ""} </p>
           </div>
@@ -939,20 +911,6 @@ function DisplayCacheProgress() {
     }, 2000); 
   }
 
-  // Save southbridge and ps4 model data
-function ps4Info(southbridge, model){
-  if (southbridge) {
-    localStorage.setItem("southbridge", southbridge);
-    user.southbridge = southbridge;
-    window.southbridge = southbridge;
-  }
-  
-  // Update payloads list
-  if (user.southbridge){
-    ui.linuxSection.innerHTML = "";
-      renderPayloads(linuxPayloads)
-  }
-}
 
 function setAdvancedPayloads(inputState){
   // Update variable/localstorage value

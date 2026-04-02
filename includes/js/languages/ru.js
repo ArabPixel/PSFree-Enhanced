@@ -36,11 +36,6 @@ window.lang = {
     "selectTemp":   "Выберите температуру",
     "default":  "Стандартная", // Fan default string
     "goldhenFirmwareSemiSupported": "* Загрузка payload через GoldHEN PayLoader поддерживается на всех версиях ПО.",
-    "southbridgeHeader":    "Модель PS4 и Южного моста",
-    "southbridgeHelp":  "Нужна помощь?",
-    "southbridgeHelp1": "Запустите GoldHEN И перейдите в Настройки -> Система -> Информация о системе и посмотрите Southbridge.",
-    "southbridgeHelp2": "Выбор неправильных опций может привести к крашу системы!",
-    "selectSouthbridge":    "Выберите ваш Южный мост и модель PS4",
     // payloads.js
     "payloadOnlyWithGoldHEN": "Активация .elf должна осуществляться исключительно через программу GoldHEN PayLoader.",
     "busyBinLoader":    "Невозможно запустить Payload так как PayLoader занят",

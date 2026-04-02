@@ -103,29 +103,6 @@ function Loadpayloadonline(PLfile) {
     import('../../src/alert.mjs');
 }
 
-// Linux payloads are in firmware groups and not for each
-function getLinuxFolder() {
-    const fwMap = {
-        7.00: "fw700", 7.01: "fw700", 7.02: "fw700",
-        7.50: "fw750", 7.51: "fw750", 7.55: "fw750",
-        8.00: "fw800", 8.01: "fw800", 8.03: "fw800",
-        8.50: "fw850",
-        9.00: "fw900",
-        9.03: "fw903", 9.04: "fw903",
-        9.50: "fw960", 9.51: "fw960", 9.60: "fw960",
-        10.00: "fw1000", 10.01: "fw1000",
-        10.50: "fw1050", 10.70: "fw1050", 10.71: "fw1050",
-        11.00: "fw1100",
-        11.02: "fw1102",
-        11.50: "fw1150", 11.52: "fw1150",
-        12.00: "fw1200", 12.02: "fw1200",
-        12.50: "fw1250", 12.52: "fw1250",
-        13.00: "fw1300", 13.02: "fw1302",
-    };
-
-    // If it's not found, it returns undefined
-    return fwMap[Number(user.ps4Fw)] || undefined;
-}
 // Payloads
 
 export function HEN(){
@@ -245,12 +222,8 @@ export function load_Linux(name, payloadId){
         size = payloadId.slice(sliceIndex).replace("x", "-").toLowerCase();
     }
 
-    const linuxFwFolder = getLinuxFolder(user.ps4Fw);
-    if (linuxFwFolder){
-        var southbridge = localStorage.getItem('southbridge');
-        Loadpayloadlocal("./includes/payloads/Linux/" + linuxFwFolder + "/payload-" + linuxFwFolder.replace("fw", "") + size + (southbridge == "baikal" ? "-" + southbridge : "") + ".elf", name);
-        needsGoldHEN = true;
-    }else alert(window.lang.unsupportedFirmware + user.ps4Fw);
+    Loadpayloadlocal("./includes/payloads/Linux/linux" + size + ".elf", name);
+    needsGoldHEN = true;
 }
 
 export function load_npFakeSignin(name){

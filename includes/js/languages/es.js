@@ -36,11 +36,6 @@ window.lang = {
     "selectTemp":   "Selecciona temperatura",
     "default":  "Por defecto", // Fan default string
     "goldhenFirmwareSemiSupported": "* La carga payloads a traves de GoldHEN's PayLoader es soportada por cualquier firmware.",
-    "southbridgeHeader":    "Southbridge y Modelo",
-    "southbridgeHelp":  "Necesitas ayuda?",
-    "southbridgeHelp1": "Carga GoldHEN y ve a Ajustes -> Sistema -> Informacion de Sistema y mira el Southbridge.",
-    "southbridgeHelp2": "Seleccionar opciones incorrectas causara un Kernel Panic!",
-    "selectSouthbridge":    "Elije tu modelo de Southbridge y PS4",
     "showAdvancedPayloads": "Mostrar Payloads Avanzados",
     "advancedPayloadHeader":    "Payloads Avanzados",
     "advanced": "Avanzado",

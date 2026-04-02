@@ -196,9 +196,6 @@
                                 </div>
                                 <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="linux" role="tabpanel"
                                     aria-labelledby="linux-tab">
-                                    <button onclick="settingsPopup();" id="selectSouthbridgeTemp"
-                                        class="mt-6 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors "
-                                        >Select your Southbridge and PS4 Model</button>
                                 </div>
                                 <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="advanced" role="tabpanel"
                                     aria-labelledby="advanced-tab">
@@ -314,7 +311,7 @@
                 </div>
             </div>
             <!-- Choose GoldHEN version -->
-            <div id="chooseGoldHEN" class="mb-6">
+            <div id="chooseGoldHEN" class="mb-4">
                 <h3 class="text-lg font-semibold mb-2" id="ghVer">GoldHEN versions</h3>
                 <div class="radio-group space-y-2">
                     <label class="flex items-center text-white/80">
@@ -341,34 +338,6 @@
                         </label>
                     </details>
                 </div>
-            </div>
-            <!-- Choose southbridge and console type -->
-            <div id="southbridgeHeader" class="mb-6">
-                <h3 class="text-lg font-semibold mb-2">Southbridge and Model</h3>
-                <div class="radio-group flex flex-wrap mb-4">
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="southbridge" value="aeolia" onchange="ps4Info(this.value);">
-                        <p>Aeolia</p>
-                    </label>
-                    <hr>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="southbridge" value="belize" onchange="ps4Info(this.value);">
-                        <p>Belize</p>
-                    </label>
-                    <hr>
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="southbridge" value="baikal" onchange="ps4Info(this.value);">
-                        <p>Baikal</p>
-                    </label>
-                </div>
-                <div style="border-top: 1px solid #b5b1b1;max-width: 16rem;;margin: 0 15px;"></div>
-                <details>
-                    <summary><small id="southbridgeHelp">Need help?</small></summary>
-                    <small><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 512 512"><path d="M256,56C145.72,56,56,145.72,56,256s89.72,200,200,200,200-89.72,200-200S366.28,56,256,56Zm0,82a26,26,0,1,1-26,26A26,26,0,0,1,256,138Zm64,226H200V332h44V244H212V212h64V332h44Z"/></svg>
-                            <i id="southbridgeHelp1">Load GoldHEN and go to Settings -> System -> System information and check Southbridge.</i></small><br>
-                    <small><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                            <i id="southbridgeHelp2">Selecting wrong options may cause a kernel panic!</i></small>
-                </details>
             </div>
              <div id="advancedPayloads" class="mb-6">
                 <h3 class="text-lg font-semibold mb-2" id="advancedPayloadHeader">Advanced payloads</h3>
