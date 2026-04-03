@@ -1,10 +1,11 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-04-02 19:25:44.885518
+# Generated on 2026-04-04 01:08:15.849482
 
 CACHE:
 index.html
 includes/index.css
+includes/vibrant.css
 includes/js/index.js
 includes/js/languages/ru.js
 includes/js/languages/ar.js
@@ -33,6 +34,7 @@ includes/payloads/Bins/Tools/ps4debug.bin
 includes/payloads/Bins/Tools/pup-decrypt.bin
 includes/payloads/Bins/Tools/np-fake-signin-ps4.elf
 includes/payloads/Bins/Tools/elfldr.bin
+includes/payloads/Bins/Tools/elfldr.elf
 includes/payloads/Bins/Tools/ps4-websrv.bin
 includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold60.bin
 includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold70.bin

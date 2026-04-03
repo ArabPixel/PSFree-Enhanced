@@ -42,4 +42,7 @@ window.lang = {
     "binLoaderNotDetected": "GoldHEN PayLoader не найден, он точно включен?!", // For no-webkit firmware
     "disabledBinloader":    "GoldHEN PayLoader не найден, запустить payload через эксплоит?",
     "unsupportedFirmware":  "Неподдерживаемая версия ПО ",
+    "theme": "Тема",
+    "defaultTheme": "По умолчанию",
+    "vibrantTheme": "Яркий",
 }

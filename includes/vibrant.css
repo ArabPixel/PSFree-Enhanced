@@ -2,6 +2,8 @@
 body {
     font-family: sans-serif;
     overflow: hidden;
+    background: -webkit-linear-gradient(242deg, #2d00c8 0%, #6b3a1f 100%);
+    background: linear-gradient(208deg, #2d00c8 0%, #6b3a1f 100%);
 }
 
 .mainContainer{
@@ -27,7 +29,7 @@ label {
 
 #ps-logo {
     /* This overrides the fill="#f72585" in your HTML */
-    fill: var(--color-blue-500) !important; 
+    fill: #f72585 !important; 
 }
 
 /* Custom radio button styling for better compatibility */
@@ -44,7 +46,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked {
     border: none;
-    background: #3B82F6;
+    background: #6d28d9;
 }
 
 /* For PS4 (because its old browser) */
@@ -68,8 +70,7 @@ input[type="radio"]:checked {
 
 .fwSelected{
     border-radius: 5px;
-    /* border-bottom: 2px solid #2563eb; */
-    background-color: #2563eb;
+    background-color: #5b21b6;
     color: white;
 }
 
@@ -95,25 +96,25 @@ input[type="radio"]:checked {
 
 /* Thumb of the scrollbar */
 ::-webkit-scrollbar-thumb {
-    background: #2563eb;
+    background: #b45309;
     border-radius: 10px;
 }
 
 /* Payloads categories colors */
 
 .category-tools {
-    background-color: rgba(34, 197, 94, 0.2);
-    color: #4ade80;
+    background-color: rgba(91, 33, 182, 0.3);
+    color: #c4b5fd;
 }
 
 /* Good color for future tab: #facc15 */
 .category-advanced {
-    background-color: rgba(246, 92, 97, 0.2);
-    color: #fa8b96;
+    background-color: rgba(185, 28, 28, 0.25);
+    color: #fca5a5;
 }
 .category-linux {
-    background-color: rgba(139, 92, 246, 0.2);
-    color: #a78bfa;
+    background-color: rgba(107, 58, 31, 0.4);
+    color: #fbbf24;
 }
 .category-tools, .category-linux{
     border: none !important;
@@ -139,29 +140,39 @@ body {
 /* --- Tailwind Color Palette (Approximations based on common values) --- */
 /* These are approximations. For exact matches, refer to Tailwind's default config. */
 :root {
-    --color-gray-900: #111827;
-    --color-gray-800: #1f2937;
-    --color-gray-700: #374151;
-    --color-gray-600: #4b5563;
-    --color-gray-50: #f9fafb;
-    --color-blue-600: #2563eb;
-    --color-blue-700: #1d4ed8;
-    --color-blue-500: #3b82f6;
-    --color-blue-400: #60a5fa;
-    --color-red-600: #dc2626;
-    --color-red-700: #901717;
-    --color-yellow-600: #ca8a04;
-    --color-yellow-500: #eab308;
-    --color-yellow-400: #facc15;
+    /* Panels — dark indigo-brown tones matching the gradient midpoints */
+    --color-gray-900: #160a2a;
+    --color-gray-800: #231540;
+    --color-gray-700: #352050;
+    --color-gray-600: #4a2e62;
+    --color-gray-50:  #ede9fe;
+
+    /* Primary accent — deep electric violet */
+    --color-blue-600: #5b21b6;
+    --color-blue-700: #4c1d95;
+    --color-blue-500: #7c3aed;
+    --color-blue-400: #a78bfa;
+
+    /* Danger */
+    --color-red-600: #b91c1c;
+    --color-red-700: #991b1b;
+
+    /* Warning — warm amber, echoes the brown gradient end */
+    --color-yellow-600: #b45309;
+    --color-yellow-500: #d97706;
+    --color-yellow-400: #f59e0b;
     --color-yellow-200: #fde68a;
-    --color-cyan-300: #67e8f9;
+
+    /* Highlight — soft violet-white, not cyan, not pink */
+    --color-cyan-300: #ddd6fe;
+
     --color-white: #ffffff;
 }
 
 /* --- Utility Classes Replication --- */
 
 /* Background Colors */
-.bg-gray-900 { background-color: var(--color-gray-900); }
+/* .bg-gray-900 { background-color: var(--color-gray-900); } */
 .bg-gray-800 { background-color: var(--color-gray-800); }
 .bg-gray-700 { background-color: var(--color-gray-700); }
 .bg-gray-700\/60 { background-color: rgba(55, 65, 81, 0.6); } /* 60% opacity */
@@ -315,7 +326,7 @@ body {
 .border-2 { border-width: 2px; border-style: solid; border-color: currentColor; }
 /* .border-4 is not used in your HTML */
 .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
-.border-white\/20 { border-color: rgba(255, 255, 255, 0.2); } /* 20% opacity */
+.border-white\/20 { border-color: rgba(255, 255, 255, 0.519); }
 .border-blue-500 { border-color: var(--color-blue-500); }
 .border-yellow-500\/50 { border-color: rgba(234, 179, 8, 0.5); } /* 50% opacity */
 .border-transparent { border-color: transparent; }
@@ -434,9 +445,9 @@ section { /* Apply to initial-screen and exploit-main-screen */
 }
 
 /* --- Custom classes for payload categories (from your JS) --- */
-.category-tools { border-color: #a78bfa; /* Example purple */ }
-.category-linux { border-color: #34d399; /* Example green */ }
-.category-testing { border-color: red; /* Example red */ }
+.category-tools { border-color: #7c3aed; /* violet */ }
+.category-linux { border-color: #d97706; /* amber */ }
+.category-testing { border-color: #b91c1c; /* deep red */ }
 
 /* --- Tab specific styling (from your HTML and Flowbite's typical behavior) --- */
 .tabs ul {
@@ -449,9 +460,9 @@ section { /* Apply to initial-screen and exploit-main-screen */
     color: rgba(255, 255, 255, 0.8); /* Default text color for inactive tabs */
 }
 .tabs button[aria-selected="true"] {
-    border-color: var(--color-blue-500);
-    color: var(--color-blue-500);
-    border-bottom: 1px solid var(--color-blue-500);
+    border-color: var(--color-blue-400);
+    color: var(--color-blue-400);
+    border-bottom: 1px solid var(--color-blue-400);
 }
 .tabs button:not([aria-selected="true"]):hover {
     color: var(--color-gray-600);

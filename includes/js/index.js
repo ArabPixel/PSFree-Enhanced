@@ -670,7 +670,10 @@ function applyLanguage(lang) {
   updateText(ui.settingsPopup.querySelector('#chooseGoldHEN summary'), 'otherVer'); 
   updateText(ui.settingsPopup.querySelector('#latestVer'), 'latestVer');
   updateText(document.getElementById('showAdvancedPayloads'), 'showAdvancedPayloads');
-  updateText(document.getElementById('advancedPayloadHeader'), 'advancedPayloadHeader')
+  updateText(document.getElementById('advancedPayloadHeader'), 'advancedPayloadHeader');
+  updateText(document.getElementById('theme'), 'theme');
+  updateText(document.getElementById('defaultTheme'), 'defaultTheme');
+  updateText(document.getElementById('vibrantTheme'), 'vibrantTheme');
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
@@ -828,6 +831,7 @@ function CheckFW() {
 // Load settings
 function loadSettings() {
   try {
+    loadTheme();
     CheckFW();
     loadJbFlavor();
     initLanguage(user.currentLanguage);
@@ -854,7 +858,7 @@ function renderPayloads(payloads) {
     const payloadCard = document.createElement('div');
     payloadCard.id = payload.id;
     payloadCard.onclick = () => Loadpayloads(payload.funcName, payload.name, payload.id);
-    payloadCard.className = `payload payload-card relative group cursor-pointer transition-all hover:scale-102`;
+    payloadCard.className = `payload payload-card relative group cursor-pointer duration-300 transform hover:scale-102`;
     payloadCard.dataset.payloadId = payload.id;
 
     payloadCard.innerHTML = `
@@ -1056,3 +1060,36 @@ function shutdownServer() {
             window.location.reload();
         });
 }
+
+function setTheme(theme) {
+    const styleSheet = document.getElementById('main-stylesheet');
+    if (styleSheet) {
+        // Ensure we don't end up with "index.css.css"
+        const fileName = theme.endsWith('.css') ? theme : `${theme}.css`;
+        styleSheet.setAttribute('href', `./includes/${fileName}`);
+        localStorage.setItem('theme', theme);
+    }
+}
+
+function loadTheme() {
+    let savedTheme = localStorage.getItem('theme') || 'index';
+    
+    // Find the radio button
+    let radioElement = document.querySelector(`input[name="theme"][value="${savedTheme}"]`);
+    
+    // Fallback if the saved theme doesn't exist or is invalid
+    if (!radioElement) {
+        savedTheme = 'index';
+        radioElement = document.querySelector(`input[name="theme"][value="index"]`);
+        localStorage.setItem('theme', 'index');
+        // Apply the CSS file
+        setTheme(savedTheme);
+    }
+    // Update the UI radio button if it exists
+    if (radioElement) {
+        radioElement.checked = true;
+    }
+}
+
+// CRITICAL: Run this when the page is fully loaded
+document.addEventListener('DOMContentLoaded', loadTheme);

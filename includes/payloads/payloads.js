@@ -35,6 +35,9 @@ function Loadpayloadlocal(PLfile, name){ //Loading Payload via Payload Param.
     }
 		req.send();
 		req.onerror = function(){
+            // If its elfldr, change to .bin 
+            if (name == "ElfLoader") PLfile = "./includes/payloads/Bins/Tools/elfldr.bin";
+
             if (user.ps4Fw >= 7.00 && user.ps4Fw <= 9.60){
                 if (!isHttps()){
                     if (confirm(window.lang.disabledBinloader)){
@@ -133,7 +136,7 @@ export function load_BinLoader(name){
 }
 
 export function load_Elfldr(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/elfldr.bin", name)
+    Loadpayloadlocal("./includes/payloads/Bins/Tools/elfldr.elf", name)
 }
 
 export function load_PS4Debug(name){

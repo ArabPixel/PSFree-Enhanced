@@ -55,4 +55,7 @@ window.lang = {
   "failedToSendToPayLoader": "فشل في إرسال {payload} إلى PayLoader في ",
   "payloadSentToPayLoader": "{payload} تم إرساله إلى PayLoader في ",
   "customPayloadLoaded": "تم رفع الإضافة الخاصة بك: ",
+  "theme": "المظهر",
+  "defaultTheme": "الإفتراضي",
+  "vibrantTheme": "مشرق",
 }
