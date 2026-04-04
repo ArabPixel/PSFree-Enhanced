@@ -36,7 +36,7 @@ function Loadpayloadlocal(PLfile, name){ //Loading Payload via Payload Param.
 		req.send();
 		req.onerror = function(){
             // If its elfldr, change to .bin 
-            if (name == "ElfLoader") PLfile = "./includes/payloads/Bins/Tools/elfldr.bin";
+            if (name == "ElfLoader") PLfile = "./includes/payloads/Bins/elfldr.bin";
 
             if (user.ps4Fw >= 7.00 && user.ps4Fw <= 9.60){
                 if (!isHttps()){
@@ -136,80 +136,80 @@ export function load_BinLoader(name){
 }
 
 export function load_Elfldr(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/elfldr.elf", name)
+    Loadpayloadlocal("./includes/payloads/Bins/elfldr.elf", name)
 }
 
 export function load_PS4Debug(name){
     if (user.ps4Fw <= 12.02){
-        Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4debug.bin", name);
+        Loadpayloadlocal("./includes/payloads/Bins/ps4debug.bin", name);
     }else alert(window.lang.unsupportedFirmware + user.ps4Fw);
 }
 
 export function load_App2USB(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-app2usb.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-app2usb.bin", name);
 }
 
 
 export function load_BackupDB(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-backup.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-backup.bin", name);
 }
 
 export function load_RestoreDB(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-restore.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-restore.bin", name);
 }
 
 export function load_DisableASLR(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-disable-aslr.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-disable-aslr.bin", name);
 }
 
 export function load_DisableUpdates(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-disable-updates.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-disable-updates.bin", name);
 }
 
 export function load_EnableUpdates(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-enable-updates.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-enable-updates.bin", name);
 }
 
 export function load_ExitIDU(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-exit-idu.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-exit-idu.bin", name);
 }
   
 export function load_FTP(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-ftp.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-ftp.bin", name);
 }
   
 export function load_HistoryBlocker(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-history-blocker.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-history-blocker.bin", name);
 }
   
 export function load_RIFRenamer(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-rif-renamer.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-rif-renamer.bin", name);
 }
   
 export function load_Orbis(name){
     if (user.ps4Fw != 5.05 || user.ps4Fw != 6.72 || user.ps4Fw != 7.02 || user.ps4Fw != 7.55 || user.ps4Fw != 9.00){
         alert(window.lang.unsupportedFirmware + user.ps4Fw);
-    }else Loadpayloadlocal("./includes/payloads/Bins/Tools/Orbis-Toolbox-900.bin", name);
+    }else Loadpayloadlocal("./includes/payloads/Bins/Orbis-Toolbox-900.bin", name);
 }
 
 export function load_WebRTE(name){
     if (user.ps4Fw != 5.05 && user.ps4Fw != 6.72 && (user.ps4Fw < 7.00 || user.ps4Fw > 11.00)){
         //  5.05, 6.72 And 7.00 - 11.00
         alert(window.lang.unsupportedFirmware + user.ps4Fw);
-    }else Loadpayloadlocal("./includes/payloads/Bins/Tools/WebRTE.bin", name);
+    }else Loadpayloadlocal("./includes/payloads/Bins/WebRTE.bin", name);
 }
 
 export function load_PermanentUART(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-permanent-uart.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-permanent-uart.bin", name);
 }
 
 export function load_PUPDecrypt(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/pup-decrypt.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-pup-decrypt.bin", name);
 }
 
 export function load_FanThreshold(name){
     const temp = sessionStorage.getItem('fanTemp');
-    Loadpayloadlocal(`./includes/payloads/Bins/Tools/fan-thresholds/ps4-fan-threshold${temp}.bin`, name);
+    Loadpayloadlocal(`./includes/payloads/Bins/fan-thresholds/ps4-fan-threshold${temp}.bin`, name);
 }
 
 // Linux
@@ -230,11 +230,11 @@ export function load_Linux(name, payloadId){
 }
 
 export function load_npFakeSignin(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/np-fake-signin-ps4.elf", name);
+    Loadpayloadlocal("./includes/payloads/Bins/np-fake-signin-ps4.elf", name);
 }
 
 export function load_WebSrv(name){
-    Loadpayloadlocal("./includes/payloads/Bins/Tools/ps4-websrv.bin", name);
+    Loadpayloadlocal("./includes/payloads/Bins/ps4-websrv.bin", name);
 }
 
 // Custom uploaded Payload

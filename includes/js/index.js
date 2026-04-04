@@ -459,6 +459,12 @@ async function jailbreak() {
   if (window.ps4Fw) ui.initialScreen.remove();
   sessionStorage.removeItem('binloader');
 
+  // stop counter
+  if (!ui.stopAutoJbBtn.classList.contains('hidden')) {
+    // Click stop automaically
+    ui.stopAutoJbBtn.click();
+  }
+
   // Make it retry untill success
   sessionStorage.setItem('autoJbRetry', 'true');
 
@@ -1116,7 +1122,7 @@ function setAutoJbRetry(checked) {
     // close settings popup
       settingsPopup();
 
-    jailbreak();
+      jailbreak();
   }
 }
 
@@ -1152,8 +1158,7 @@ function autoJailbreakTimer() {
 // Stop the auto jailbreak retry on button click
 ui.stopAutoJbBtn.addEventListener('click', () => {
   clearInterval(autoJbInterval);
-  user.sessionAutoJbRetry = false;
-  sessionStorage.setItem('autoJbRetry', user.sessionAutoJbRetry);
+  sessionStorage.setItem('autoJbRetry', false);
   ui.stopAutoJbBtn.classList.toggle('hidden');
   ui.clickToStartText.textContent = window.lang.clickToStart;
 });
@@ -1173,8 +1178,6 @@ function updateJbStats(attemp, isSuccess) {
 
     localStorage.setItem('jbTotal', total);
     localStorage.setItem('jbSuccess', success);
-    user.jbTotal = total;
-    user.jbSuccess = success;
 
     let rate = ((success / total) * 100).toFixed(0);
     rate = isNaN(rate) ? "0" : rate; // Handle NaN case when total is 0
