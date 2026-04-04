@@ -774,7 +774,7 @@ function CheckFW() {
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's PayLoader
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection', 'autoJbContainer');
+        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection', 'autoJbContainer', 'successRate');
         document.getElementById('exploitContainer').style.display = "block";
 
         // Sizing the payload's section
@@ -814,7 +814,7 @@ function CheckFW() {
         
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads', 'custom-tab'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer');
+        elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer', 'successRate');
 
         // Sizing the payload's section
         // Full screen for phones, centered for desktop
