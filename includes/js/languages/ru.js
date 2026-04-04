@@ -34,6 +34,8 @@ window.lang = {
     "fanTitle": "Порог температуры",
     "fanDescription": "Устанавливает температуру которую система PS4 будет старться удерживать",
     "selectTemp":   "Выберите температуру",
+    "showAdvancedPayloads": "Показать продвинутые payloads",
+    "optionsHeader":    "Опции",
     "default":  "Стандартная", // Fan default string
     "goldhenFirmwareSemiSupported": "* Загрузка payload через GoldHEN PayLoader поддерживается на всех версиях ПО.",
     // payloads.js
@@ -45,4 +47,9 @@ window.lang = {
     "theme": "Тема",
     "defaultTheme": "По умолчанию",
     "vibrantTheme": "Яркий",
+    "autoJbRetryText": "Автоматически повторять взлом",
+    "autoJbRetryConfirm": "Выполнить взлом сейчас? Функция взлома будет автоматически повторяться при неудаче, пока не будет успешной.",
+    "jailbreakCountDown": "Повторная попытка взлома через {seconds} секунд...",
+    "successRate": "Успешность: ",
+    "clearStatsConfirm": "Вы уверены, что хотите очистить статистику взломов? Это действие необратимо!"
 }

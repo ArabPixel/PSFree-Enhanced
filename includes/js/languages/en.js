@@ -37,7 +37,7 @@ window.lang = {
     "default":  "Default", // Fan default string
     "goldhenFirmwareSemiSupported": "* Loading payloads through GoldHEN's PayLoader is supported on all firmware.",
     "showAdvancedPayloads": "Show Advanced Payloads",
-    "advancedPayloadHeader":    "Advanced Payloads",
+    "optionsHeader":    "Options",
     "advanced": "Advanced",
     "scanPayLoader":    "Scan for GoldHEN's PayLoader",
     "shutdownServerConfirm": "Are you sure you want to shutdown the server? You will need to re-inject the payload to start it again.",
@@ -58,4 +58,9 @@ window.lang = {
     "theme": "Theme",
     "defaultTheme": "Default",
     "vibrantTheme": "Vibrant",
+    "autoJbRetryText": "Auto-Retry Jailbreak",
+    "autoJbRetryConfirm": "Jailbreak now? The jailbreak function will automatically retry if it fails until it succeeds.",
+    "jailbreakCountDown": "Retrying jailbreak in {seconds} seconds...",
+    "successRate": "Success Rate: ",
+    "clearStatsConfirm": "Are you sure you want to clear jailbreak stats? This cannot be undone!"
 }

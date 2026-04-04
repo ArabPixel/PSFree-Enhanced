@@ -1961,6 +1961,9 @@ function runPayload(path) {
 
           // Unmap the memory used for the payload
           sysi("munmap", payload_buffer, padded_buffer.length);
+
+          // reload after some time
+          payloadSucces();
         } catch (e) {
           // Caught error while trying to execute payload
           log(`error in runPayload: ${e.message}`);
@@ -1984,12 +1987,16 @@ kexploit().then((success) => {
       runBinLoader();
     } else {
       runPayload(window.payload_path);
-      payloadSucces();
     }
   }
 });
 
 function payloadSucces(){
   log("AIO fix applied");
+
+  // check for auto retry
+  sessionStorage.setItem('autoJbRetry', 'false');
+
+  updateJbStats(false, true);
   setTimeout(() => {window.location.reload();}, 4000); // 4 seconds delay
 }

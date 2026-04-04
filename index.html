@@ -45,7 +45,12 @@
                     </g>
                 </svg>
             </div>
-            <h3 class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</h3>
+        </button>
+        <h3 class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</h3>
+        <button onclick="clearInterval(autoJbInterval);"
+            class="hidden mt-2 bg-red-600 hover:bg-red-700 p-3 rounded font-semibold transition-colors"
+            id="stopAutoJb">
+            Stop Auto Jailbreak
         </button>
 
         <!-- Compatibility message -->
@@ -87,7 +92,12 @@
                 <div id="exploitContainer" class="grid md:grid-cols-2 gap-8 h-screen">
                     <!-- Exploit console panel -->
                     <div id="exploit-status-panel" class="bg-gray-800 p-6 rounded-lg flex flex-col h-full">
-                        <h2 class="text-xl font-semibold mb-4">Exploit status</h2>
+                        <div class="flex justify-between w-auto" style="align-items: baseline;">
+                            <h2 class="text-xl font-semibold mb-4">Exploit status</h2>
+                            <button id="successRate" style="white-space: nowrap;" class="text-base font-semibold duration-300 transform hover:scale-102 hover:border-bottom cursor-pointer" onclick="clearStats()">
+                                Success rate
+                            </button>
+                        </div>
                         <div id="DebugConsole"
                             class="flex-grow min-h-[150px] bg-black/50 p-4 rounded-lg overflow-y-auto mb-4 text-xs font-mono"
                             dir="ltr">
@@ -360,11 +370,15 @@
                 </div>
             </div>
              <div id="advancedPayloads" class="mb-6">
-                <h3 class="text-lg font-semibold mb-2" id="advancedPayloadHeader">Advanced payloads</h3>
+                <h3 class="text-lg font-semibold mb-2" id="optionsHeader">Options</h3>
                 <div class="radio-group flex flex-wrap mb-4">
                     <label class="flex items-center text-white/80">
                         <input type="checkbox" id="advancedPayloadsInput" onclick="setAdvancedPayloads(this.checked)">
                         <p id="showAdvancedPayloads">Show Advanced Payloads</p>
+                    </label>
+                    <label id="autoJbContainer" class="flex items-center text-white/80">
+                        <input type="checkbox" id="autoJbRetry" onclick="setAutoJbRetry(this.checked)">
+                        <p id="autoJbRetryText">Auto-Retry Jailbreak</p>
                     </label>
                 </div>
             </div>

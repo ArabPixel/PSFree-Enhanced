@@ -38,7 +38,7 @@ window.lang = {
   "goldhenFirmwareSemiSupported": "* تفعيل الإضافات من خلال PayLoader الخاص بـ GoldHEN مدعوم على جميع الإصدارات",
   "payloadOnlyWithGoldHEN": "تفعيل إضافة .elf مسموح فقط عن طريق خادم إضافات (PayLoader)GoldHEN!",
   "showAdvancedPayloads": "عرض الإضافات المتقدمة",
-  "advancedPayloadHeader":  "الإضافات المتقدمة",
+  "optionsHeader":  "الخيارات",
   "advanced": "المتقدم",
   "scanPayLoader":    "العثور على خادم PayLoader الخاص بـ GoldHEN",
   "shutdownServerConfirm": "هل أنت متأكد من أنك تريد إغلاق الخادم؟ ستحتاج إلى إعادة إدخال الإضافة لبدء تشغيله مرة أخرى.",
@@ -58,4 +58,9 @@ window.lang = {
   "theme": "المظهر",
   "defaultTheme": "الإفتراضي",
   "vibrantTheme": "مشرق",
+  "autoJbRetryText": "إعادة محاولة التعديلة تلقائيا",
+  "autoJbRetryConfirm": "هل تريد تعديل الجهاز الآن؟ سيتم اعادة المحاولة تلقائيا إذا فشلت حتى تنجح.",
+  "jailbreakCountDown": "إعادة محاولة التعديل في {seconds} ثواني...",
+  "successRate": "نسبة النجاح: ",
+  "clearStatsConfirm": "هل أنت متأكد من أنك تريد مسح إحصائيات التعديل؟ هذا لا يمكن التراجع عنه!"
 }

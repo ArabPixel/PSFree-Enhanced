@@ -9,6 +9,7 @@ var user = {
   ps4Fw:            localStorage.getItem('ps4Fw'),  // Used for the case of sending the payload over the network
   clearLog:         true
 }
+var autoJbInterval;
 let lastScrollY = 0;
 let lastSection = "initial";
 var devMode = false;   // Dev mode for PC debugging
@@ -25,6 +26,7 @@ const ui = {
   psLogoContainer: document.getElementById('ps-logo-container'),
   clickToStartText: document.getElementById('click-to-start-text'),
   ps4FwStatus: document.getElementById('PS4FW'),
+  stopAutoJbBtn: document.getElementById('stopAutoJb'),
 
   // Exploit screen elements
   statusMessage: document.getElementById('statusMessage'),
@@ -41,6 +43,7 @@ const ui = {
   customPayloadsTab: document.getElementById('custom-tab'),
   customPayloadInput: document.getElementById('customPayloadInput'),
   sendCustomPayloadBtn: document.getElementById('sendCustomPayloadBtn'),
+  successRateText: document.getElementById('successRate'),
   
   payloadsSection: document.getElementById('payloadsSection'),
   payloadsList: document.getElementById("payloadsGrid"),
@@ -58,6 +61,7 @@ const ui = {
   chooseFanThreshold: document.getElementById('choose-fanThreshold'),
   scanGoldHENPayLoader: document.getElementById('scanPayLoader'),
   shutdownServerBtn: document.getElementById('shutdownServerBtn'),
+  autoJbRetry: document.getElementById('autoJbRetry'),
 
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
@@ -454,6 +458,12 @@ function chooseFanThreshold(){
 async function jailbreak() {
   if (window.ps4Fw) ui.initialScreen.remove();
   sessionStorage.removeItem('binloader');
+
+  // Make it retry untill success
+  sessionStorage.setItem('autoJbRetry', 'true');
+
+  // add one jailbreak attempt to the stats
+  updateJbStats(true,false);
   try {
     const modules = await loadMultipleModules([
       '../payloads/Jailbreak.js',
@@ -568,6 +578,7 @@ async function initLanguage() {
   try {
       await loadLanguage();
       applyLanguage(user.currentLanguage);
+      updateJbStats(false,false);
   } catch (e) {
       console.error(e);
   }
@@ -670,10 +681,11 @@ function applyLanguage(lang) {
   updateText(ui.settingsPopup.querySelector('#chooseGoldHEN summary'), 'otherVer'); 
   updateText(ui.settingsPopup.querySelector('#latestVer'), 'latestVer');
   updateText(document.getElementById('showAdvancedPayloads'), 'showAdvancedPayloads');
-  updateText(document.getElementById('advancedPayloadHeader'), 'advancedPayloadHeader');
+  updateText(document.getElementById('optionsHeader'), 'optionsHeader');
   updateText(document.getElementById('theme'), 'theme');
   updateText(document.getElementById('defaultTheme'), 'defaultTheme');
   updateText(document.getElementById('vibrantTheme'), 'vibrantTheme');
+  updateText(document.getElementById('autoJbRetryText'), 'autoJbRetryText');
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
@@ -698,7 +710,8 @@ function applyLanguage(lang) {
   updateTitle(ui.exploitRunBtn, 'clickToStart')
   updateTitle(ui.aboutBtn, 'aboutMenu');
 
-  updateText(document.querySelector('#exploit-status-panel h2'), 'exploitStatusHeader');
+  updateText(document.querySelector('#exploit-status-panel div h2'), 'exploitStatusHeader');
+  updateText(ui.successRateText, 'successRate');
   updateText(ui.payloadsSectionTitle, 'payloadsHeader');
   updateText(ui.toolsTab, 'payloadsToolsHeader');
   updateText(ui.linuxTab, 'payloadsLinuxHeader');
@@ -761,8 +774,9 @@ function CheckFW() {
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's PayLoader
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection');
+        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection', 'autoJbContainer');
         document.getElementById('exploitContainer').style.display = "block";
+
         // Sizing the payload's section
         ui.payloadsSection.style.width = "75%";
         ui.payloadsSection.style.margin = "auto";
@@ -778,6 +792,7 @@ function CheckFW() {
     user.ip = "127.0.0.1"
     user.ps4Fw = fwVersion;
   } else {
+    // Not a PS4
     user.platform = 'Unknown platform';
     if (/Android/.test(userAgent)) user.platform = 'Android';
     else if (/iPhone|iPad|iPod/.test(userAgent)) user.platform = 'iOS';
@@ -799,7 +814,7 @@ function CheckFW() {
         
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads', 'custom-tab'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'henSelection', 'warningBox');
+        elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer');
 
         // Sizing the payload's section
         // Full screen for phones, centered for desktop
@@ -839,6 +854,7 @@ function loadSettings() {
     loadAdvancedPayloads();
     loadLastTab();
     loadGoldHENVer();
+    autoJailbreak();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
   }
@@ -1091,5 +1107,85 @@ function loadTheme() {
     }
 }
 
-// CRITICAL: Run this when the page is fully loaded
-document.addEventListener('DOMContentLoaded', loadTheme);
+function setAutoJbRetry(checked) {
+  localStorage.setItem('autoJbRetry', checked);
+  sessionStorage.setItem('autoJbRetry', checked);
+
+  if (!checked) return;
+  if (confirm(window.lang.autoJbRetryConfirm)) {
+    // close settings popup
+      settingsPopup();
+
+    jailbreak();
+  }
+}
+
+// When jailbreak succeds, this will be stopped
+function autoJailbreak() {
+  var checked = localStorage.getItem('autoJbRetry') == 'true';
+  var sessionChecked = sessionStorage.getItem('autoJbRetry') == 'true';
+  ui.autoJbRetry.checked = checked;
+  // check if supported ps4
+  if (window.ps4Fw <= 7.00 || window.ps4Fw > 9.60) return;
+
+  // If auto jb is checked and previous jailbreak attempt was unsuccessful, retry jailbreak with a timer
+  if (checked && sessionChecked) {
+    autoJailbreakTimer();
+  }
+}
+
+// localStorage retry value true but no sessionStorage value? use timer.
+function autoJailbreakTimer() {
+  let timer = 3; // Start a longer countdown immediately
+  ui.stopAutoJbBtn.classList.toggle('hidden');
+  autoJbInterval = setInterval(() => {
+
+  ui.clickToStartText.textContent = window.lang.jailbreakCountDown.replace('{seconds}', timer);
+    if (timer < 0) {
+      clearInterval(autoJbInterval);
+      jailbreak();
+    }
+    timer--;
+  }, 1000);
+}
+
+// Stop the auto jailbreak retry on button click
+ui.stopAutoJbBtn.addEventListener('click', () => {
+  clearInterval(autoJbInterval);
+  user.sessionAutoJbRetry = false;
+  sessionStorage.setItem('autoJbRetry', user.sessionAutoJbRetry);
+  ui.stopAutoJbBtn.classList.toggle('hidden');
+  ui.clickToStartText.textContent = window.lang.clickToStart;
+});
+
+/**
+ * Safely updates element's textContent only if translation exists and is not empty.
+ * @param {boolean} attemp - Set to true if a jailbreak attempt was made.
+ * @param {boolean} isSuccess - Set to true if the jailbreak was successful.
+ * - Set both to false will only update the stats, useful when reloading the page.
+ */
+function updateJbStats(attemp, isSuccess) {
+    let total = parseInt(localStorage.getItem('jbTotal') || 0);
+    let success = parseInt(localStorage.getItem('jbSuccess') || 0);
+
+    if (attemp) total++;
+    if (isSuccess) success++;
+
+    localStorage.setItem('jbTotal', total);
+    localStorage.setItem('jbSuccess', success);
+    user.jbTotal = total;
+    user.jbSuccess = success;
+
+    let rate = ((success / total) * 100).toFixed(0);
+    rate = isNaN(rate) ? "0" : rate; // Handle NaN case when total is 0
+
+    // Update UI element:
+    ui.successRateText.textContent = window.lang.successRate + rate + "%" + ` (${success}/${total})`;
+}
+
+function clearStats() {
+  if (!confirm(window.lang.clearStatsConfirm)) return;
+  localStorage.removeItem('jbTotal');
+  localStorage.removeItem('jbSuccess');
+  ui.successRateText.textContent = window.lang.successRate + "0% (0/0)";
+}
