@@ -326,7 +326,7 @@ const advancedPayloads = [
 // Scroll snap for the PS4
 ui.mainContainer.addEventListener('scroll', () => {
   // Only apply if using a PS4
-  if (user.platform != "PS4") return;
+  if (user.platform != "PS4" || !ui.initialScreen) return;
   if (ui.mainContainer.scrollTop > lastScrollY) {
     // scrolling down
     if (lastSection !== "exploit") {
