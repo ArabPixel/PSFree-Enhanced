@@ -29,7 +29,6 @@ const ui = {
   stopAutoJbBtn: document.getElementById('stopAutoJb'),
 
   // Exploit screen elements
-  statusMessage: document.getElementById('statusMessage'),
   consoleElement: document.getElementById('console'),
   toolsSection: document.getElementById('tools'),
   toolsTab: document.getElementById('tools-tab'),
@@ -331,7 +330,7 @@ ui.mainContainer.addEventListener('scroll', () => {
   if (ui.mainContainer.scrollTop > lastScrollY) {
     // scrolling down
     if (lastSection !== "exploit") {
-      ui.exploitScreen.scrollIntoView({ block: "end" });
+      document.getElementById('exploitContainer').scrollIntoView({ block: "end" });
       lastSection = "exploit";
     }
   } else if (ui.mainContainer.scrollTop < lastScrollY) {
@@ -365,6 +364,9 @@ ui.toolsTab.addEventListener('click', () =>{
     ui.linuxTab.setAttribute("aria-selected", "false");
     ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
     ui.customPayloadsTab.setAttribute("aria-selected", "false");
+
+    ui.toolsSection.innerHTML = '';
+    renderPayloads(payloads.filter(p => p.category === 'tools'));
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -382,6 +384,9 @@ ui.linuxTab.addEventListener('click', () =>{
     ui.linuxTab.setAttribute("aria-selected", "true");
     ui.advancedPayloadsTab.setAttribute("aria-selected", "false");
     ui.customPayloadsTab.setAttribute("aria-selected", "false");
+
+    ui.linuxSection.innerHTML = '';
+    renderPayloads(payloads.filter(p => p.category === 'linux'));
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -399,6 +404,9 @@ ui.advancedPayloadsTab.addEventListener('click', () =>{
     ui.linuxTab.setAttribute("aria-selected", "false");
     ui.advancedPayloadsTab.setAttribute("aria-selected", "true");
     ui.customPayloadsTab.setAttribute("aria-selected", "false");
+
+    ui.advancedPayloadsSection.innerHTML = '';
+    renderPayloads(advancedPayloads);
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -435,9 +443,27 @@ function loadLastTab(){
   document.getElementById(user.lastTab + '-tab').setAttribute("aria-selected", "true");
 }
 
-function saveLastTab(tab){
+function saveLastTab(tab) {
+  // Update state
   user.lastTab = tab;
   localStorage.setItem('lastTab', tab);
+
+  // Define the map of containers
+  const sections = {
+    'tools': ui.toolsSection,
+    'linux': ui.linuxSection,
+    'advanced': ui.advancedPayloadsSection,
+    'custom': ui.customPayloadsSection
+  };
+
+  // Nuke contents of every section but the active one to free memory
+  Object.keys(sections).forEach(key => {
+    if (key !== tab && sections[key]) {
+      sections[key].innerHTML = ''; 
+    }
+  });
+  
+  console.log("Memory cleared for inactive tabs.");
 }
 
 // popups
@@ -456,20 +482,17 @@ function chooseFanThreshold(){
 
 // Jailbreak-related functions
 async function jailbreak() {
-  if (window.ps4Fw) ui.initialScreen.remove();
-  sessionStorage.removeItem('binloader');
-
   // stop counter
-  if (!ui.stopAutoJbBtn.classList.contains('hidden')) {
-    // Click stop automaically
-    ui.stopAutoJbBtn.click();
-  }
+  if (autoJbInterval) clearInterval(autoJbInterval);
 
   // Make it retry untill success
   sessionStorage.setItem('autoJbRetry', 'true');
 
   // add one jailbreak attempt to the stats
   updateJbStats(true,false);
+  cleanUp();
+  // wait a bit maybe for GC 
+  await new Promise(r => setTimeout(r, 300));
   try {
     const modules = await loadMultipleModules([
       '../payloads/Jailbreak.js',
@@ -876,6 +899,17 @@ function getPayloadCategoryClass(category) {
 }
 
 function renderPayloads(payloads) {
+  // Identify the target container first
+  const firstCategory = payloads[0].category;
+  let targetContainer;
+  
+  if (firstCategory === 'tools') targetContainer = ui.toolsSection;
+  else if (firstCategory === 'linux') targetContainer = ui.linuxSection;
+  else if (firstCategory === 'advanced') targetContainer = ui.advancedPayloadsSection;
+
+  // Clear to prevent duplicates
+  if (targetContainer) targetContainer.innerHTML = '';
+
   payloads.forEach(payload => {
     const payloadCard = document.createElement('div');
     payloadCard.id = payload.id;
@@ -888,7 +922,6 @@ function renderPayloads(payloads) {
       <div class="bg-gray-800 border border-white/20 rounded-xl p-6 h-full">
           <div class="flex items-start justify-between mb-4">
               <div class="flex items-center space-x-3">
-                  <div class="text-2xl"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> </svg></div>
                   <div>
                       <h3 class="text-start font-semibold text-white text-lg">${payload.name}</h3>
                       <p class="text-start text-cyan-300" style="font-size: 0.75rem">${payload.author}</p>
@@ -1132,7 +1165,7 @@ function autoJailbreak() {
   var sessionChecked = sessionStorage.getItem('autoJbRetry') == 'true';
   ui.autoJbRetry.checked = checked;
   // check if supported ps4
-  if (window.ps4Fw <= 7.00 || window.ps4Fw > 9.60) return;
+  if (window.ps4Fw < 7.00 || window.ps4Fw > 9.60) return;
 
   // If auto jb is checked and previous jailbreak attempt was unsuccessful, retry jailbreak with a timer
   if (checked && sessionChecked) {
@@ -1191,4 +1224,46 @@ function clearStats() {
   localStorage.removeItem('jbTotal');
   localStorage.removeItem('jbSuccess');
   ui.successRateText.textContent = window.lang.successRate + "0% (0/0)";
+}
+
+// A try to free up some memory to improve success rate
+function cleanUp() {
+  if (!window.ps4Fw) return;
+
+  // Stop auto-jailbreak counter
+  if (autoJbInterval) {
+    clearInterval(autoJbInterval);
+    autoJbInterval = null;
+  }
+
+  // Empty payloads sections
+  if (ui.payloadsList) {
+    ui.payloadsList.innerHTML = '';
+  }
+
+
+  // Wipe individual refs
+  const toDestroy = [
+    'settingsBtn', 'aboutBtn', 'initialScreen',
+    'psLogoContainer', 'clickToStartText',
+    'ps4FwStatus', 'stopAutoJbBtn', 'payloadsSection', 'payloadsList', 'payloadsSectionTitle',
+    'ps4IpInput', 'ps4FwSelect', 'scanGoldHENPayLoader', 'shutdownServerBtn',
+    'aboutPopup', 'settingsPopup', 'chooseFanThreshold', 'autoJbRetry', 'chooselang',
+    'toolsSection', 'toolsTab', 'linuxSection', 'linuxTab', 'advancedPayloadsSection', 'advancedPayloadsTab',
+    'advancedPayloadsContainer', 'advancedPayloadsInput', 'customPayloadsSection', 'customPayloadsTab', 'customPayloadInput',
+    'sendCustomPayloadBtn', 'exploitRunBtn', 'secondHostBtn', 'aboutPopupOverlay', 'settingsPopupOverlay', 'chooseFanThresholdOverlay'
+  ];
+  toDestroy.forEach(key => {
+    if (ui[key]) {
+      if (typeof ui[key].remove === 'function') ui[key].remove();
+      ui[key] = null;
+    }
+  });
+
+  // Null the payload arrays — forces GC eligibility on their objects
+  if (typeof payloads !== 'undefined') payloads.length = 0;
+  if (typeof advancedPayloads !== 'undefined') advancedPayloads.length = 0;
+
+  // Make console full screen
+  document.getElementById('exploitContainer').style.display = "block";
 }

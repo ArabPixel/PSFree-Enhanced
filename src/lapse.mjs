@@ -1962,8 +1962,8 @@ function runPayload(path) {
           // Unmap the memory used for the payload
           sysi("munmap", payload_buffer, padded_buffer.length);
 
-          // reload after some time
-          payloadSucces();
+          // disable auto retry
+          sessionStorage.setItem('autoJbRetry', 'false');
         } catch (e) {
           // Caught error while trying to execute payload
           log(`error in runPayload: ${e.message}`);
@@ -1984,18 +1984,20 @@ kexploit().then((success) => {
   if (success) {
     clear_log();
     if (sessionStorage.getItem('binloader')){
+      // Dont load binloader next attempt
+      sessionStorage.removeItem('binloader');
+      
       runBinLoader();
     } else {
       runPayload(window.payload_path);
+      // reload after some time
+      payloadSucces();
     }
   }
 });
 
 function payloadSucces(){
   log("AIO fix applied");
-
-  // check for auto retry
-  sessionStorage.setItem('autoJbRetry', 'false');
 
   updateJbStats(false, true);
   setTimeout(() => {window.location.reload();}, 4000); // 4 seconds delay
