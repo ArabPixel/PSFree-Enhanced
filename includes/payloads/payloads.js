@@ -103,6 +103,12 @@ function Loadpayloadonline(PLfile) {
     }else {
         window.payload_path = PLfile;
     }
+    // add one jailbreak attempt to the stats
+    updateJbStats(true,false);
+    cleanUp();
+    // wait a bit maybe for GC 
+    new Promise(r => setTimeout(r, 300));
+
     import('../../src/alert.mjs');
 }
 
