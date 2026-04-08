@@ -1161,11 +1161,11 @@ function setAutoJbRetry(checked) {
 
 // When jailbreak succeds, this will be stopped
 function autoJailbreak() {
-  var checked = localStorage.getItem('autoJbRetry') == 'true';
+  var checked = (localStorage.getItem('autoJbRetry') || 'true') === 'true'; // default to true if not set
   var sessionChecked = sessionStorage.getItem('autoJbRetry') == 'true';
   ui.autoJbRetry.checked = checked;
   // check if supported ps4
-  if (window.ps4Fw < 7.00 || window.ps4Fw > 9.60) return;
+  if (window.ps4Fw < 7.00 || window.ps4Fw > 9.60 || !window.ps4Fw) return;
 
   // If auto jb is checked and previous jailbreak attempt was unsuccessful, retry jailbreak with a timer
   if (checked && sessionChecked) {
@@ -1180,7 +1180,7 @@ function autoJailbreakTimer() {
   autoJbInterval = setInterval(() => {
 
   ui.clickToStartText.textContent = window.lang.jailbreakCountDown.replace('{seconds}', timer);
-    if (timer < 0) {
+    if (timer <= 0) {
       clearInterval(autoJbInterval);
       jailbreak();
     }
