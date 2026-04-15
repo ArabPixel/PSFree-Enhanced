@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v1
-# Generated on 2026-04-08 21:35:44.441162
+# v2
+# Generated on 2026-04-15 10:31:00.000000
 
 CACHE:
 index.html
@@ -9,6 +9,7 @@ includes/vibrant.css
 includes/js/index.js
 includes/js/languages/ru.js
 includes/js/languages/ar.js
+includes/js/languages/zh-cn.js
 includes/js/languages/en.js
 includes/js/languages/es.js
 includes/js/languages/tr.js
