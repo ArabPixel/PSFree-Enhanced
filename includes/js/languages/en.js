@@ -18,6 +18,7 @@ window.lang = {
     "closeButton": "Close",
     "settingsPsfreeHeader": "Settings",
     "ps4FirmwareSupportedHeader": "Supported PS4 firmware",
+    "bareboneJB":  "Barebone Jailbreak Experience",
     "languageHeader": "Language",
     "warnings": {
         "note1": "Make sure to delete cache data before running the exploit for the first time",

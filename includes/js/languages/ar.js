@@ -18,6 +18,7 @@ window.lang = {
   "closeButton": "إغلاق",
   "settingsPsfreeHeader": "الإعدادات",
   "ps4FirmwareSupportedHeader": "إصدارات PS4 المدعومة",
+  "bareboneJB":  "تجربة تعديل خام",
   "languageHeader": "اللغة",
   "warnings": {
     "note1": "تأكد من ان تقوم بمسح الملفات المؤقته قبل تنفيذ الثغرة لأول مرة",

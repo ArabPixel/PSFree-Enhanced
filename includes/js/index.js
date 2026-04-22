@@ -7,7 +7,8 @@ var user = {
   advancedPayloads: localStorage.getItem('advancedPayloads') || false, // True/false
   ip:               localStorage.getItem('PayLoaderIp') || window.location.hostname,
   ps4Fw:            localStorage.getItem('ps4Fw'),  // Used for the case of sending the payload over the network
-  clearLog:         true
+  clearLog:         true,
+  bareboneJB:       localStorage.getItem('bareboneJB') === 'true'
 }
 var autoJbInterval;
 let lastScrollY = 0;
@@ -61,6 +62,8 @@ const ui = {
   scanGoldHENPayLoader: document.getElementById('scanPayLoader'),
   shutdownServerBtn: document.getElementById('shutdownServerBtn'),
   autoJbRetry: document.getElementById('autoJbRetry'),
+  bareboneJbBtn: document.getElementById('bareboneJB'),
+  bareboneJBInput: document.getElementById('bareboneJBInput'),
 
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
@@ -490,29 +493,16 @@ async function jailbreak() {
 
   // add one jailbreak attempt to the stats
   updateJbStats(true,false);
-  cleanUp();
-  // wait a bit maybe for GC 
-  await new Promise(r => setTimeout(r, 300));
-  try {
-    const modules = await loadMultipleModules([
-      '../payloads/Jailbreak.js',
-      '../../src/alert.mjs'
-    ]);
-    const JailbreakModule = modules[0];
 
-    if (user.currentJbFlavor == 'GoldHEN') {
-      if (JailbreakModule && typeof JailbreakModule.GoldHEN === 'function') {
-        JailbreakModule.GoldHEN();
-      } else {
-        alert("GoldHEN function not found in Jailbreak.js module");
-      }
-    } else {
-      if (JailbreakModule && typeof JailbreakModule.HEN === 'function') {
-        JailbreakModule.HEN();
-      }
-    }
-  } catch (e) {
-    alert("Failed to jailbreak: " + e);
+  // barebone exploit prefered? go to exploit file
+  if (user.bareboneJB){
+    location.href = "./exploit.html";
+    return;
+  }else{
+    cleanUp();
+    // wait a bit maybe for GC 
+    await new Promise(r => setTimeout(r, 300));
+    import("../../src/alert.mjs");
   }
 }
 
@@ -687,6 +677,7 @@ function applyLanguage(lang) {
   const aboutParagraphs = ui.aboutPopup.querySelectorAll('p');
   updateText(aboutParagraphs[0], 'aboutVersion');
   updateText(aboutParagraphs[1], 'aboutDescription');
+  updateText(ui.bareboneJB, 'bareboneJB')
   
   updateText(ui.aboutPopup.querySelector('#PS4FWOK h3'), 'ps4FirmwareSupportedHeader');
   updateText(ui.aboutPopup.querySelector('#close-about'), 'closeButton');
@@ -803,7 +794,7 @@ function CheckFW() {
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's PayLoader
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection', 'autoJbContainer', 'successRate');
+        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection', 'autoJbContainer', 'successRate', 'bareboneJBOption');
         document.getElementById('exploitContainer').style.display = "block";
 
         // Sizing the payload's section
@@ -843,7 +834,7 @@ function CheckFW() {
         
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads', 'custom-tab'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer', 'successRate');
+        elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer', 'successRate', 'bareboneJBOption');
 
         // Sizing the payload's section
         // Full screen for phones, centered for desktop
@@ -884,6 +875,7 @@ function loadSettings() {
     loadLastTab();
     loadGoldHENVer();
     autoJailbreak();
+    updateBareboneJB();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
   }
@@ -969,6 +961,24 @@ function DisplayCacheProgress() {
       location.reload();
     }, 2000); 
   }
+
+function terminateCache() {
+    if (window.applicationCache) {
+        // Status 3 is 'downloading', Status 1 is 'checking'
+        if (window.applicationCache.status === 3 || window.applicationCache.status === 1) {
+            console.log("Terminating cache process to save memory...");
+            window.applicationCache.abort();
+
+            // restore title
+            document.title = window.lang.title;
+            
+            // cleanup
+            window.applicationCache.removeEventListener("progress", DLProgress);
+            window.applicationCache.oncached = null;
+            window.applicationCache.onupdateready = null;
+        }
+    }
+}
 
 
 function setAdvancedPayloads(inputState){
@@ -1228,6 +1238,7 @@ function clearStats() {
 
 // A try to free up some memory to improve success rate
 function cleanUp() {
+  // terminateCache(); Still not sure if this drops the success rate and makes more crashes
   if (!window.ps4Fw) return;
 
   // Stop auto-jailbreak counter
@@ -1266,4 +1277,16 @@ function cleanUp() {
 
   // Make console full screen
   document.getElementById('exploitContainer').style.display = "block";
+}
+
+function updateBareboneJB(){
+  ui.bareboneJBInput.checked = user.bareboneJB;
+  console.log(user.bareboneJB);
+}
+
+function setBareboneJB(checked){
+  localStorage.setItem("bareboneJB", checked);
+  user.bareboneJB = checked;
+    console.log(user.bareboneJB);
+
 }

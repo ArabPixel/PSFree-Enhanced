@@ -310,10 +310,6 @@
                 <div class="radio-group space-y-2">
                     <!-- Language options -->
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="zh-cn" class="ml-2" onchange="saveLanguage(this.value);">
-                        <p>简体中文</p>
-                    </label>
-                    <label class="flex items-center text-white/80">
                         <input type="radio" name="language" value="en" class="ml-2" onchange="saveLanguage(this.value);">
                         <p>English</p>
                     </label>
@@ -332,6 +328,10 @@
                     <label class="flex items-center text-white/80">
                         <input type="radio" name="language" value="tr" class="ml-2" onchange="saveLanguage(this.value);">
                         <p>T&uuml;rk&ccedil;e</p>
+                    </label>
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="language" value="zh-cn" class="ml-2" onchange="saveLanguage(this.value);">
+                        <p>简体中文</p>
                     </label>
                 </div>
             </div>
@@ -387,6 +387,10 @@
                     <label id="autoJbContainer" class="flex items-center text-white/80">
                         <input type="checkbox" id="autoJbRetry" onclick="setAutoJbRetry(this.checked)">
                         <p id="autoJbRetryText">Auto-Retry Jailbreak</p>
+                    </label>
+                    <label id="bareboneJBOption" class="flex items-center text-white/80">
+                        <input type="checkbox" id="bareboneJBInput" onclick="setBareboneJB(this.checked)">
+                        <p id="bareboneJB">Barebone Jailbreak Experience</p>
                     </label>
                 </div>
             </div>

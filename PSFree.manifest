@@ -1,9 +1,10 @@
 CACHE MANIFEST
 # v2
-# Generated on 2026-04-15 10:31:00.000000
+# Generated on 2026-04-22
 
 CACHE:
 index.html
+exploit.html
 includes/index.css
 includes/vibrant.css
 includes/js/index.js
@@ -13,7 +14,6 @@ includes/js/languages/zh-cn.js
 includes/js/languages/en.js
 includes/js/languages/es.js
 includes/js/languages/tr.js
-includes/payloads/Jailbreak.js
 includes/payloads/payloads.js
 includes/payloads/Bins/appcache-install.bin
 includes/payloads/Bins/elfldr.bin
