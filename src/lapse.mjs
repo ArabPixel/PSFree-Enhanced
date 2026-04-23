@@ -1987,11 +1987,17 @@ kexploit().then((success) => {
       // Dont load binloader next attempt
       sessionStorage.removeItem('binloader');
       
+      if (typeof updateJbStats === "function"){
+        updateJbStats(false, true);
+      }
       runBinLoader();
     } else {
-      if (localStorage.getItem('jailbreakFlavor') == "HEN"){
-        HEN();
-      } else GoldHEN();
+      // No payload defined? Choose prefered HEN
+      if (window.payload_path == undefined){
+        if (localStorage.getItem('jailbreakFlavor') == "HEN"){
+          HEN();
+        } else GoldHEN();
+      }
 
       runPayload(window.payload_path);
       // reload after some time

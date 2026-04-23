@@ -1207,7 +1207,7 @@ ui.stopAutoJbBtn.addEventListener('click', () => {
 });
 
 /**
- * Safely updates element's textContent only if translation exists and is not empty.
+ * A Function to add an attempt and/or a success exploit and update the localStorage.
  * @param {boolean} attemp - Set to true if a jailbreak attempt was made.
  * @param {boolean} isSuccess - Set to true if the jailbreak was successful.
  * - Set both to false will only update the stats, useful when reloading the page.
@@ -1216,17 +1216,20 @@ function updateJbStats(attemp, isSuccess) {
     let total = parseInt(localStorage.getItem('jbTotal') || 0);
     let success = parseInt(localStorage.getItem('jbSuccess') || 0);
 
-    if (attemp) total++;
-    if (isSuccess) success++;
-
-    localStorage.setItem('jbTotal', total);
-    localStorage.setItem('jbSuccess', success);
+    if (attemp){
+      total++;
+      localStorage.setItem('jbTotal', total);
+    } 
+    if (isSuccess){
+      success++;
+      localStorage.setItem('jbSuccess', success);
+    } 
 
     let rate = ((success / total) * 100).toFixed(0);
     rate = isNaN(rate) ? "0" : rate; // Handle NaN case when total is 0
 
     // Update UI element:
-    ui.successRateText.textContent = window.lang.successRate + rate + "%" + ` (${success}/${total})`;
+    ui.successRateText.textContent = (window.lang.successRate || "Success Rate: ") + rate + "%" + ` (${success}/${total})`;
 }
 
 function clearStats() {
