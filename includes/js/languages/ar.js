@@ -63,5 +63,8 @@ window.lang = {
   "autoJbRetryConfirm": "هل تريد تعديل الجهاز الآن؟ سيتم اعادة المحاولة تلقائيا إذا فشلت حتى تنجح.",
   "jailbreakCountDown": "إعادة محاولة التعديل في {seconds} ثواني...",
   "successRate": "نسبة النجاح: ",
-  "clearStatsConfirm": "هل أنت متأكد من أنك تريد مسح إحصائيات التعديل؟ هذا لا يمكن التراجع عنه!"
+  "clearStatsConfirm": "هل أنت متأكد من أنك تريد مسح إحصائيات التعديل؟ هذا لا يمكن التراجع عنه!",
+  "exploitChainTitle": "سلسلة الثغرات",
+  "defaultLapse": "ثغرة PSFree الإفتراضية",
+  "secondLapse": "ثغرة PSFree الخاصة بـ Feyzee61",
 }

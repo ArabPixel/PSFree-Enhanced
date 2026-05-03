@@ -8,7 +8,8 @@ var user = {
   ip:               localStorage.getItem('PayLoaderIp') || window.location.hostname,
   ps4Fw:            localStorage.getItem('ps4Fw'),  // Used for the case of sending the payload over the network
   clearLog:         true,
-  bareboneJB:       localStorage.getItem('bareboneJB') === 'true'
+  bareboneJB:       localStorage.getItem('bareboneJB') === 'true',
+  secondLapse:      localStorage.getItem('secondLapse') === "true", //Exploit chain method
 }
 var autoJbInterval;
 let lastScrollY = 0;
@@ -64,6 +65,8 @@ const ui = {
   autoJbRetry: document.getElementById('autoJbRetry'),
   bareboneJbBtn: document.getElementById('bareboneJB'),
   bareboneJBInput: document.getElementById('bareboneJBInput'),
+  secondLapse: document.getElementById('secondLapse'),
+  exploitChainTitle: document.getElementById('exploitChainTitle'),
 
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
@@ -485,6 +488,8 @@ function chooseFanThreshold(){
 
 // Jailbreak-related functions
 async function jailbreak() {
+  // clear terminal
+  ui.consoleElement.textContent = '';``
   // stop counter
   if (autoJbInterval) clearInterval(autoJbInterval);
 
@@ -494,18 +499,34 @@ async function jailbreak() {
   // add one jailbreak attempt to the stats
   updateJbStats(true,false);
 
+  // Skip if payload were chosen, useful when a payload were chosen from payloads.js
+  if (sessionStorage.getItem('payload_path') == (null || undefined)){
+    // Choose HEN
+    if (user.currentJbFlavor === 'GoldHEN') {
+      GoldHEN();
+    } else if (user.currentJbFlavor === 'HEN') {
+      HEN();
+    }
+  }
+  // Cleanup before jailbreak
+  cleanUp();
   // barebone exploit prefered? go to exploit file
   if (user.bareboneJB){
     location.href = "./exploit.html";
-    return;
   }else{
-    cleanUp();
     // wait a bit maybe for GC 
-    await new Promise(r => setTimeout(r, 300));
-    import("../../src/alert.mjs");
+    await new Promise(r => setTimeout(r, 500));
+
+    // Exploit chain method check
+    if (user.secondLapse){
+      console.log("Loading second lapse version of the exploit");
+      // Feyzee61's exploit chain
+      import("./bundle.js");
+      doJailBreak();
+
+    }else import("../../src/alert.mjs"); // Default chain
   }
 }
-
 async function loadMultipleModules(files) {
   try {
     // Dynamically import all modules
@@ -566,6 +587,36 @@ async function Loadpayloads(payload, name, payloadId) {
   } catch (e) {
     alert(`Failed to load ${payload}: ${e}`);
   }
+}
+
+// HEN path selection based on user preference
+function GoldHEN() {
+    let goldHenVersion = localStorage.getItem('GHVer');
+    let basePath = "./includes/payloads/GoldHEN/";
+    switch (goldHenVersion){
+        case "GHv2.4b18.9":
+            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.9.bin");
+            break;
+        case "GHv2.4b18.8":
+            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.8.bin");
+            break;
+        case "GHv2.4b18.7":
+            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.7.bin");
+            break;
+        case "GHv2.4b18.6":
+            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.6.bin");
+            break;
+        case "GHv2.4b18.5":
+            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.5.bin");
+            break;
+        default:
+            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.9.bin");
+            break;
+    }
+}
+
+function HEN() {
+    sessionStorage.setItem('payload_path', './includes/payloads/HEN/HEN.bin');
 }
 
 function setGoldHENVer(value){
@@ -706,6 +757,7 @@ function applyLanguage(lang) {
   updateText(document.getElementById('defaultTheme'), 'defaultTheme');
   updateText(document.getElementById('vibrantTheme'), 'vibrantTheme');
   updateText(document.getElementById('autoJbRetryText'), 'autoJbRetryText');
+  updateText(ui.exploitChainTitle, 'exploitChainTitle');
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
@@ -794,7 +846,7 @@ function CheckFW() {
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's PayLoader
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection', 'autoJbContainer', 'successRate', 'bareboneJBOption');
+        elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection', 'autoJbContainer', 'successRate', 'bareboneJBOption', 'chooseExploitChain');
         document.getElementById('exploitContainer').style.display = "block";
 
         // Sizing the payload's section
@@ -834,7 +886,7 @@ function CheckFW() {
         
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads', 'custom-tab'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer', 'successRate', 'bareboneJBOption');
+        elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer', 'successRate', 'bareboneJBOption', 'chooseExploitChain');
 
         // Sizing the payload's section
         // Full screen for phones, centered for desktop
@@ -876,6 +928,7 @@ function loadSettings() {
     loadGoldHENVer();
     autoJailbreak();
     updateBareboneJB();
+    loadSecondLapse();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
   }
@@ -1224,12 +1277,13 @@ function updateJbStats(attemp, isSuccess) {
       success++;
       localStorage.setItem('jbSuccess', success);
     } 
-
-    let rate = ((success / total) * 100).toFixed(0);
-    rate = isNaN(rate) ? "0" : rate; // Handle NaN case when total is 0
-
-    // Update UI element:
-    ui.successRateText.textContent = (window.lang.successRate || "Success Rate: ") + rate + "%" + ` (${success}/${total})`;
+    
+    // Update UI element if present, useful for the case of exploit.html not having the ui element.
+    if (ui.successRateText) {
+      let rate = ((success / total) * 100).toFixed(0);
+      rate = isNaN(rate) ? "0" : rate; // Handle NaN case when total is 0
+      ui.successRateText.textContent = (window.lang.successRate || "Success Rate: ") + rate + "%" + ` (${success}/${total})`;
+    }
 }
 
 function clearStats() {
@@ -1258,14 +1312,15 @@ function cleanUp() {
 
   // Wipe individual refs
   const toDestroy = [
-    'settingsBtn', 'aboutBtn', 'initialScreen',
+    'settingsBtn', 'aboutBtn', 'initialScreen', 'chooseGoldHEN',
     'psLogoContainer', 'clickToStartText',
     'ps4FwStatus', 'stopAutoJbBtn', 'payloadsSection', 'payloadsList', 'payloadsSectionTitle',
     'ps4IpInput', 'ps4FwSelect', 'scanGoldHENPayLoader', 'shutdownServerBtn',
     'aboutPopup', 'settingsPopup', 'chooseFanThreshold', 'autoJbRetry', 'chooselang',
     'toolsSection', 'toolsTab', 'linuxSection', 'linuxTab', 'advancedPayloadsSection', 'advancedPayloadsTab',
     'advancedPayloadsContainer', 'advancedPayloadsInput', 'customPayloadsSection', 'customPayloadsTab', 'customPayloadInput',
-    'sendCustomPayloadBtn', 'exploitRunBtn', 'secondHostBtn', 'aboutPopupOverlay', 'settingsPopupOverlay', 'chooseFanThresholdOverlay'
+    'sendCustomPayloadBtn', 'exploitRunBtn', 'secondHostBtn', 'aboutPopupOverlay', 'settingsPopupOverlay', 'chooseFanThresholdOverlay',
+    'exploitChainTitle', 'secondLapse'
   ];
   toDestroy.forEach(key => {
     if (ui[key]) {
@@ -1292,4 +1347,14 @@ function setBareboneJB(checked){
   user.bareboneJB = checked;
     console.log(user.bareboneJB);
 
+}
+
+// save exploit chain method to localStorage
+function secondLapse(value){
+  localStorage.setItem('secondLapse', value);
+  user.secondLapse = value == "true";
+}
+// load option when loading the page
+function loadSecondLapse(){
+  document.querySelector(`input[name="exploitChain"][value="${user.secondLapse}"]`).checked = true;
 }

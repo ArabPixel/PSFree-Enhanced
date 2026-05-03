@@ -1917,6 +1917,8 @@ function runBinLoader() {
     call_nze("pthread_create", pthread, 0, payload_loader, payload_buffer);
   }
 
+  // disable auto retry
+  sessionStorage.setItem('autoJbRetry', 'false');
   log("awaiting payload on port 9020...");
 }
 
@@ -1964,6 +1966,8 @@ function runPayload(path) {
 
           // disable auto retry
           sessionStorage.setItem('autoJbRetry', 'false');
+          // Empty variable to return to the index page (for exploit.html)
+          sessionStorage.removeItem('payload_path');
         } catch (e) {
           // Caught error while trying to execute payload
           log(`error in runPayload: ${e.message}`);
@@ -1992,16 +1996,28 @@ kexploit().then((success) => {
       }
       runBinLoader();
     } else {
-      // No payload defined? Choose prefered HEN
-      if (window.payload_path == undefined){
-        if (localStorage.getItem('jailbreakFlavor') == "HEN"){
-          HEN();
-        } else GoldHEN();
+      // Just for the barebone jailbreak experience. 
+      // When reloading payload_path is undefined.
+      let bareboneJB = localStorage.getItem('bareboneJB');
+      let currentJbFlavor = localStorage.getItem('currentJbFlavor');
+      let payload_path = sessionStorage.getItem('payload_path');
+
+      if (bareboneJB && payload_path == null){
+        if (typeof GoldHEN == 'function' && typeof HEN == 'function') {
+          if(confirm("Load " + currentJbFlavor + "? Otherwise we'll launch a BinLoader!")){
+            // Load the prefered HEN
+            if (currentJbFlavor == 'HEN'){
+              HEN();
+            }else GoldHEN();
+
+          }
+        }
       }
 
-      runPayload(window.payload_path);
       // reload after some time
       payloadSucces();
+
+      runPayload(sessionStorage.getItem('payload_path'));
     }
   }
 });
@@ -2013,32 +2029,4 @@ function payloadSucces(){
     updateJbStats(false, true);
   }
   setTimeout(() => {window.location.href = "./";}, 4000); // 4 seconds delay
-}
-
-function GoldHEN() {
-    let goldHenVersion = localStorage.getItem('GHVer');
-    switch (goldHenVersion){
-        case "GHv2.4b18.9":
-            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.9.bin";
-            break;
-        case "GHv2.4b18.8":
-            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.8.bin";
-            break;
-        case "GHv2.4b18.7":
-            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.7.bin";
-            break;
-        case "GHv2.4b18.6":
-            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.6.bin";
-            break;
-        case "GHv2.4b18.5":
-            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.5.bin";
-            break;
-        default:
-            window.payload_path = "./includes/payloads/GoldHEN/goldhen_v2.4b18.9.bin";
-            break;
-    }
-}
-
-function HEN() {
-    window.payload_path = './includes/payloads/HEN/HEN.bin';
 }

@@ -1,11 +1,12 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-04-26 10:59:4.43821
+# Generated on 2026-05-03 01:51:01.331169
 
 CACHE:
 index.html
 exploit.html
 includes/index.css
+includes/js/bundle.js
 includes/vibrant.css
 includes/js/index.js
 includes/js/languages/ru.js

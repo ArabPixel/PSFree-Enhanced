@@ -174,6 +174,9 @@
                                     <option value="12.50">12.50</option>
                                     <option value="12.52">12.52</option>
                                     <option value="13.00">13.00</option>
+                                    <option value="13.02">13.02</option>
+                                    <option value="13.04">13.04</option>
+                                    <option value="13.50">13.50</option>
                                 </select>
                             </div>
                         </div>
@@ -307,7 +310,7 @@
             <!-- Language chooser -->
             <div id="chooselang" class="mb-6">
                 <h3 class="text-lg font-semibold mb-2">Language</h3>
-                <div class="radio-group space-y-2">
+                <div class="radio-group space-y-2 flex flex-wrap">
                     <!-- Language options -->
                     <label class="flex items-center text-white/80">
                         <input type="radio" name="language" value="en" class="ml-2" onchange="saveLanguage(this.value);">
@@ -366,7 +369,7 @@
             </div>
             <div id="chooseTheme" class="mb-4">
                 <h3 class="text-lg font-semibold mb-2" id="theme">Choose Theme</h3>
-                <div class="radio-group space-y-2">
+                <div class="radio-group space-y-2 flex flex-wrap">
                     <label class="flex items-center text-white/80">
                         <input type="radio" name="theme" value="index" onchange="setTheme(this.value);">
                         <p id="defaultTheme">Default</p>
@@ -377,6 +380,19 @@
                     </label>
                 </div>
             </div>
+            <div id="chooseExploitChain" class="mb-4">
+                <h3 class="text-lg font-semibold mb-2" id="exploitChainTitle">Exploit Chain</h3>
+                <div class="radio-group space-y-2 flex flex-wrap">
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="exploitChain" value="false" onchange="secondLapse(this.value);">
+                        <p id="defaultLapse">Default's PSFree Lapse</p>
+                    </label>
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="exploitChain" value="true" onchange="secondLapse(this.value);">
+                        <p id="secondLapse">Feyzee61's PSFree Lapse</p>
+                    </label>
+                </div>
+            </div>
              <div id="advancedPayloads" class="mb-6">
                 <h3 class="text-lg font-semibold mb-2" id="optionsHeader">Options</h3>
                 <div class="radio-group flex flex-wrap mb-4">
@@ -384,15 +400,15 @@
                         <input type="checkbox" id="advancedPayloadsInput" onclick="setAdvancedPayloads(this.checked)">
                         <p id="showAdvancedPayloads">Show Advanced Payloads</p>
                     </label>
-                    <label id="autoJbContainer" class="flex items-center text-white/80">
-                        <input type="checkbox" id="autoJbRetry" onclick="setAutoJbRetry(this.checked)">
-                        <p id="autoJbRetryText">Auto-Retry Jailbreak</p>
-                    </label>
-                    <label id="bareboneJBOption" class="flex items-center text-white/80">
-                        <input type="checkbox" id="bareboneJBInput" onclick="setBareboneJB(this.checked)">
-                        <p id="bareboneJB">Barebone Jailbreak Experience</p>
-                    </label>
                 </div>
+                <label id="autoJbContainer" class="flex items-center text-white/80">
+                    <input type="checkbox" id="autoJbRetry" onclick="setAutoJbRetry(this.checked)">
+                    <p id="autoJbRetryText">Auto-Retry Jailbreak</p>
+                </label>
+                <label id="bareboneJBOption" class="flex items-center text-white/80">
+                    <input type="checkbox" id="bareboneJBInput" onclick="setBareboneJB(this.checked)">
+                    <p id="bareboneJB">Barebone Jailbreak Experience</p>
+                </label>
             </div>
             <button onclick="ipGuess()"
                 class="hidden bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
@@ -452,6 +468,7 @@
     </script>
     <!-- Main JS file -->
     <script src='./includes/js/index.js'></script>
+    <script src='./includes/js/bundle.js'></script>
 </body>
 
 </html>
