@@ -351,10 +351,12 @@ ui.mainContainer.addEventListener('scroll', () => {
 
 // Launch jailbreak
 ui.exploitRunBtn.addEventListener('click', () => {
+  chooseHEN();
   jailbreak();
 });
 
 ui.psLogoContainer.addEventListener('click', () => {
+  chooseHEN();
   jailbreak()
 });
 
@@ -489,7 +491,7 @@ function chooseFanThreshold(){
 // Jailbreak-related functions
 async function jailbreak() {
   // clear terminal
-  ui.consoleElement.textContent = '';``
+  ui.consoleElement.textContent = '';
   // stop counter
   if (autoJbInterval) clearInterval(autoJbInterval);
 
@@ -502,11 +504,7 @@ async function jailbreak() {
   // Skip if payload were chosen, useful when a payload were chosen from payloads.js
   if (sessionStorage.getItem('payload_path') == (null || undefined)){
     // Choose HEN
-    if (user.currentJbFlavor === 'GoldHEN') {
-      GoldHEN();
-    } else if (user.currentJbFlavor === 'HEN') {
-      HEN();
-    }
+    chooseHEN();
   }
   // Cleanup before jailbreak
   cleanUp();
@@ -617,6 +615,12 @@ function GoldHEN() {
 
 function HEN() {
     sessionStorage.setItem('payload_path', './includes/payloads/HEN/HEN.bin');
+}
+
+function chooseHEN() {
+  if (user.currentJbFlavor === 'HEN') {
+    HEN();
+  }else GoldHEN();
 }
 
 function setGoldHENVer(value){

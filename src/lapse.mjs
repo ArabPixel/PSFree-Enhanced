@@ -2003,13 +2003,10 @@ kexploit().then((success) => {
       let payload_path = sessionStorage.getItem('payload_path');
 
       if (bareboneJB && payload_path == null){
-        if (typeof GoldHEN == 'function' && typeof HEN == 'function') {
+        if (typeof chooseHEN == 'function') {
           if(confirm("Load " + currentJbFlavor + "? Otherwise we'll launch a BinLoader!")){
             // Load the prefered HEN
-            if (currentJbFlavor == 'HEN'){
-              HEN();
-            }else GoldHEN();
-
+            chooseHEN();
           }
         }
       }
