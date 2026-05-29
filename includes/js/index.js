@@ -608,7 +608,7 @@ function GoldHEN() {
             sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.5.bin");
             break;
         default:
-            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.9.bin");
+            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.10.bin");
             break;
     }
 }
@@ -628,7 +628,7 @@ function setGoldHENVer(value){
 }
 
 function loadGoldHENVer(){
-  const goldHenVer = localStorage.getItem("GHVer") || "GHv2.4b18.9";
+  const goldHenVer = localStorage.getItem("GHVer") || "GHv2.4b18.10";
   document.querySelector(`input[name="goldhen"][value="${goldHenVer}"]`).checked = true;
 }
 
@@ -832,7 +832,7 @@ function CheckFW() {
   let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
   let elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
-    'click-to-start-text', 'chooseGoldHEN', 'advancedPayloads'
+    'click-to-start-text', 'chooseGoldHEN', 'advancedPayloads', 'chooseExploitChain'
   ];
 
   if (ps4Regex.test(userAgent)) {

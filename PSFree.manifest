@@ -48,6 +48,7 @@ includes/payloads/GoldHEN/goldhen_v2.4b18.6.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.7.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.8.bin
 includes/payloads/GoldHEN/goldhen_v2.4b18.9.bin
+includes/payloads/GoldHEN/goldhen_v2.4b18.10.bin
 includes/payloads/HEN/HEN.bin
 includes/payloads/Linux/linux-32mb.elf
 includes/payloads/Linux/linux-64mb.elf
