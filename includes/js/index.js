@@ -695,7 +695,7 @@ function applyLanguage(lang) {
 
   // Document Properties
   document.title = strings.title || "PSFree Enhanced";
-  document.dir = (user.currentLanguage === 'ar') ? 'rtl' : 'ltr';
+  document.dir = ['ar', 'fa'].includes(user.currentLanguage) ? 'rtl' : 'ltr';
   ui.consoleElement.dir = document.dir;
   document.lang = user.currentLanguage;
 
