@@ -62,5 +62,8 @@ window.lang = {
     "autoJbRetryConfirm": "¿Quieres hacer jailbreak ahora? La función de jailbreak se reintentará automáticamente si falla hasta que tenga éxito.",
     "jailbreakCountDown": "Reintentando jailbreak en {seconds} segundos...",
     "successRate": "Tasa de éxito: ",
-    "clearStatsConfirm": "¿Estás seguro de que quieres borrar las estadísticas de jailbreak? ¡Esto no se puede deshacer!"
+    "clearStatsConfirm": "¿Estás seguro de que quieres borrar las estadísticas de jailbreak? ¡Esto no se puede deshacer!",
+	"exploitChainTitle": "Metodo de Exploit",
+    "defaultLapse": "PSFree Lapse por defecto",
+    "secondLapse": "PSFree Lapse de Feyzee61",
 }
