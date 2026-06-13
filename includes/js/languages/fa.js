@@ -13,7 +13,7 @@ window.lang = {
     "payloadsGameHeader": "بازی",
     "payloadsLinuxHeader": "لینوکس",
     "aboutPsfreeHeader": "درباره PSFree Enhanced",
-    "aboutVersion": "نسخه: 1.5.1",
+    "aboutVersion": "نسخه: 2.0",
     "aboutDescription": "یک رابط وب برای جیلبریک کردن PS4 با استفاده از PSFree و اکسپلویت کرنل Lapse.",
     "closeButton": "بستن",
     "settingsPsfreeHeader": "تنظیمات",

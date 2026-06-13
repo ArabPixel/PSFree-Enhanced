@@ -13,7 +13,7 @@ window.lang = {
   "payloadsGameHeader": "الألعاب",
   "payloadsLinuxHeader": "لينكس",
   "aboutPsfreeHeader": "حول PSFree المحسن",
-  "aboutVersion": "الإصدار: 1.5.1",
+  "aboutVersion": "الإصدار: 2.0",
   "aboutDescription": "واجهة ويب لتهكير البلايستايشن 4 بإستخدام ثغرة PSFree المربوطة مع ثغرة النواة Lapse",
   "closeButton": "إغلاق",
   "settingsPsfreeHeader": "الإعدادات",
@@ -67,4 +67,5 @@ window.lang = {
   "exploitChainTitle": "سلسلة الثغرات",
   "defaultLapse": "ثغرة PSFree الإفتراضية",
   "secondLapse": "ثغرة PSFree الخاصة بـ Feyzee61",
+  "userlandOnlyOnJB67x":  "اشتغلال ثعرة الـ userland فقط عند الجيلبريك"
 }

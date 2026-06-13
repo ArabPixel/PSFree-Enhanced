@@ -3,10 +3,10 @@ import os
 from datetime import datetime
 
 # Configuration
-EXCLUDED_DIRS = {'.venv', '.git', 'noneed', '.github'}
+EXCLUDED_DIRS = {'.venv', '.git', 'noneed', '.github', 'node_modules'}
 EXCLUDED_EXTENSIONS = {
     '.bat', '.txt', '.exe', '.mp4', '.py', '.bak', '.zip',
-    '.mp3', '.sh', '.h', '.c', '.o', '.ld', '.md', '.d'
+    '.mp3', '.sh', '.h', '.c', '.o', '.ld', '.md', '.d', '.json'
 }
 EXCLUDED_FILES = {'.gitignore', 'COPYING', 'LICENSE', 'MAKEFILE', 'dockerfile', '.gitinclude', '.prettierrc', '.keepgithub'}
 OUTPUT_FILE = 'PSFree.manifest'

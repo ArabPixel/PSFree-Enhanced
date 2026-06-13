@@ -1,8 +1,8 @@
-name: Deploy to mirrored Host
+name: Transpile and Deploy to mirrored Host
 on:
   push:
     branches:
-      - main  # or master, depending on your repo
+      - main
 
 jobs:
   deploy:
@@ -10,6 +10,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+        # Set up Node.js to use Babel for transpiling index.js for legacy PS4 WebKit compatibility
+      - name: Set up Node.js 
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Transpile index.js for legacy PS4 WebKit
+        run: npm run build
 
       - name: Upload to mirrored host via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -22,3 +34,4 @@ jobs:
           exclude: |
             **/.git*
             **/.github*
+            **/node_modules/**

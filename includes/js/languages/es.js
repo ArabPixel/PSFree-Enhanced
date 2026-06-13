@@ -13,7 +13,7 @@ window.lang = {
     "payloadsGameHeader": "Juego",
     "payloadsLinuxHeader": "Linux",
     "aboutPsfreeHeader": "Sobre PSFree Mejorado",
-    "aboutVersion": "Version: 1.5.1",
+    "aboutVersion": "Version: 2.0",
     "aboutDescription": "Una interfaz web para desbloquear tu PS4 usando PSFree encadenada con el exploit de kernel Lapse.",
     "closeButton": "Cerrar",
     "settingsPsfreeHeader": "Ajustes",

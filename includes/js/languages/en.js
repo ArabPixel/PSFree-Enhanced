@@ -13,7 +13,7 @@ window.lang = {
     "payloadsGameHeader": "Game",
     "payloadsLinuxHeader": "Linux",
     "aboutPsfreeHeader": "About PSFree Enhanced",
-    "aboutVersion": "Version: 1.5.1",
+    "aboutVersion": "Version: 2.0",
     "aboutDescription": "A web interface to jailbreak your PS4 using PSFree chained with Lapse kernel exploit.",
     "closeButton": "Close",
     "settingsPsfreeHeader": "Settings",
@@ -67,4 +67,5 @@ window.lang = {
     "exploitChainTitle": "Exploit Chain",
     "defaultLapse": "Default's PSFree Lapse",
     "secondLapse": "Feyzee61's PSFree Lapse",
+    "userlandOnlyOnJB67x":  "Load userland exploit only on Jailbreak"
 }

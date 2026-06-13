@@ -13,7 +13,7 @@ window.lang = {
     "payloadsGameHeader": "Oyun",
     "payloadsLinuxHeader": "Linux",
     "aboutPsfreeHeader": "PSFree Enhanced Hakkında",
-    "aboutVersion": "Versiyon: 1.5.1",
+    "aboutVersion": "Versiyon: 2.0",
     "aboutDescription": "PSFree ile Lapse kernel exploitinin zincirlenmesiyle PS4'ünüzü jailbreak yapmanızı sağlayan bir web arayüzü.",
     "closeButton": "Kapat",
     "settingsPsfreeHeader": "Ayarlar",

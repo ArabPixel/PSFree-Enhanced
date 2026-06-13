@@ -1,0 +1,15 @@
+{
+  "name": "psfree-enhanced",
+  "version": "1.5.1",
+  "description": "A web interface to jailbreak your PS4",
+  "main": "index.html",
+  "scripts": {
+    "build": "babel includes/js/index.js --out-file includes/js/index-legacy.js --presets=@babel/preset-env",
+    "watch": "babel includes/js/index.js --out-file includes/js/index-legacy.js --presets=@babel/preset-env --watch"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.1",
+    "@babel/preset-env": "^7.24.1"
+  }
+}

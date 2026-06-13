@@ -15,7 +15,7 @@ window.lang = {
     "payloadsCustomHeader": "自定义",
     "customPayloadHint": "上传自定义 payload 文件。",
     "aboutPsfreeHeader": "关于 PSFree 增强版",
-    "aboutVersion": "版本：1.5.1",
+    "aboutVersion": "版本：2.0",
     "aboutDescription": "一个用于在 PS4 上通过 PSFree 串联 Lapse 内核 exploit 执行越狱的 Web 界面。",
     "closeButton": "关闭",
     "settingsPsfreeHeader": "PSFree 设置",

@@ -13,7 +13,7 @@ window.lang = {
     "payloadsGameHeader": "Модификации игр",
     "payloadsLinuxHeader": "Linux",
     "aboutPsfreeHeader": "О PSFree Enhanced",
-    "aboutVersion": "Версия: 1.5.1",
+    "aboutVersion": "Версия: 2.0",
     "aboutDescription": "Интерфейс для взлома PS4 использующий webkit совмещенный с эксплоитом ядра Lapse",
     "closeButton": "Закрыть",
     "settingsPsfreeHeader": "Настройки",

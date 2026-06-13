@@ -1,20 +1,22 @@
 // @ts-nocheck
 var user = {
-  currentLanguage:  localStorage.getItem('language') || 'en',
-  currentJbFlavor:  localStorage.getItem('jailbreakFlavor') || 'GoldHEN',
-  platform:         "PS4", // PS4/PC/Mobile etc..
-  lastTab:          localStorage.getItem('lastTab') || 'tools',
+  currentLanguage: localStorage.getItem('language') || 'en',
+  currentJbFlavor: localStorage.getItem('jailbreakFlavor') || 'GoldHEN',
+  platform: "PS4", // PS4/PC/Mobile etc..
+  lastTab: localStorage.getItem('lastTab') || 'tools',
   advancedPayloads: localStorage.getItem('advancedPayloads') || false, // True/false
-  ip:               localStorage.getItem('PayLoaderIp') || window.location.hostname,
-  ps4Fw:            localStorage.getItem('ps4Fw'),  // Used for the case of sending the payload over the network
-  clearLog:         true,
-  bareboneJB:       localStorage.getItem('bareboneJB') === 'true',
-  secondLapse:      localStorage.getItem('secondLapse') === "true", //Exploit chain method
+  ip: localStorage.getItem('PayLoaderIp') || window.location.hostname,
+  ps4Fw: localStorage.getItem('ps4Fw'),  // Used for the case of sending the payload over the network
+  clearLog: true,
+  bareboneJB: localStorage.getItem('bareboneJB') === 'true',
+  secondLapse: localStorage.getItem('secondLapse') === "true", //Exploit chain method
+  blockJailbreak: false,  // Prevent double jailbreak execution
 }
 var autoJbInterval;
 let lastScrollY = 0;
 let lastSection = "initial";
 var devMode = false;   // Dev mode for PC debugging
+var rtlLangs = ["ar", "fa"];
 const ui = {
   mainContainer: document.querySelector('.mainContainer'),
 
@@ -39,13 +41,13 @@ const ui = {
   advancedPayloadsSection: document.getElementById('advanced'),
   advancedPayloadsTab: document.getElementById('advanced-tab'),
   advancedPayloadsContainer: document.querySelector('.advancedPayloadsTab'),
-  advancedPayloadsInput:  document.getElementById('advancedPayloadsInput'),
+  advancedPayloadsInput: document.getElementById('advancedPayloadsInput'),
   customPayloadsSection: document.getElementById('custom'),
   customPayloadsTab: document.getElementById('custom-tab'),
   customPayloadInput: document.getElementById('customPayloadInput'),
   sendCustomPayloadBtn: document.getElementById('sendCustomPayloadBtn'),
   successRateText: document.getElementById('successRate'),
-  
+
   payloadsSection: document.getElementById('payloadsSection'),
   payloadsList: document.getElementById("payloadsGrid"),
   payloadsSectionTitle: document.getElementById('payloads-section-title'),
@@ -67,11 +69,12 @@ const ui = {
   bareboneJBInput: document.getElementById('bareboneJBInput'),
   secondLapse: document.getElementById('secondLapse'),
   exploitChainTitle: document.getElementById('exploitChainTitle'),
+  userlandOnlyOnJB67x: document.getElementById('userlandOnlyOnJB67xInput'),
 
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
 };
-const payloads = [
+const payloadsList = [
   {
     id: "FTP",
     name: "FTP",
@@ -201,7 +204,7 @@ const payloads = [
   {
     id: "Linux1024mb",
     name: "Linux Loader 1GB",
-    author: "ps4boot",
+    author: "ps4boot<br>ArabPixel, rmux",
     description: "Linux Loader for all consoles. 1GB VRAM. Select for first install",
     specificFW: "7.00 - 13.02",
     category: "linux",
@@ -210,7 +213,7 @@ const payloads = [
   {
     id: "Linux2048mb",
     name: "Linux Loader 2GB",
-    author: "ps4boot",
+    author: "ps4boot<br>ArabPixel, rmux",
     description: "Linux Loader for all consoles. 2GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
@@ -219,7 +222,7 @@ const payloads = [
   {
     id: "Linux3072mb",
     name: "Linux Loader 3GB",
-    author: "ps4boot",
+    author: "ps4boot<br>ArabPixel, rmux",
     description: "Linux Loader for all consoles. 3GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
@@ -228,7 +231,7 @@ const payloads = [
   {
     id: "Linux4096mb",
     name: "Linux Loader 4GB",
-    author: "ps4boot",
+    author: "ps4boot<br>ArabPixel, rmux",
     description: "Linux Loader for all consoles. 4GB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
@@ -237,7 +240,7 @@ const payloads = [
   {
     id: "Linux128mb",
     name: "Linux Loader 128MB",
-    author: "ps4boot",
+    author: "ps4boot<br>ArabPixel, rmux",
     description: "Linux Loader for all consoles. 128MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
@@ -246,7 +249,7 @@ const payloads = [
   {
     id: "Linux256mb",
     name: "Linux Loader 256MB",
-    author: "ps4boot",
+    author: "ps4boot<br>ArabPixel, rmux",
     description: "Linux Loader for all consoles. 256MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
@@ -255,7 +258,7 @@ const payloads = [
   {
     id: "Linux512mb",
     name: "Linux Loader 512MB",
-    author: "ps4boot",
+    author: "ps4boot<br>ArabPixel, rmux",
     description: "Linux Loader for all consoles. 512MB VRAM.",
     specificFW: "7.00 - 13.02",
     category: "linux",
@@ -301,7 +304,7 @@ const advancedPayloads = [
     funcName: "load_KernelDumper"
   },
   {
-    id: "DisableASLR", 
+    id: "DisableASLR",
     name: "Disable-ASLR",
     author: "Scene Collective",
     description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
@@ -351,18 +354,22 @@ ui.mainContainer.addEventListener('scroll', () => {
 
 // Launch jailbreak
 ui.exploitRunBtn.addEventListener('click', () => {
+  if (user.blockJailbreak) return;
+  user.blockJailbreak = true;
   chooseHEN();
   jailbreak();
 });
 
 ui.psLogoContainer.addEventListener('click', () => {
+  if (user.blockJailbreak) return;
+  user.blockJailbreak = true;
   chooseHEN();
-  jailbreak()
+  jailbreak();
 });
 
 // tabs switching
-ui.toolsTab.addEventListener('click', () =>{
-  if (ui.toolsSection.classList.contains('hidden')){
+ui.toolsTab.addEventListener('click', () => {
+  if (ui.toolsSection.classList.contains('hidden')) {
     ui.toolsSection.classList.remove('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.advancedPayloadsSection.classList.add('hidden');
@@ -374,15 +381,15 @@ ui.toolsTab.addEventListener('click', () =>{
     ui.customPayloadsTab.setAttribute("aria-selected", "false");
 
     ui.toolsSection.innerHTML = '';
-    renderPayloads(payloads.filter(p => p.category === 'tools'));
+    renderPayloads(payloadsList.filter(p => p.category === 'tools'));
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
   saveLastTab('tools');
 })
 
-ui.linuxTab.addEventListener('click', () =>{
-  if (ui.linuxSection.classList.contains('hidden')){
+ui.linuxTab.addEventListener('click', () => {
+  if (ui.linuxSection.classList.contains('hidden')) {
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.remove('hidden');
     ui.advancedPayloadsSection.classList.add('hidden');
@@ -394,15 +401,15 @@ ui.linuxTab.addEventListener('click', () =>{
     ui.customPayloadsTab.setAttribute("aria-selected", "false");
 
     ui.linuxSection.innerHTML = '';
-    renderPayloads(payloads.filter(p => p.category === 'linux'));
+    renderPayloads(payloadsList.filter(p => p.category === 'linux'));
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
   saveLastTab('linux');
 });
 
-ui.advancedPayloadsTab.addEventListener('click', () =>{
-  if (ui.advancedPayloadsSection.classList.contains('hidden')){
+ui.advancedPayloadsTab.addEventListener('click', () => {
+  if (ui.advancedPayloadsSection.classList.contains('hidden')) {
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.advancedPayloadsSection.classList.remove('hidden');
@@ -419,11 +426,11 @@ ui.advancedPayloadsTab.addEventListener('click', () =>{
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
   saveLastTab('advanced');
-  
+
 });
 
-ui.customPayloadsTab.addEventListener('click', () =>{
-  if (ui.customPayloadsSection.classList.contains('hidden')){
+ui.customPayloadsTab.addEventListener('click', () => {
+  if (ui.customPayloadsSection.classList.contains('hidden')) {
     ui.toolsSection.classList.add('hidden');
     ui.linuxSection.classList.add('hidden');
     ui.advancedPayloadsSection.classList.add('hidden');
@@ -437,12 +444,12 @@ ui.customPayloadsTab.addEventListener('click', () =>{
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
   saveLastTab('custom');
-  
+
 });
 
 // payloads tabs
-function loadLastTab(){
-  if (user.lastTab == "advanced" && user.advancedPayloads != "true"){
+function loadLastTab() {
+  if (user.lastTab == "advanced" && user.advancedPayloads != "true") {
     // set last tab to tools
     user.lastTab = "tools";
     ui.toolsSection.click();
@@ -464,14 +471,12 @@ function saveLastTab(tab) {
     'custom': ui.customPayloadsSection
   };
 
-  // Nuke contents of every section but the active one to free memory
+  // Nuke contents of every section but the active one and custom to free memory
   Object.keys(sections).forEach(key => {
-    if (key !== tab && sections[key]) {
-      sections[key].innerHTML = ''; 
+    if (key !== tab && sections[key] && key != 'custom') {
+      sections[key].innerHTML = '';
     }
   });
-  
-  console.log("Memory cleared for inactive tabs.");
 }
 
 // popups
@@ -483,13 +488,38 @@ function settingsPopup() {
   ui.settingsPopupOverlay.classList.toggle('hidden');
 }
 
-function chooseFanThreshold(){
+function chooseFanThreshold() {
   ui.chooseFanThresholdOverlay.classList.toggle('hidden');
+}
+
+// display settings panel for new users to explore the options :)
+if (localStorage.getItem("NewUser") != "0") {
+  settingsPopup();
+}
+document.getElementById("close-settings").addEventListener('click', function () {
+  if (localStorage.getItem("NewUser") != "0") {
+    localStorage.setItem("NewUser", "0");
+  }
+});
+
+function updateUserlandOnlyOnJB67x(checked){
+  localStorage.setItem('userlandOnlyOnJB67x', checked);
+}
+
+function userlandOnlyOnJB67x(){
+  var value = localStorage.getItem('userlandOnlyOnJB67x') == "true";
+  ui.userlandOnlyOnJB67x.checked = value;
+}
+
+function sleep(ms = 0) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
 // Jailbreak-related functions
 async function jailbreak() {
+  if (user.platform !== "PS4") return;
+
   // clear terminal
   ui.consoleElement.textContent = '';
   // stop counter
@@ -498,41 +528,133 @@ async function jailbreak() {
   // Make it retry untill success
   sessionStorage.setItem('autoJbRetry', 'true');
 
-  // add one jailbreak attempt to the stats
-  updateJbStats(true,false);
-
   // Skip if payload were chosen, useful when a payload were chosen from payloads.js
-  if (sessionStorage.getItem('payload_path') == (null || undefined)){
+  if (sessionStorage.getItem('payload_path') == (null || undefined)) {
     // Choose HEN
     chooseHEN();
   }
-  // Cleanup before jailbreak
+
   cleanUp();
+
   // barebone exploit prefered? go to exploit file
-  if (user.bareboneJB){
+  if (user.bareboneJB) {
     location.href = "./exploit.html";
-  }else{
-    // wait a bit maybe for GC 
-    await new Promise(r => setTimeout(r, 500));
+    return;
+  }
+  let fwVersion = Number(user.ps4Fw);
 
-    // Exploit chain method check
-    if (user.secondLapse){
-      console.log("Loading second lapse version of the exploit");
-      // Feyzee61's exploit chain
-      import("./bundle.js");
-      doJailBreak();
+  switch (true) {
+    case (fwVersion >= 6.70 && fwVersion <= 6.72):
+      log("Initializing Exploit...");
+      var value = localStorage.getItem('userlandOnlyOnJB67x') == "true";
+      if (value){
+        localStorage.setItem('userlandOnlyOnJB67x', "false");
+        sessionStorage.setItem("jailbreakNow");
+        location.reload();
+      }
+      badHoistJailbreak();
+      break;
+    case (fwVersion >= 7.00 && fwVersion <= 9.60):
+      psfreeLapse();
+      break;
+  }
+  // add one jailbreak attempt to the stats
+  updateJbStats(1, 0);
+}
 
-    }else import("../../src/alert.mjs"); // Default chain
+async function psfreeLapse() {
+  // Exploit chain method check
+  if (user.secondLapse) {
+    try {
+      await loadScript('./src/alert.mjs');
+    } catch (e) {
+      log("alert.mjs is not defined", "red");
+    }
+  } else {
+    log("Loading Feyzee61's PSFree Lapse implementation..");
+    try {
+      await loadScript('./includes/js/exploits/bundle.js');
+
+      if (typeof doJailBreak === "function") {
+        doJailBreak();
+      } else {
+        log("Error: doJailBreak is not defined", "red");
+      }
+    } catch (e) {
+      log("Failed to load bundle script: " + e.message, "red");
+    }
   }
 }
-async function loadMultipleModules(files) {
-  try {
-    // Dynamically import all modules
-    const modules = await Promise.all(files.map(file => import(file)));
-    return modules; // array of imported modules
-  } catch (error) {
-    alert("Error loading modules: " + error);
-    throw error;
+
+// Taken from Feyzee61 ps4jb
+async function badHoistJailbreak() {
+  if (window.entrypoint672_result < 1) {
+    log("An error occured during Bad Hoist Entrypoint\nRetrying..", "red");
+    await sleep(2000);
+    location.reload();
+    return;
+  }
+  else
+    log("Bad Hoist Entrypoint succeeded");
+  if (window.exploitsetup672_result < 1) {
+    log("An error occured during Exploit Setup\nPlease refresh page and try again...", "red");
+    return;
+  }
+  else
+    log("Exploit Setup complete\n");
+  log("Starting Kernel Exploit...");
+  await sleep(200); // Wait 200ms
+
+  await loadScript('./includes/js/exploits/672kexploit.js');
+  var result = KernelExploit672();
+
+  if (result === 0 || result === 91) {
+    log("\nKernel exploit succeeded", "green");
+    // Inject HEN payload
+    getPayload672(sessionStorage.getItem('payload_path'));
+
+    log("\nBad Hoist by Fire30, 6.7x Kernel Exploit by Sleirsgoevy");
+    log("Implementation taken from Feyzee61");
+    jailbreakSuccess();
+  } else if (result === 179) {
+    getPayload672(sessionStorage.getItem('payload_path'));
+
+    log("\nAlready jailbroken, skipping..", "green");
+    jailbreakSuccess();
+  } else {
+    log("\nAn error occured during Kernel Exploit\nPlease restart console and try again...", "red");
+  }
+}
+
+function jailbreakSuccess() {
+  if (sessionStorage.getItem('jailbreakNow') == "true"){
+    sessionStorage.removeItem('jailbreakNow');
+    localStorage.setItem("userlandOnlyOnJB67x", "false");
+  }
+  sessionStorage.setItem('autoJbRetry', 'false');
+  updateJbStats(0, 1);
+  setTimeout(() => { window.location.href = "./"; }, 5000);
+}
+
+// Taken from Feyzee61's ps4jb
+function getScript(source) {
+  return new Promise((resolve, reject) => {
+    const gs = document.createElement('script');
+    gs.src = source;
+    gs.async = false;
+    gs.onload = () => resolve();
+    gs.onerror = () => reject(new Error("Script load failed: " + source));
+    document.body.appendChild(gs);
+  });
+}
+
+// Taken from Feyzee61's ps4jb
+async function loadScript(script_js) {
+  window.script_loaded = 0;
+  await getScript(script_js);
+  // Wait for script to be loaded
+  while (window.script_loaded < 1) {
+    await sleep(50); // Wait 50ms
   }
 }
 
@@ -541,93 +663,87 @@ function isHttps() {
 }
 
 async function Loadpayloads(payload, name, payloadId) {
-  if (user.platform != "PS4"){
-     var inputIp = ui.ps4IpInput.value.trim();
-  if (inputIp == null || inputIp == undefined || inputIp == "" || /\s/.test(inputIp)){
-    alert(window.lang.ps4IpInvalid);
-    return;
-  }
+  if (user.platform != "PS4") {
+    var inputIp = ui.ps4IpInput.value.trim();
+    if (inputIp == null || inputIp == undefined || inputIp == "" || /\s/.test(inputIp)) {
+      alert(window.lang.ps4IpInvalid);
+      return;
+    }
 
-  if (user.ps4Fw == null || user.ps4Fw == 'undefined'){
-    ui.ps4FwSelect.style.border = "2px solid red";
-    return;
-  }
-  user.ip = inputIp;
+    if (user.ps4Fw == null || user.ps4Fw == 'undefined') {
+      ui.ps4FwSelect.style.border = "2px solid red";
+      return;
+    }
+    user.ip = inputIp;
   }
   try {
-    let modules;
     sessionStorage.removeItem('binloader');
-    if (payload == "chooseFanThreshold"){
+    if (payload == "chooseFanThreshold") {
       chooseFanThreshold();
       return;
     }
 
-    if (payload == "custom"){
-      const payloadFile = ui.customPayloadInput.files[0];
-      if (!payloadFile) return;
-    }
-      modules = await loadMultipleModules([
-        '../payloads/payloads.js'
-      ]);
-    console.log("All modules are loaded!");
+    // Try to find the function in global scope or window.payloads
+    const targetFunc = window[payload] || (window.payloads && window.payloads[payload]);
 
-    const payloadModule = modules[0];
-    if (payloadModule && typeof payloadModule[payload] === 'function') {
-      // Load custom uploaded payload
-      if (payload == "custom"){
-        payloadModule[payload](ui.customPayloadInput.files[0]);
-        return;
+    if (typeof targetFunc === 'function') {
+      if (payload == "custom") {
+        var payloadFile = ui.customPayloadInput.files[0];
+        if (!payloadFile) return;
+        targetFunc(payloadFile);
+      } else {
+        targetFunc(name, payloadId);
       }
-      payloadModule[payload](name, payloadId);
     } else {
-      alert(`${payload} function not found in payloads.js module`);
+      alert(`Payload function ${payload} not found.`);
     }
+
   } catch (e) {
-    alert(`Failed to load ${payload}: ${e}`);
+    alert('Failed to load payload: ' + payload + " | Error: " + e);
   }
 }
 
 // HEN path selection based on user preference
 function GoldHEN() {
-    let goldHenVersion = localStorage.getItem('GHVer');
-    let basePath = "./includes/payloads/GoldHEN/";
-    switch (goldHenVersion){
-        case "GHv2.4b18.9":
-            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.9.bin");
-            break;
-        case "GHv2.4b18.8":
-            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.8.bin");
-            break;
-        case "GHv2.4b18.7":
-            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.7.bin");
-            break;
-        case "GHv2.4b18.6":
-            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.6.bin");
-            break;
-        case "GHv2.4b18.5":
-            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.5.bin");
-            break;
-        default:
-            sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.10.bin");
-            break;
-    }
+  let goldHenVersion = localStorage.getItem('GHVer');
+  let basePath = "./includes/payloads/GoldHEN/";
+  switch (goldHenVersion) {
+    case "GHv2.4b18.9":
+      sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.9.bin");
+      break;
+    case "GHv2.4b18.8":
+      sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.8.bin");
+      break;
+    case "GHv2.4b18.7":
+      sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.7.bin");
+      break;
+    case "GHv2.4b18.6":
+      sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.6.bin");
+      break;
+    case "GHv2.4b18.5":
+      sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.5.bin");
+      break;
+    default:
+      sessionStorage.setItem('payload_path', basePath + "goldhen_v2.4b18.10.bin");
+      break;
+  }
 }
 
 function HEN() {
-    sessionStorage.setItem('payload_path', './includes/payloads/HEN/HEN.bin');
+  sessionStorage.setItem('payload_path', './includes/payloads/HEN/HEN.bin');
 }
 
 function chooseHEN() {
   if (user.currentJbFlavor === 'HEN') {
     HEN();
-  }else GoldHEN();
+  } else GoldHEN();
 }
 
-function setGoldHENVer(value){
+function setGoldHENVer(value) {
   localStorage.setItem('GHVer', value);
 }
 
-function loadGoldHENVer(){
+function loadGoldHENVer() {
   const goldHenVer = localStorage.getItem("GHVer") || "GHv2.4b18.10";
   document.querySelector(`input[name="goldhen"][value="${goldHenVer}"]`).checked = true;
 }
@@ -636,7 +752,7 @@ function loadGoldHENVer(){
 function loadLanguage() {
   document.querySelector(`input[name="language"][value="${user.currentLanguage}"]`).checked = true;
   const langScript = document.getElementById("langScript");
-  if(langScript) langScript.remove();
+  if (langScript) langScript.remove();
   // load language file
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
@@ -650,11 +766,11 @@ function loadLanguage() {
 // Apply lanuage after loading the language file
 async function initLanguage() {
   try {
-      await loadLanguage();
-      applyLanguage(user.currentLanguage);
-      updateJbStats(false,false);
+    await loadLanguage();
+    applyLanguage(user.currentLanguage);
+    updateJbStats(false, false);
   } catch (e) {
-      console.error(e);
+    console.error(e);
   }
 }
 
@@ -675,7 +791,7 @@ function applyLanguage(lang) {
   const updateText = (element, key) => {
     const translation = strings[key];
     // Check if element exists, and translation is a non-empty string.
-    if (element && translation && typeof translation === 'string' && translation.length > 0) { 
+    if (element && translation && typeof translation === 'string' && translation.length > 0) {
       element.textContent = translation;
     }
   };
@@ -688,37 +804,33 @@ function applyLanguage(lang) {
   const updateTitle = (element, key) => {
     const translation = strings[key];
     // Check if element exists, and translation is a non-empty string.
-    if (element && translation && typeof translation === 'string' && translation.length > 0) { 
+    if (element && translation && typeof translation === 'string' && translation.length > 0) {
       element.title = translation;
     }
   };
 
   // Document Properties
   document.title = strings.title || "PSFree Enhanced";
-  document.dir = ['ar', 'fa'].includes(user.currentLanguage) ? 'rtl' : 'ltr';
+  document.dir = rtlLangs.includes(user.currentLanguage) ? 'rtl' : 'ltr';
   ui.consoleElement.dir = document.dir;
   document.lang = user.currentLanguage;
 
 
   // PS4 Firmware Status Check
   const ps4Fw = window.ps4Fw;
-  const ps4StatusElement = ui.ps4FwStatus;
 
   if (ps4Fw === undefined) {
     if (strings.notPs4 && strings.notPs4.length > 0) {
-      ps4StatusElement.textContent = strings.notPs4 + user.platform;
+      ui.ps4FwStatus.textContent = strings.notPs4 + user.platform;
     }
-    ps4StatusElement.style.color = 'red';
-  } else if (ps4Fw <= 9.60) {
+  } else if (ps4Fw <= 9.60 && ps4Fw >= 6.70) {
     if (strings.ps4FwCompatible && strings.ps4FwCompatible.length > 0) {
-      ps4StatusElement.textContent = strings.ps4FwCompatible.replace('{ps4fw}', ps4Fw);
+      ui.ps4FwStatus.textContent = strings.ps4FwCompatible.replace('{ps4fw}', ps4Fw);
     }
-    ps4StatusElement.style.color = 'green';
   } else {
     if (strings.ps4FwIncompatible && strings.ps4FwIncompatible.length > 0) {
-      ps4StatusElement.textContent = strings.ps4FwIncompatible.replace('{ps4fw}', ps4Fw);
+      ui.ps4FwStatus.textContent = strings.ps4FwIncompatible.replace('{ps4fw}', ps4Fw);
     }
-    ps4StatusElement.style.color = 'orange';
   }
 
   // Main Screen Elements
@@ -727,34 +839,39 @@ function applyLanguage(lang) {
   updateText(document.querySelector('#choosejb-initial h3'), 'chooseHEN');
 
   // About Us Popup
-  updateText(ui.aboutPopup.querySelector('h2'), 'aboutPsfreeHeader');
-  
-  const aboutParagraphs = ui.aboutPopup.querySelectorAll('p');
-  updateText(aboutParagraphs[0], 'aboutVersion');
-  updateText(aboutParagraphs[1], 'aboutDescription');
-  updateText(ui.bareboneJB, 'bareboneJB')
-  
-  updateText(ui.aboutPopup.querySelector('#PS4FWOK h3'), 'ps4FirmwareSupportedHeader');
-  updateText(ui.aboutPopup.querySelector('#close-about'), 'closeButton');
-  updateText(ui.aboutPopup.querySelector('#goldhenFirmwareSemiSupported i'), 'goldhenFirmwareSemiSupported');
-  updateText(ui.settingsPopup.querySelector('#scanPayLoader'), 'scanPayLoader');
-  updateText(ui.settingsPopup.querySelector('#shutdownServerBtn'), 'shutdownServerBtn');
-  updateText(ui.aboutPopup.querySelector('#infoProtip'), 'infoProtip');
+  if (ui.aboutPopup) {
+    updateText(ui.aboutPopup.querySelector('h2'), 'aboutPsfreeHeader');
+    var aboutParagraphs = ui.aboutPopup.querySelectorAll('p');
+    if (aboutParagraphs.length > 0) updateText(aboutParagraphs[0], 'aboutVersion');
+    if (aboutParagraphs.length > 1) updateText(aboutParagraphs[1], 'aboutDescription');
+    updateText(ui.aboutPopup.querySelector('#PS4FWOK h3'), 'ps4FirmwareSupportedHeader');
+    updateText(ui.aboutPopup.querySelector('#close-about'), 'closeButton');
+    updateText(ui.aboutPopup.querySelector('#goldhenFirmwareSemiSupported i'), 'goldhenFirmwareSemiSupported');
+    updateText(ui.aboutPopup.querySelector('#infoProtip'), 'infoProtip');
+  }
+  updateText(ui.bareboneJbBtn, 'bareboneJB')
 
   // Fan Threshold
-  updateText(ui.chooseFanThreshold.querySelector('#close-fanChoose'), 'closeButton');
-  updateText(ui.chooseFanThreshold.querySelector('h2'), 'fanTitle');
-  updateText(ui.chooseFanThreshold.querySelector('p'), 'fanDescription');
-  updateText(ui.chooseFanThreshold.querySelector('h3'), 'selectTemp');
+  if (ui.chooseFanThreshold) {
+    updateText(ui.chooseFanThreshold.querySelector('#close-fanChoose'), 'closeButton');
+    updateText(ui.chooseFanThreshold.querySelector('h2'), 'fanTitle');
+    updateText(ui.chooseFanThreshold.querySelector('p'), 'fanDescription');
+    updateText(ui.chooseFanThreshold.querySelector('h3'), 'selectTemp');
+  }
   updateText(document.getElementById('defaultTemp'), 'default');
 
   // Settings Popup 
-  updateText(ui.settingsPopup.querySelector('h2'), 'settingsPsfreeHeader');
-  updateText(ui.settingsPopup.querySelector('#chooselang h3'), 'languageHeader');
-  updateText(ui.settingsPopup.querySelector('#close-settings'), 'closeButton');
-  updateText(ui.settingsPopup.querySelector('#ghVer'), 'ghVer');
-  updateText(ui.settingsPopup.querySelector('#chooseGoldHEN summary'), 'otherVer'); 
-  updateText(ui.settingsPopup.querySelector('#latestVer'), 'latestVer');
+  if (ui.settingsPopup) {
+    updateText(ui.settingsPopup.querySelector('h2'), 'settingsPsfreeHeader');
+    updateText(ui.settingsPopup.querySelector('#chooselang h3'), 'languageHeader');
+    updateText(ui.settingsPopup.querySelector('#close-settings'), 'closeButton');
+    updateText(ui.settingsPopup.querySelector('#ghVer'), 'ghVer');
+    var ghOtherVer = ui.settingsPopup.querySelector('#chooseGoldHEN summary');
+    if (ghOtherVer) updateText(ghOtherVer, 'otherVer');
+    updateText(ui.settingsPopup.querySelector('#latestVer'), 'latestVer');
+    updateText(ui.settingsPopup.querySelector('#scanPayLoader'), 'scanPayLoader');
+    updateText(ui.settingsPopup.querySelector('#shutdownServerBtn'), 'shutdownServerBtn');
+  }
   updateText(document.getElementById('showAdvancedPayloads'), 'showAdvancedPayloads');
   updateText(document.getElementById('optionsHeader'), 'optionsHeader');
   updateText(document.getElementById('theme'), 'theme');
@@ -762,11 +879,12 @@ function applyLanguage(lang) {
   updateText(document.getElementById('vibrantTheme'), 'vibrantTheme');
   updateText(document.getElementById('autoJbRetryText'), 'autoJbRetryText');
   updateText(ui.exploitChainTitle, 'exploitChainTitle');
+  updateText(document.getElementById('userlandOnlyOnJB67xText'), 'userlandOnlyOnJB67x')
 
   // Warning element (Exploit section)
   const warningHeader = document.querySelector('#warningBox p');
   const warningNotes = document.querySelector('#warningBox ul');
-  
+
   if (warningNotes && strings.warnings) {
     const items = warningNotes.querySelectorAll('li');
     // Check both existence and length for nested properties
@@ -775,8 +893,8 @@ function applyLanguage(lang) {
     if (items[2] && strings.warnings.note3 && strings.warnings.note3.length > 0) items[2].textContent = strings.warnings.note3;
   }
   updateText(warningHeader, 'alert');
-  
-  if (isHttps()){
+
+  if (isHttps()) {
     ui.secondHostBtn[1].style.display = "block";
   }
 
@@ -795,9 +913,7 @@ function applyLanguage(lang) {
   updateText(ui.consoleElement.querySelector('center'), 'waitingUserInput');
 
   // Change direction of 'Default' option text for the fan threshold panel
-  if (user.currentLanguage == "ar"){
-    document.getElementById("defaultTempDiv").style.float = "left";
-  }else document.getElementById("defaultTempDiv").style.float = "right";
+  document.getElementById('defaultTempDiv').style.float = rtlLangs.includes(user.currentLanguage) ? "left" : "right";
 }
 
 
@@ -819,8 +935,8 @@ function loadJbFlavor() {
   }
 }
 
-function saveLanguage() {
-  const language = document.querySelector('input[name="language"]:checked').value;
+function saveLanguage(language) {
+  if (!language) return;
   localStorage.setItem('language', language);
   user.currentLanguage = language;
   initLanguage();
@@ -829,24 +945,30 @@ function saveLanguage() {
 function CheckFW() {
   const userAgent = navigator.userAgent;
   const ps4Regex = /PlayStation 4/;
-  let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
+  let fwVersion = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/", "");
   let elementsToHide = [
     'ps-logo-container', 'choosejb-initial', 'exploit-main-screen', 'scrollDown',
     'click-to-start-text', 'chooseGoldHEN', 'advancedPayloads', 'chooseExploitChain'
   ];
 
   if (ps4Regex.test(userAgent)) {
-    if (fwVersion >= 7.00 && fwVersion <= 9.60) {
+    if (fwVersion >= 6.70 && fwVersion <= 9.60) {
       ui.ps4FwStatus.style.color = 'green';
 
       // Highlight firmware in about popup
-      let fwElement = "fw"+fwVersion.replace('.','');
-      document.getElementById(fwElement).classList.add('fwSelected');
+      let fwElement = "fw" + fwVersion.replace('.', '');
+      var el = document.getElementById(fwElement);
+      if (el) el.classList.add('fwSelected');
+
+      // show "load userland exploit only on jailbreak" option
+      if (fwVersion >= 6.70 && fwVersion <= 6.72) 
+        document.getElementById("userlandOnlyOnJB67x").classList.toggle('hidden');
     } else {
-      ui.ps4FwStatus.style.color = 'red';
-      if (isHttps()){
+      ui.ps4FwStatus.style.color = 'orange';
+      if (isHttps()) {
         ui.secondHostBtn[0].style.display = "block";
-      }else{
+        terminateCache(); // Dont cache in case no webkit and is https
+      } else {
         // modify elements inside elementsToHide for unsupported ps4 firmware to load using GoldHEN's PayLoader
         const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads'];
         elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
@@ -854,7 +976,6 @@ function CheckFW() {
         document.getElementById('exploitContainer').style.display = "block";
 
         // Sizing the payload's section
-        ui.payloadsSection.style.width = "75%";
         ui.payloadsSection.style.margin = "auto";
         document.getElementById('header2').classList.remove('hidden');
       }
@@ -877,40 +998,40 @@ function CheckFW() {
     else if (/Linux/.test(userAgent)) user.platform = 'Linux';
 
     // For user selected firmware
-      if (user.ps4Fw) ui.ps4FwSelect.value = user.ps4Fw;
-      // Show only if on a local server
-      if (isLocalIP(window.location.hostname) && !devMode){
-        // Show IP input and firmware selector for local server users on smart devices
-        ui.ps4IpInput.classList.remove('hidden');
-        ui.ps4FwSelect.classList.remove('hidden');
-        ui.scanGoldHENPayLoader.classList.remove('hidden');
-        ui.shutdownServerBtn.classList.remove('hidden');
-        document.querySelector('.customPayloadsTab').classList.remove('hidden');
-        ui.ps4IpInput.value = user.ip;
-        
-        const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads', 'custom-tab'];
-        elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-        elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer', 'successRate', 'bareboneJBOption', 'chooseExploitChain');
+    if (user.ps4Fw) ui.ps4FwSelect.value = user.ps4Fw;
+    // Show only if on a local server
+    if (isLocalIP(window.location.hostname) && !devMode) {
+      // Show IP input and firmware selector for local server users on smart devices
+      ui.ps4IpInput.classList.remove('hidden');
+      ui.ps4FwSelect.classList.remove('hidden');
+      ui.scanGoldHENPayLoader.classList.remove('hidden');
+      ui.shutdownServerBtn.classList.remove('hidden');
+      document.querySelector('.customPayloadsTab').classList.remove('hidden');
+      ui.ps4IpInput.value = user.ip;
 
-        // Sizing the payload's section
-        // Full screen for phones, centered for desktop
-        if (user.platform == "Android" || user.platform == "iOS"){
-          // hide console
-          elementsToHide.push('exploit-status-panel');
-          document.getElementById('exploitContainer').style.display = "block";
-          ui.exploitScreen.style.padding = "0";
-        }
-        ui.payloadsSection.style.width = "100%";
-        ui.payloadsSection.style.margin = "auto";
-        // Moving the settings icon to a better place
-        document.getElementById('header2').classList.remove('hidden', 'left-6');
-        document.getElementById('header2').classList.add('flex', 'inherit');
-        document.getElementById('header2').querySelectorAll('button').forEach((item) => item.classList.add('border', 'border-white/20', 'rounded-xl'))
-        ui.ps4FwStatus.style.color = 'red';
+      const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads', 'custom-tab'];
+      elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
+      elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer', 'successRate', 'bareboneJBOption', 'chooseExploitChain');
+
+      // Sizing the payload's section
+      // Full screen for phones, centered for desktop
+      if (user.platform == "Android" || user.platform == "iOS") {
+        // hide console
+        elementsToHide.push('exploit-status-panel');
+        document.getElementById('exploitContainer').style.display = "block";
+        ui.exploitScreen.style.padding = "0";
       }
+      ui.payloadsSection.style.width = "100%";
+      ui.payloadsSection.style.margin = "auto";
+      // Moving the settings icon to a better place
+      document.getElementById('header2').classList.remove('hidden', 'left-6');
+      document.getElementById('header2').classList.add('flex', 'inherit');
+      document.getElementById('header2').querySelectorAll('button').forEach((item) => item.classList.add('border', 'border-white/20', 'rounded-xl'))
+      ui.ps4FwStatus.style.color = 'red';
+    }
 
     // Hide elements for non supported devices unless in dev mode
-    if (!devMode){
+    if (!devMode) {
       elementsToHide.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
@@ -926,13 +1047,14 @@ function loadSettings() {
     CheckFW();
     loadJbFlavor();
     initLanguage(user.currentLanguage);
-    renderPayloads(payloads);
+    renderPayloads(payloadsList);
     loadAdvancedPayloads();
     loadLastTab();
     loadGoldHENVer();
     autoJailbreak();
     updateBareboneJB();
     loadSecondLapse();
+    userlandOnlyOnJB67x();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
   }
@@ -951,7 +1073,7 @@ function renderPayloads(payloads) {
   // Identify the target container first
   const firstCategory = payloads[0].category;
   let targetContainer;
-  
+
   if (firstCategory === 'tools') targetContainer = ui.toolsSection;
   else if (firstCategory === 'linux') targetContainer = ui.linuxSection;
   else if (firstCategory === 'advanced') targetContainer = ui.advancedPayloadsSection;
@@ -1006,55 +1128,56 @@ function renderPayloads(payloads) {
 }
 
 // Handling cache
-function DLProgress(e) { 
-  Percent = (Math.round(e.loaded / e.total * 100)); 
-  document.title = window.lang.cache + " " + Percent + "%"; 
+function DLProgress(e) {
+  var Percent = (Math.round(e.loaded / e.total * 100));
+  document.title = window.lang.cache + " " + Percent + "%";
 }
-function DisplayCacheProgress() { 
+function DisplayCacheProgress() {
   setTimeout(function () {
-    document.title = "\u2713"; 
+    document.title = "\u2713";
   }, 1000);
-    setTimeout(function () { 
-      location.reload();
-    }, 2000); 
-  }
+  setTimeout(function () {
+    // location.reload();
+    document.title = (window.lang.title || "PSFree Enhanced");
+  }, 2000);
+}
 
 function terminateCache() {
-    if (window.applicationCache) {
-        // Status 3 is 'downloading', Status 1 is 'checking'
-        if (window.applicationCache.status === 3 || window.applicationCache.status === 1) {
-            console.log("Terminating cache process to save memory...");
-            window.applicationCache.abort();
+  if (window.applicationCache) {
+    // Status 3 is 'downloading', Status 1 is 'checking'
+    if (window.applicationCache.status === 3 || window.applicationCache.status === 1) {
+      console.log("Terminating cache process to save memory...");
+      window.applicationCache.abort();
 
-            // restore title
-            document.title = window.lang.title;
-            
-            // cleanup
-            window.applicationCache.removeEventListener("progress", DLProgress);
-            window.applicationCache.oncached = null;
-            window.applicationCache.onupdateready = null;
-        }
+      // restore title
+      document.title = window.lang.title;
+
+      // cleanup
+      window.applicationCache.removeEventListener("progress", DLProgress);
+      window.applicationCache.oncached = null;
+      window.applicationCache.onupdateready = null;
     }
+  }
 }
 
 
-function setAdvancedPayloads(inputState){
+function setAdvancedPayloads(inputState) {
   // Update variable/localstorage value
   user.advancedPayloads = inputState;
   localStorage.setItem("advancedPayloads", inputState)
-  if (inputState == true){
+  if (inputState == true) {
     // Its true, show tab and render payloads
     ui.advancedPayloadsContainer.classList.remove('hidden')
     renderPayloads(advancedPayloads);
-  }else {
+  } else {
     // its false, hide payloads' tab and move to tools' tab
     ui.advancedPayloadsContainer.classList.add('hidden')
     ui.toolsTab.click();
   }
 }
 
-function loadAdvancedPayloads(){
-  if (user.advancedPayloads == "true"){
+function loadAdvancedPayloads() {
+  if (user.advancedPayloads == "true") {
     // its true, check the box, show tab and load the payloads
     ui.advancedPayloadsInput.checked = true;
     ui.advancedPayloadsContainer.classList.remove('hidden')
@@ -1062,7 +1185,7 @@ function loadAdvancedPayloads(){
   }
 }
 
-// keep base ip and chop the user IP
+// keep base ip and chop the rest
 // e.g. 192.168.20.156 => 192.168.20
 function baseIp(ip) {
   return ip.substring(0, ip.lastIndexOf('.'));
@@ -1096,7 +1219,7 @@ function findPs4FromBaseIP(ip) {
           if (json.status === 'ready') {
             found = true;
             user.ip = checkIp;
-            try { localStorage.setItem('PayLoaderIp', checkIp); } catch (_) {}
+            try { localStorage.setItem('PayLoaderIp', checkIp); } catch (_) { }
             if (ui.ps4IpInput && !ui.ps4IpInput.classList.contains('hidden')) {
               ui.ps4IpInput.value = checkIp;
               localStorage.setItem('ps4Ip', checkIp);
@@ -1104,7 +1227,7 @@ function findPs4FromBaseIP(ip) {
             alert(window.lang.payLoaderFound + checkIp);
             resolve(checkIp);
           }
-        } catch (_) {}
+        } catch (_) { }
         onDone();
       };
 
@@ -1121,96 +1244,101 @@ function isLocalIP(ip) {
 }
 
 function ipGuess() {
-    const host = window.location.hostname;
-    const isPS4 = (user.platform === "PS4" || typeof window.ps4Fw !== 'undefined');
-    
-    // 1. is it a local network ? (192.168.x.x, 10.x.x.x, etc.)
-    if (isLocalIP(host)) {
-        if (isPS4) {
-          user.ip = "127.0.0.1";
-          if (!ui.ps4IpInput.classList.contains("hidden")){
-            ui.ps4IpInput.value = user.ip;
-          }
-            return; // PS4 browsing its own local server
-        } else {
-            // PC browsing a hosted site.
-            findPs4FromBaseIP(host);
-            return;
-        }
-    }
+  const host = window.location.hostname;
+  const isPS4 = (user.platform === "PS4" || typeof window.ps4Fw !== 'undefined');
 
-    // 2. is it localhost or 127.0.0.1
-    const isLoopback = (host === "localhost" || host === "127.0.0.1");
-    if (isLoopback) {
-        if (isPS4) {
-            return host;
-        } else {
-            alert("Can't scan for ip since its not provided")
-            // PC browsing a PC-hosted site.
-            // Cant scan for a PayLoader server because we only have localhost or 127.0.0.1
-            return;
-        }
+  // 1. is it a local network ? (192.168.x.x, 10.x.x.x, etc.)
+  if (isLocalIP(host)) {
+    if (isPS4) {
+      user.ip = "127.0.0.1";
+      if (!ui.ps4IpInput.classList.contains("hidden")) {
+        ui.ps4IpInput.value = user.ip;
+      }
+      return; // PS4 browsing its own local server
+    } else {
+      // PC browsing a hosted site.
+      findPs4FromBaseIP(host);
+      return;
     }
+  }
+
+  // 2. is it localhost or 127.0.0.1
+  const isLoopback = (host === "localhost" || host === "127.0.0.1");
+  if (isLoopback) {
+    if (isPS4) {
+      return host;
+    } else {
+      alert("Can't scan for ip since its not provided")
+      // PC browsing a PC-hosted site.
+      // Cant scan for a PayLoader server because we only have localhost or 127.0.0.1
+      return;
+    }
+  }
 }
 // Save ps4Fw from select element (Only for communicating external device -> PS4 for local network)
-ui.ps4FwSelect.addEventListener('change', function (){
+ui.ps4FwSelect.addEventListener('change', function () {
   user.ps4Fw = ui.ps4FwSelect.value;
   localStorage.setItem('ps4Fw', ui.ps4FwSelect.value);
   ui.ps4FwSelect.style.border = "1px solid white";
 })
 
-function log(message) {
+function log(message, color) {
   if (user.clearLog) {
     ui.consoleElement.textContent = '';
     user.clearLog = false;
   }
-  ui.consoleElement.textContent += message + '\n';
+  const span = document.createElement('span');
+  span.textContent = message + '\n';
+  if (color) {
+    span.style.color = color;
+  }
+  ui.consoleElement.appendChild(span);
 }
 
 // To be only used when this project is served on a PS4-Websrv payload on a PS4.
 // Send shutdown request to the server
 function shutdownServer() {
-    if (!confirm(window.lang.shutdownServerConfirm)) return;
+  if (!confirm(window.lang.shutdownServerConfirm)) return;
 
-    fetch('/shutdown')
-        .then(() => {
-            alert("Server is shutting down. The page will now reload.");
-            window.location.reload();
-        })
-        .catch(err => {
-            alert("Server stopped? (connection lost).");
-            window.location.reload();
-        });
+  fetch('/shutdown')
+    .then(() => {
+      alert("Server is shutting down. The page will now reload.");
+      window.location.reload();
+    })
+    .catch(err => {
+      alert("Server stopped? (connection lost).");
+      window.location.reload();
+    });
 }
 
 function setTheme(theme) {
-    const styleSheet = document.getElementById('main-stylesheet');
-    if (styleSheet) {
-        // Ensure we don't end up with "index.css.css"
-        const fileName = theme.endsWith('.css') ? theme : `${theme}.css`;
-        styleSheet.setAttribute('href', `./includes/${fileName}`);
-        localStorage.setItem('theme', theme);
-    }
+  const styleSheet = document.getElementById('main-stylesheet');
+  if (styleSheet) {
+    // Ensure we don't end up with "index.css.css"
+    const fileName = theme.endsWith('.css') ? theme : `${theme}.css`;
+    styleSheet.setAttribute('href', `./includes/${fileName}`);
+    localStorage.setItem('theme', theme);
+  }
 }
 
 function loadTheme() {
-    let savedTheme = localStorage.getItem('theme') || 'index';
-    
-    // Find the radio button
-    let radioElement = document.querySelector(`input[name="theme"][value="${savedTheme}"]`);
-    
-    // Fallback if the saved theme doesn't exist or is invalid
-    if (!radioElement) {
-        savedTheme = 'index';
-        radioElement = document.querySelector(`input[name="theme"][value="index"]`);
-        localStorage.setItem('theme', 'index');
-        // Apply the CSS file
-        setTheme(savedTheme);
-    }
-    // Update the UI radio button if it exists
-    if (radioElement) {
-        radioElement.checked = true;
-    }
+  let savedTheme = localStorage.getItem('theme') || 'index';
+
+  // Find the radio button
+  let radioElement = document.querySelector(`input[name="theme"][value="${savedTheme}"]`);
+
+  // Fallback if the saved theme doesn't exist or is invalid
+  if (!radioElement) {
+    savedTheme = 'index';
+    radioElement = document.querySelector(`input[name="theme"][value="index"]`);
+    localStorage.setItem('theme', 'index');
+    // Apply the CSS file
+    setTheme(savedTheme);
+  }
+  // Update the UI radio button if it exists
+  if (radioElement) {
+    radioElement.checked = true;
+  }
 }
 
 function setAutoJbRetry(checked) {
@@ -1220,19 +1348,23 @@ function setAutoJbRetry(checked) {
   if (!checked) return;
   if (confirm(window.lang.autoJbRetryConfirm)) {
     // close settings popup
-      settingsPopup();
+    settingsPopup();
 
-      jailbreak();
+    jailbreak();
   }
 }
 
 // When jailbreak succeds, this will be stopped
 function autoJailbreak() {
+  if (sessionStorage.getItem('jailbreakNow') == "true"){
+    jailbreak();
+    return;
+  }
   var checked = (localStorage.getItem('autoJbRetry') || 'true') === 'true'; // default to true if not set
   var sessionChecked = sessionStorage.getItem('autoJbRetry') == 'true';
   ui.autoJbRetry.checked = checked;
   // check if supported ps4
-  if (window.ps4Fw < 7.00 || window.ps4Fw > 9.60 || !window.ps4Fw) return;
+  if (window.ps4Fw < 6.70 || window.ps4Fw > 9.60 || !window.ps4Fw) return;
 
   // If auto jb is checked and previous jailbreak attempt was unsuccessful, retry jailbreak with a timer
   if (checked && sessionChecked) {
@@ -1246,7 +1378,7 @@ function autoJailbreakTimer() {
   ui.stopAutoJbBtn.classList.toggle('hidden');
   autoJbInterval = setInterval(() => {
 
-  ui.clickToStartText.textContent = window.lang.jailbreakCountDown.replace('{seconds}', timer);
+    ui.clickToStartText.textContent = window.lang.jailbreakCountDown.replace('{seconds}', timer);
     if (timer <= 0) {
       clearInterval(autoJbInterval);
       jailbreak();
@@ -1270,24 +1402,24 @@ ui.stopAutoJbBtn.addEventListener('click', () => {
  * - Set both to false will only update the stats, useful when reloading the page.
  */
 function updateJbStats(attemp, isSuccess) {
-    let total = parseInt(localStorage.getItem('jbTotal') || 0);
-    let success = parseInt(localStorage.getItem('jbSuccess') || 0);
+  let total = parseInt(localStorage.getItem('jbTotal') || 0);
+  let success = parseInt(localStorage.getItem('jbSuccess') || 0);
 
-    if (attemp){
-      total++;
-      localStorage.setItem('jbTotal', total);
-    } 
-    if (isSuccess){
-      success++;
-      localStorage.setItem('jbSuccess', success);
-    } 
-    
-    // Update UI element if present, useful for the case of exploit.html not having the ui element.
-    if (ui.successRateText) {
-      let rate = ((success / total) * 100).toFixed(0);
-      rate = isNaN(rate) ? "0" : rate; // Handle NaN case when total is 0
-      ui.successRateText.textContent = (window.lang.successRate || "Success Rate: ") + rate + "%" + ` (${success}/${total})`;
-    }
+  if (attemp) {
+    total++;
+    localStorage.setItem('jbTotal', total);
+  }
+  if (isSuccess) {
+    success++;
+    localStorage.setItem('jbSuccess', success);
+  }
+
+  // Update UI element if present, useful for the case of exploit.html not having the ui element.
+  if (ui.successRateText && window.lang) {
+    let rate = ((success / total) * 100).toFixed(0);
+    rate = isNaN(rate) ? "0" : rate; // Handle NaN case when total is 0
+    ui.successRateText.textContent = (window.lang.successRate || "Success Rate: ") + rate + "%" + ` (${success}/${total})`;
+  }
 }
 
 function clearStats() {
@@ -1334,31 +1466,50 @@ function cleanUp() {
   });
 
   // Null the payload arrays — forces GC eligibility on their objects
-  if (typeof payloads !== 'undefined') payloads.length = 0;
-  if (typeof advancedPayloads !== 'undefined') advancedPayloads.length = 0;
+  if (typeof payloadsList !== 'undefined' && Array.isArray(payloadsList)) {
+    payloadsList.length = 0;
+  }
 
   // Make console full screen
   document.getElementById('exploitContainer').style.display = "block";
 }
 
-function updateBareboneJB(){
-  ui.bareboneJBInput.checked = user.bareboneJB;
+function updateBareboneJB() {
+  if (ui.bareboneJBInput) {
+    ui.bareboneJBInput.checked = user.bareboneJB;
+  }
   console.log(user.bareboneJB);
 }
 
-function setBareboneJB(checked){
+function setBareboneJB(checked) {
+  if (user.ps4Fw >= 6.70 && user.ps4Fw <= 6.72 && checked) {
+    alert("Jailbreak now?");
+    location.replace('./exploit.html');
+  }
   localStorage.setItem("bareboneJB", checked);
   user.bareboneJB = checked;
-    console.log(user.bareboneJB);
 
 }
 
 // save exploit chain method to localStorage
-function secondLapse(value){
+function secondLapse(value) {
   localStorage.setItem('secondLapse', value);
   user.secondLapse = value == "true";
 }
 // load option when loading the page
-function loadSecondLapse(){
-  document.querySelector(`input[name="exploitChain"][value="${user.secondLapse}"]`).checked = true;
+function loadSecondLapse() {
+  var chainElement = document.getElementById('chooseExploitChain');
+
+  if (user.ps4Fw >= 6.70 && user.ps4Fw <= 6.72) {
+    if (chainElement) {
+      chainElement.remove();
+    }
+    return;
+  }
+
+  // Protective check
+  var radioElement = document.querySelector(`input[name="exploitChain"][value="${user.secondLapse}"]`);
+  if (radioElement) {
+    radioElement.checked = true;
+  }
 }

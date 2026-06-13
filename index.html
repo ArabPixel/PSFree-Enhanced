@@ -1,259 +1,318 @@
 <!DOCTYPE html>
 <html lang="en" manifest="PSFree.manifest">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>PSFree Enhanced</title>
     <link rel="stylesheet" id="main-stylesheet" href="">
     <script>
-    // Prevent "Theme Flash" by applying the href before the body renders
-    var savedTheme = localStorage.getItem('theme') || "index";
-    if (savedTheme) {
-        document.getElementById('main-stylesheet').setAttribute('href', './includes/' + savedTheme + '.css');
-    }
-</script>
+        // Prevent "Theme Flash" by applying the href before the body renders
+        var savedTheme = localStorage.getItem('theme') || "index";
+        if (savedTheme) {
+            document.getElementById('main-stylesheet').setAttribute('href', './includes/' + savedTheme + '.css');
+        }
+    </script>
 </head>
 
 <body class="bg-gray-900 text-white">
     <main class="mainContainer">
         <section id="initial-screen" class="relative flex flex-col items-center justify-center min-h-screen p-6 transition-opacity duration-700
             opacity-100">
-        <!-- Header Buttons -->
-        <header class="absolute top-6 left-6 flex space-x-3 rtl:space-x-reverse z-10">
-            <button onclick="settingsPopup()" id="settings-btn"
-                class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
-                title="Settings">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> </svg>
-            </button>
-            <button onclick="aboutPopup()" id="about-btn"
-                class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
-                title="About">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" viewBox="0 0 512 512"><path d="M256,56C145.72,56,56,145.72,56,256s89.72,200,200,200,200-89.72,200-200S366.28,56,256,56Zm0,82a26,26,0,1,1-26,26A26,26,0,0,1,256,138Zm64,226H200V332h44V244H212V212h64V332h44Z"/></svg>
-            </button>
-        </header>
-
-        <!-- PS Button -->
-        <button>
-            <div id="ps-logo-container"
-                class="relative group cursor-pointer flex flex-col items-center justify-center p-8 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:scale-102">
-                <svg id="ps-logo" class="w-32 h-32 transition-all duration-500 ease-in-out" viewBox="0 0 32 32"
-                    fill="#3B82F6" xmlns="http://www.w3.org/2000/svg">
-                    <g id="SVGRepo_iconCarrier">
+            <!-- Header Buttons -->
+            <header class="absolute top-6 left-6 flex space-x-3 rtl:space-x-reverse z-10">
+                <button onclick="settingsPopup()" id="settings-btn"
+                    class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
+                    title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor"
+                        class="bi bi-gear" viewBox="0 0 16 16">
                         <path
-                            d="M0.69116 21.9548C-0.506476 22.7935 -0.284724 24.2384 2.44769 25.1419C5.18011 26.0455 8.35603 26.2323 11.1505 25.729C11.0707 25.729 11.3102 25.729 11.1505 25.729V22.8774L8.43588 23.8C7.39792 24.1355 6.35997 24.2194 5.32202 23.9677C4.5236 23.7161 4.68328 23.2129 5.64139 22.7935L11.1505 20.7806V17.6774L3.48565 20.4452C2.52754 20.7806 1.56943 21.2839 0.69116 21.9548ZM19.2146 9.37419V17.5097C22.4881 19.1871 25.0431 17.5097 25.0431 13.1484C25.0431 8.70323 23.5261 6.69032 19.1348 5.09677C16.8193 4.25806 14.4241 3.50323 12.0288 3V27.2387L17.6178 29V8.61935C17.6178 7.69677 17.6178 7.02581 18.2565 7.27742C19.1348 7.52903 19.2146 8.45161 19.2146 9.37419ZM29.5941 20.0258C27.2787 19.1871 24.8036 18.8516 22.4083 19.1032C21.0779 19.1906 19.8294 19.5869 18.5759 20.0258V23.2968L23.7656 21.2839C24.8036 20.9484 25.8415 20.8645 26.8795 21.1161C27.6779 21.3677 27.5182 21.871 26.5601 22.2903L18.5759 25.3935V28.5806L29.5941 24.3032C30.3925 23.9677 31.1111 23.5484 31.7499 22.8774C32.3088 22.0387 32.0692 20.8645 29.5941 20.0258Z">
-                        </path>
-                    </g>
+                            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                        <path
+                            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                    </svg>
+                </button>
+                <button onclick="aboutPopup()" id="about-btn"
+                    class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
+                    title="About">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor"
+                        viewBox="0 0 512 512">
+                        <path
+                            d="M256,56C145.72,56,56,145.72,56,256s89.72,200,200,200,200-89.72,200-200S366.28,56,256,56Zm0,82a26,26,0,1,1-26,26A26,26,0,0,1,256,138Zm64,226H200V332h44V244H212V212h64V332h44Z" />
+                    </svg>
+                </button>
+            </header>
+
+            <!-- PS Button -->
+            <button>
+                <div id="ps-logo-container"
+                    class="relative group cursor-pointer flex flex-col items-center justify-center p-8 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:scale-102">
+                    <svg id="ps-logo" class="w-32 h-32 transition-all duration-500 ease-in-out" viewBox="0 0 32 32"
+                        fill="#3B82F6" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M0.69116 21.9548C-0.506476 22.7935 -0.284724 24.2384 2.44769 25.1419C5.18011 26.0455 8.35603 26.2323 11.1505 25.729C11.0707 25.729 11.3102 25.729 11.1505 25.729V22.8774L8.43588 23.8C7.39792 24.1355 6.35997 24.2194 5.32202 23.9677C4.5236 23.7161 4.68328 23.2129 5.64139 22.7935L11.1505 20.7806V17.6774L3.48565 20.4452C2.52754 20.7806 1.56943 21.2839 0.69116 21.9548ZM19.2146 9.37419V17.5097C22.4881 19.1871 25.0431 17.5097 25.0431 13.1484C25.0431 8.70323 23.5261 6.69032 19.1348 5.09677C16.8193 4.25806 14.4241 3.50323 12.0288 3V27.2387L17.6178 29V8.61935C17.6178 7.69677 17.6178 7.02581 18.2565 7.27742C19.1348 7.52903 19.2146 8.45161 19.2146 9.37419ZM29.5941 20.0258C27.2787 19.1871 24.8036 18.8516 22.4083 19.1032C21.0779 19.1906 19.8294 19.5869 18.5759 20.0258V23.2968L23.7656 21.2839C24.8036 20.9484 25.8415 20.8645 26.8795 21.1161C27.6779 21.3677 27.5182 21.871 26.5601 22.2903L18.5759 25.3935V28.5806L29.5941 24.3032C30.3925 23.9677 31.1111 23.5484 31.7499 22.8774C32.3088 22.0387 32.0692 20.8645 29.5941 20.0258Z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+            </button>
+            <h3 class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</h3>
+            <button onclick="clearInterval(autoJbInterval);"
+                class="hidden mt-2 bg-red-600 hover:bg-red-700 p-3 rounded font-semibold transition-colors"
+                id="stopAutoJb">
+                Stop Auto Jailbreak
+            </button>
+
+            <!-- Compatibility message -->
+            <p id="PS4FW" class="text-white/70 text-lg mt-4 mb-6">-</p>
+            <a hidden
+                class="secondHostBtn bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center"
+                href="http://psfree-enhanced.free.nf" style="text-decoration: none;">
+                <button
+                    class="bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center">Load
+                    payloads using GoldHEN's PayLoader - External link</button>
+            </a>
+
+            <!-- Jailbreak flavor options -->
+            <div id="choosejb-initial" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-sm text-center">
+                <h3 class="text-xl font-semibold mb-4">Choose your HEN flavor</h3>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 rtl:gap-4 sm:rtl:gap-8">
+                    <label
+                        class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto mb-2 sm:mb-0">
+                        <input type="radio" name="hen" value="GoldHEN" onchange="saveJbFlavor(this.name, this.value)"
+                            class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
+                        <span class="text-lg font-semibold text-white/90 select-none">GoldHEN</span>
+                    </label>
+                    <label
+                        class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto">
+                        <input type="radio" name="hen" value="HEN" onchange="saveJbFlavor(this.name, this.value)"
+                            class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
+                        <span class="text-lg font-semibold text-white/90 select-none">HEN</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Scroll Down Icon -->
+            <button id="scrollDown" class="absolute bottom-10 animate-bounce cursor-pointer"
+                onclick="ui.exploitScreen.scrollIntoView({block: 'end'});">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="currentColor" viewBox="0 0 512 512">
+                    <polyline points="112 184 256 328 400 184"></polyline>
                 </svg>
-            </div>
-        </button>
-        <h3 class="text-white/70 text-lg mt-4" id="click-to-start-text">Click to start</h3>
-        <button onclick="clearInterval(autoJbInterval);"
-            class="hidden mt-2 bg-red-600 hover:bg-red-700 p-3 rounded font-semibold transition-colors"
-            id="stopAutoJb">
-            Stop Auto Jailbreak
-        </button>
-
-        <!-- Compatibility message -->
-        <p id="PS4FW" class="text-white/70 text-lg mt-4 mb-6">-</p>
-        <a hidden class="secondHostBtn bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center" href="http://psfree-enhanced.free.nf" style="text-decoration: none;" >
-            <button class="bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center">Load payloads using GoldHEN's PayLoader - External link</button>
-        </a>
-
-        <!-- Jailbreak flavor options -->
-        <div id="choosejb-initial" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-sm text-center">
-            <h3 class="text-xl font-semibold mb-4">Choose your HEN flavor</h3>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 rtl:gap-4 sm:rtl:gap-8">
-                <label
-                    class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto mb-2 sm:mb-0">
-                    <input type="radio" name="hen" value="GoldHEN" onchange="saveJbFlavor(this.name, this.value)"
-                        class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
-                    <span class="text-lg font-semibold text-white/90 select-none">GoldHEN</span>
-                </label>
-                <label
-                    class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto">
-                    <input type="radio" name="hen" value="HEN" onchange="saveJbFlavor(this.name, this.value)"
-                        class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
-                    <span class="text-lg font-semibold text-white/90 select-none">HEN</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Scroll Down Icon -->
-        <button id="scrollDown" class="absolute bottom-10 animate-bounce cursor-pointer"
-            onclick="ui.exploitScreen.scrollIntoView({block: 'end'});">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="currentColor" viewBox="0 0 512 512"><polyline points="112 184 256 328 400 184"></polyline></svg>        
-        </button>
+            </button>
         </section>
 
         <!-- Exploit section -->
-        <section id="exploit-main-screen"
-            class="w-full inset-0 bg-gray-900 text-white p-6 transition-opacity duration-700">
-            <div class="container mx-auto" style="width: 100% !important;">
-                <div id="exploitContainer" class="grid md:grid-cols-2 gap-8 h-screen">
-                    <!-- Exploit console panel -->
-                    <div id="exploit-status-panel" class="bg-gray-800 p-6 rounded-lg flex flex-col h-full">
-                        <div class="flex justify-between w-auto" style="align-items: baseline;">
-                            <h2 class="text-xl font-semibold mb-4">Exploit status</h2>
-                            <button id="successRate" style="white-space: nowrap;" class="text-base font-semibold duration-300 transform hover:scale-102 hover:border-bottom cursor-pointer" onclick="clearStats()">
-                                Success rate
-                            </button>
-                        </div>
-                        <div id="DebugConsole"
-                            class="flex-grow min-h-[150px] bg-black/50 p-4 rounded-lg overflow-y-auto mb-4 text-xs font-mono"
-                            dir="ltr">
-                            <pre id='console'><center>--</center></pre>
-                        </div>
-                        <div id="warningBox"
-                            class="bg-yellow-600/20 border border-yellow-500/50 rounded-lg p-4 ">
-                            <div class="flex items-start space-x-3 rtl:space-x-reverse">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                                <div class="text-sm text-yellow-200">
-                                    <p class="font-medium mb-1">Important notice:</p>
-                                    <ul class="space-y-1 text-yellow-200/80">
-                                        <li>Make sure to close all apps before running the exploit</li>
-                                        <li>Make sure to delete cache data before running the exploit for the first time</li>
-                                        <li>It might take you more than one time</li>
-                                    </ul>
-                                </div>
+        <section id="exploit-main-screen" class="flex w-full bg-gray-900 text-white transition-opacity duration-700">
+            <div id="exploitContainer" class="grid md:grid-cols-2 h-screen">
+                <!-- Exploit console panel -->
+                <div id="exploit-status-panel" class="gap-4 bg-gray-800 p-6 rounded-lg flex flex-col h-full w-full">
+                    <div class="flex justify-between w-auto" style="align-items: baseline;">
+                        <h2 class="text-xl font-semibold mb-4">Exploit status</h2>
+                        <button id="successRate" style="white-space: nowrap;"
+                            class="text-base font-semibold duration-300 transform hover:scale-102 hover:border-bottom cursor-pointer"
+                            onclick="clearStats()">
+                            Success rate
+                        </button>
+                    </div>
+                    <div id="DebugConsole"
+                        class="flex-grow min-h-[150px] bg-black/50 p-4 rounded-lg overflow-y-auto mb-4 text-xs font-mono"
+                        dir="ltr">
+                        <pre id='console'><center>--</center></pre>
+                    </div>
+                    <div id="warningBox" class="bg-yellow-600/20 border border-yellow-500/50 rounded-lg p-4 ">
+                        <div class="flex items-start space-x-3 rtl:space-x-reverse">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="gold" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-alert-triangle">
+                                <path
+                                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                                </path>
+                                <line x1="12" y1="9" x2="12" y2="13"></line>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                            <div class="text-sm text-yellow-200">
+                                <p class="font-medium mb-1">Important notice:</p>
+                                <ul class="space-y-1 text-yellow-200/80">
+                                    <li>Make sure to close all apps before running the exploit</li>
+                                    <li>Make sure to delete cache data before running the exploit for the first time
+                                    </li>
+                                    <li>It might take you more than one time</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Payloads section -->
-                    <div id="payloadsSection" class="bg-gray-800 p-6 rounded-lg flex flex-col h-full">
-                        <div class="flex justify-between">
-                            <div>
+                <!-- Payloads section -->
+                <div id="payloadsSection" class="gap-4 bg-gray-800 p-6 rounded-lg flex flex-col h-full">
+                    <div class="flex justify-between">
+                        <div>
                             <h2 class="text-xl font-semibold mb-4" id="payloads-section-title">
                                 Payloads
                             </h2>
-                            <header class="absolute top-6 left-6 flex space-x-3 rtl:space-x-reverse z-10 hidden" id="header2">
+                            <header class="flex space-x-3 rtl:space-x-reverse hidden" id="header2">
                                 <button onclick="settingsPopup()" id="settings-btn"
                                     class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
                                     title="Settings">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor"
+                                        class="bi bi-gear" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                                        <path
+                                            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                                    </svg>
                                 </button>
                                 <button onclick="aboutPopup()" id="about-btn"
                                     class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
                                     title="About">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" viewBox="0 0 512 512"><path d="M256,56C145.72,56,56,145.72,56,256s89.72,200,200,200,200-89.72,200-200S366.28,56,256,56Zm0,82a26,26,0,1,1-26,26A26,26,0,0,1,256,138Zm64,226H200V332h44V244H212V212h64V332h44Z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor"
+                                        viewBox="0 0 512 512">
+                                        <path
+                                            d="M256,56C145.72,56,56,145.72,56,256s89.72,200,200,200,200-89.72,200-200S366.28,56,256,56Zm0,82a26,26,0,1,1-26,26A26,26,0,0,1,256,138Zm64,226H200V332h44V244H212V212h64V332h44Z" />
+                                    </svg>
                                 </button>
                             </header>
-                            </div>
-                            <div class="flex items-center flex-col gap-2">
-                                <input type="text" id="ps4IpInput" class="hidden bg-blue-600 hover:bg-blue-700 p-1 rounded font-semibold transition-colors text-white border-transparent text-center" placeholder="PS4 IP Address">
-                                <select style="background: transparent;" id="ps4FwSelect" class="hidden p-1 text-center rounded font-semibold transition-colors text-white">
-                                    <option selected hidden>PS4 FW</option>
-                                    <option value="7.00">7.00</option>
-                                    <option value="7.01">7.01</option>
-                                    <option value="7.02">7.02</option>
-                                    <option value="7.50">7.50</option>
-                                    <option value="7.51">7.51</option>
-                                    <option value="7.55">7.55</option>
-                                    <option value="8.00">8.00</option>
-                                    <option value="8.01">8.01</option>
-                                    <option value="8.03">8.03</option>
-                                    <option value="8.50">8.50</option>
-                                    <option value="8.52">8.52</option>
-                                    <option value="9.00">9.00</option>
-                                    <option value="9.03">9.03</option>
-                                    <option value="9.04">9.04</option>
-                                    <option value="9.50">9.50</option>
-                                    <option value="9.51">9.51</option>
-                                    <option value="9.60">9.60</option>
-                                    <option value="10.00">10.00</option>
-                                    <option value="10.01">10.01</option>
-                                    <option value="10.50">10.50</option>
-                                    <option value="10.70">10.70</option>
-                                    <option value="10.71">10.71</option>
-                                    <option value="11.00">11.00</option>
-                                    <option value="11.02">11.02</option>
-                                    <option value="11.50">11.50</option>
-                                    <option value="11.52">11.52</option>
-                                    <option value="12.00">12.00</option>
-                                    <option value="12.02">12.02</option>
-                                    <option value="12.50">12.50</option>
-                                    <option value="12.52">12.52</option>
-                                    <option value="13.00">13.00</option>
-                                    <option value="13.02">13.02</option>
-                                    <option value="13.04">13.04</option>
-                                    <option value="13.50">13.50</option>
-                                </select>
-                            </div>
                         </div>
-                        <div
-                            class="mb-4 border-b border-gray-200 border-gray-700 w-full sticky top-0 bg-gray-800 z-10 tabs">
-                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center w-full"
-                                id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
-                                <li class="flex-1" role="presentation">
-                                    <button class="w-full inline-block p-4 border-b-2 rounded-t-lg" id="tools-tab"
-                                        data-tabs-target="#tools" type="button" role="tab" aria-controls="tools"
-                                        aria-selected="false">Tools</button>
-                                </li>
-                                <li class="flex-1" role="presentation">
-                                    <button
-                                        class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
-                                        id="linux-tab" data-tabs-target="#linux" type="button" role="tab"
-                                        aria-controls="linux" aria-selected="false">Linux</button>
-                                </li>
-                                <li class="hidden flex-1 advancedPayloadsTab" role="presentation">
-                                    <button
-                                        class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
-                                        id="advanced-tab" data-tabs-target="#advanced" type="button" role="tab"
-                                        aria-controls="advanced" aria-selected="false">Advanced</button>
-                                </li>
-                                <li class="hidden flex-1 customPayloadsTab" role="presentation">
-                                    <button
-                                        class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
-                                        id="custom-tab" data-tabs-target="#custom" type="button" role="tab"
-                                        aria-controls="custom" aria-selected="false">Custom</button>
-                                </li>
-                            </ul>
+                        <div class="flex items-center flex-col gap-2">
+                            <input type="text" id="ps4IpInput"
+                                class="hidden bg-blue-600 hover:bg-blue-700 p-1 rounded font-semibold transition-colors text-white border-transparent text-center"
+                                placeholder="PS4 IP Address">
+                            <select style="background: transparent;" id="ps4FwSelect"
+                                class="hidden p-1 text-center rounded font-semibold transition-colors text-white">
+                                <option selected hidden>PS4 FW</option>
+                                <option value="lower">Lower</option>
+                                <option value="6.70">6.70</option>
+                                <option value="6.71">6.71</option>
+                                <option value="6.72">6.72</option>
+                                <option value="7.00">7.00</option>
+                                <option value="7.01">7.01</option>
+                                <option value="7.02">7.02</option>
+                                <option value="7.50">7.50</option>
+                                <option value="7.51">7.51</option>
+                                <option value="7.55">7.55</option>
+                                <option value="8.00">8.00</option>
+                                <option value="8.01">8.01</option>
+                                <option value="8.03">8.03</option>
+                                <option value="8.50">8.50</option>
+                                <option value="8.52">8.52</option>
+                                <option value="9.00">9.00</option>
+                                <option value="9.03">9.03</option>
+                                <option value="9.04">9.04</option>
+                                <option value="9.50">9.50</option>
+                                <option value="9.51">9.51</option>
+                                <option value="9.60">9.60</option>
+                                <option value="10.00">10.00</option>
+                                <option value="10.01">10.01</option>
+                                <option value="10.50">10.50</option>
+                                <option value="10.70">10.70</option>
+                                <option value="10.71">10.71</option>
+                                <option value="11.00">11.00</option>
+                                <option value="11.02">11.02</option>
+                                <option value="11.50">11.50</option>
+                                <option value="11.52">11.52</option>
+                                <option value="12.00">12.00</option>
+                                <option value="12.02">12.02</option>
+                                <option value="12.50">12.50</option>
+                                <option value="12.52">12.52</option>
+                                <option value="13.00">13.00</option>
+                                <option value="13.02">13.02</option>
+                                <option value="13.04">13.04</option>
+                                <option value="13.50">13.50</option>
+                            </select>
                         </div>
-                        <div id="payloadsGrid" class="space-y-3 overflow-y-auto flex-grow max-h-[calc(100vh-250px)]" style="overflow-x: hidden !important;">
-                            <div id="default-tab-content" class="bg-gray-800">
-                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="tools" role="tabpanel"
-                                    aria-labelledby="tools-tab">
-                                </div>
-                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="linux" role="tabpanel"
-                                    aria-labelledby="linux-tab">
-                                </div>
-                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="advanced" role="tabpanel"
-                                    aria-labelledby="advanced-tab">
-                                </div>
-                                <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="custom" role="tabpanel"
-                                    aria-labelledby="custom-tab">
-                                    <p class="text-sm text-white/80 mb-2">Upload a custom payload file.</p>
-                                    <div class="flex gap-2">
-                                        <input type="file" id="customPayloadInput" style="width: 150px;" class="bg-gray-700 p-2 rounded flex-grow text-white border-transparent focus:ring-2 focus:ring-blue-500" accept=".bin,.elf">
-                                        <button id="sendCustomPayloadBtn" onclick="Loadpayloads('custom')" class="hover:bg-blue-700 p-1 rounded font-semibold transition-colors text-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512.006"><path fill="#fff" fill-rule="nonzero" d="M11.671 160.968L498.394.692c8.503-3.038 15.951 4.41 12.915 12.915L351.027 500.328c-5.264 15.865-27.364 15.388-32.617-.357l-71.675-234.703-234.703-71.675c-15.889-5.275-16.073-27.373-.361-32.625zm13.952 16.188l226.175 69.064L465.84 32.177 25.623 177.156z"/></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="henSelection" class="flex items-center justify-center gap-4 mb-4">
-                            <label
-                                class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500">
-                                <input type="radio" name="hen2" value="GoldHEN" class="accent-blue-500 w-4 h-4 ml-2"
-                                    onchange="saveJbFlavor(this.name, this.value)">
-                                <span class="text-base font-semibold text-white/90 select-none">GoldHEN</span>
-                            </label>
-                            <label
-                                class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500">
-                                <input type="radio" name="hen2" value="HEN" class="accent-blue-500 w-4 h-4 ml-2"
-                                    onchange="saveJbFlavor(this.name, this.value)">
-                                <span class="text-base font-semibold text-white/90 select-none">HEN</span>
-                            </label>
-                            <button id="exploitRun"
-                                class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/> </svg>
-                            </button>
-                        </div>
-                        <a hidden class="secondHostBtn w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center" href="http://psfree-enhanced.free.nf" style="text-decoration: none;" >
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center">Load payloads using GoldHEN's PayLoader - External link</button>
-                        </a>
                     </div>
+                    <div
+                        class="mb-4 border-b border-gray-200 border-gray-700 w-full sticky top-0 bg-gray-800 z-10 tabs">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center w-full" id="default-tab"
+                            data-tabs-toggle="#default-tab-content" role="tablist">
+                            <li class="flex-1" role="presentation">
+                                <button class="w-full inline-block p-4 border-b-2 rounded-t-lg" id="tools-tab"
+                                    data-tabs-target="#tools" type="button" role="tab" aria-controls="tools"
+                                    aria-selected="false">Tools</button>
+                            </li>
+                            <li class="flex-1" role="presentation">
+                                <button
+                                    class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                    id="linux-tab" data-tabs-target="#linux" type="button" role="tab"
+                                    aria-controls="linux" aria-selected="false">Linux</button>
+                            </li>
+                            <li class="hidden flex-1 advancedPayloadsTab" role="presentation">
+                                <button
+                                    class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                    id="advanced-tab" data-tabs-target="#advanced" type="button" role="tab"
+                                    aria-controls="advanced" aria-selected="false">Advanced</button>
+                            </li>
+                            <li class="hidden flex-1 customPayloadsTab" role="presentation">
+                                <button
+                                    class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                    id="custom-tab" data-tabs-target="#custom" type="button" role="tab"
+                                    aria-controls="custom" aria-selected="false">Custom</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="payloadsGrid" class="space-y-3 overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
+                        style="overflow-x: hidden !important;">
+                        <div id="default-tab-content" class="bg-gray-800">
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="tools" role="tabpanel"
+                                aria-labelledby="tools-tab">
+                            </div>
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="linux" role="tabpanel"
+                                aria-labelledby="linux-tab">
+                            </div>
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="advanced" role="tabpanel"
+                                aria-labelledby="advanced-tab">
+                            </div>
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="custom" role="tabpanel"
+                                aria-labelledby="custom-tab">
+                                <p class="text-sm text-white/80 mb-2">Upload a custom payload file.</p>
+                                <div class="flex gap-2">
+                                    <input type="file" id="customPayloadInput" style="width: 150px;"
+                                        class="bg-gray-700 p-2 rounded flex-grow text-white border-transparent focus:ring-2 focus:ring-blue-500"
+                                        accept=".bin,.elf">
+                                    <button id="sendCustomPayloadBtn" onclick="Loadpayloads('custom')"
+                                        class="hover:bg-blue-700 p-1 rounded font-semibold transition-colors text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px"
+                                            shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
+                                            image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
+                                            viewBox="0 0 512 512.006">
+                                            <path fill="#fff" fill-rule="nonzero"
+                                                d="M11.671 160.968L498.394.692c8.503-3.038 15.951 4.41 12.915 12.915L351.027 500.328c-5.264 15.865-27.364 15.388-32.617-.357l-71.675-234.703-234.703-71.675c-15.889-5.275-16.073-27.373-.361-32.625zm13.952 16.188l226.175 69.064L465.84 32.177 25.623 177.156z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="henSelection" class="flex items-center justify-center gap-4 mb-4">
+                        <label
+                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500">
+                            <input type="radio" name="hen2" value="GoldHEN" class="accent-blue-500 w-4 h-4 ml-2"
+                                onchange="saveJbFlavor(this.name, this.value)">
+                            <span class="text-base font-semibold text-white/90 select-none">GoldHEN</span>
+                        </label>
+                        <label
+                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500">
+                            <input type="radio" name="hen2" value="HEN" class="accent-blue-500 w-4 h-4 ml-2"
+                                onchange="saveJbFlavor(this.name, this.value)">
+                            <span class="text-base font-semibold text-white/90 select-none">HEN</span>
+                        </label>
+                        <button id="exploitRun"
+                            class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                class="bi bi-play" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <a hidden
+                        class="secondHostBtn w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center"
+                        href="http://psfree-enhanced.free.nf" style="text-decoration: none;">
+                        <button
+                            class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center">Load
+                            payloads using GoldHEN's PayLoader - External link</button>
+                    </a>
                 </div>
             </div>
         </section>
@@ -266,13 +325,17 @@
         <div id="about-popup" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
             <h2 class="text-2xl font-bold mb-4">About PSFree</h2>
             <div class="space-y-2 text-white/80">
-                <p>Version: 1.5.1</p>
+                <p>Version: 2.0</p>
                 <p>A web interface to jailbreak your PS4 using PSFree chained with Lapse kernel exploit</p>
             </div>
-            <p id="infoProtip" class="mt-2">ProTip: New functions become available if hosted locally or on a PS4 using the PS4-Websrv payload.</p>
+            <p id="infoProtip" class="mt-2">ProTip: New functions become available if hosted locally or on a PS4 using
+                the PS4-Websrv payload.</p>
             <div id="PS4FWOK" class="mt-6">
                 <h3 class="text-l font-bold mb-4">Supported PS4 firmware</h3>
-                <div id="listfw" class="grid grid-cols-4 gap-2 text-sm text-white/70 mb-4">
+                <div id="listfw" class="grid-cols-4 text-sm text-white/70 mb-4">
+                    <p id="fw670">6.70</p>
+                    <p id="fw671">6.71</p>
+                    <p id="fw672">6.72</p>
                     <p id="fw700">7.00</p>
                     <p id="fw701">7.01</p>
                     <p id="fw702">7.02</p>
@@ -313,31 +376,38 @@
                 <div class="radio-group space-y-2 flex flex-wrap">
                     <!-- Language options -->
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="en" class="ml-2" onchange="saveLanguage(this.value);">
+                        <input type="radio" name="language" value="en" class="ml-2"
+                            onchange="saveLanguage(this.value);">
                         <p>English</p>
                     </label>
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="fa" class="ml-2" onchange="saveLanguage(this.value);">
+                        <input type="radio" name="language" value="fa" class="ml-2"
+                            onchange="saveLanguage(this.value);">
                         <p>فارسی</p>
                     </label>
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="ar" class="ml-2" onchange="saveLanguage(this.value); ">
+                        <input type="radio" name="language" value="ar" class="ml-2"
+                            onchange="saveLanguage(this.value); ">
                         <p>العربية</p>
                     </label>
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="ru" class="ml-2" onchange="saveLanguage(this.value); ">
+                        <input type="radio" name="language" value="ru" class="ml-2"
+                            onchange="saveLanguage(this.value); ">
                         <p>Русский</p>
                     </label>
-					<label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="es" class="ml-2" onchange="saveLanguage(this.value);">
+                    <label class="flex items-center text-white/80">
+                        <input type="radio" name="language" value="es" class="ml-2"
+                            onchange="saveLanguage(this.value);">
                         <p>Espa&ntilde;ol</p>
                     </label>
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="tr" class="ml-2" onchange="saveLanguage(this.value);">
+                        <input type="radio" name="language" value="tr" class="ml-2"
+                            onchange="saveLanguage(this.value);">
                         <p>T&uuml;rk&ccedil;e</p>
                     </label>
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="language" value="zh-cn" class="ml-2" onchange="saveLanguage(this.value);">
+                        <input type="radio" name="language" value="zh-cn" class="ml-2"
+                            onchange="saveLanguage(this.value);">
                         <p>简体中文</p>
                     </label>
                 </div>
@@ -348,28 +418,34 @@
                 <div class="radio-group space-y-2">
                     <label class="flex items-center text-white/80">
                         <input type="radio" name="goldhen" value="GHv2.4b18.10" onchange="setGoldHENVer(this.value);">
-                        <p>GoldHEN v2.4b18.10 - </p><pre id="latestVer"> Latest</pre>
+                        <p>GoldHEN v2.4b18.10 - </p>
+                        <pre id="latestVer"> Latest</pre>
                     </label>
                     <details>
                         <summary>Other versions</summary>
                         <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.9" onchange="setGoldHENVer(this.value);">
+                            <input type="radio" name="goldhen" value="GHv2.4b18.9"
+                                onchange="setGoldHENVer(this.value);">
                             <p>GoldHEN v2.4b18.9</p>
                         </label>
                         <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.8" onchange="setGoldHENVer(this.value);">
+                            <input type="radio" name="goldhen" value="GHv2.4b18.8"
+                                onchange="setGoldHENVer(this.value);">
                             <p>GoldHEN v2.4b18.8</p>
                         </label>
                         <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.7" onchange="setGoldHENVer(this.value);">
+                            <input type="radio" name="goldhen" value="GHv2.4b18.7"
+                                onchange="setGoldHENVer(this.value);">
                             <p>GoldHEN v2.4b18.7</p>
                         </label>
                         <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.6" onchange="setGoldHENVer(this.value);">
+                            <input type="radio" name="goldhen" value="GHv2.4b18.6"
+                                onchange="setGoldHENVer(this.value);">
                             <p>GoldHEN v2.4b18.6</p>
                         </label>
                         <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.5" onchange="setGoldHENVer(this.value);">
+                            <input type="radio" name="goldhen" value="GHv2.4b18.5"
+                                onchange="setGoldHENVer(this.value);">
                             <p>GoldHEN v2.4b18.5</p>
                         </label>
                     </details>
@@ -392,16 +468,16 @@
                 <h3 class="text-lg font-semibold mb-2" id="exploitChainTitle">Exploit Chain</h3>
                 <div class="radio-group space-y-2 flex flex-wrap">
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="exploitChain" value="false" onchange="secondLapse(this.value);">
+                        <input type="radio" name="exploitChain" value="true" onchange="secondLapse(this.value);">
                         <p id="defaultLapse">Default's PSFree Lapse</p>
                     </label>
                     <label class="flex items-center text-white/80">
-                        <input type="radio" name="exploitChain" value="true" onchange="secondLapse(this.value);">
+                        <input type="radio" name="exploitChain" value="false" onchange="secondLapse(this.value);">
                         <p id="secondLapse">Feyzee61's PSFree Lapse</p>
                     </label>
                 </div>
             </div>
-             <div id="advancedPayloads" class="mb-6">
+            <div id="advancedPayloads" class="mb-6">
                 <h3 class="text-lg font-semibold mb-2" id="optionsHeader">Options</h3>
                 <div class="radio-group flex flex-wrap mb-4">
                     <label class="flex items-center text-white/80">
@@ -416,6 +492,10 @@
                 <label id="bareboneJBOption" class="flex items-center text-white/80">
                     <input type="checkbox" id="bareboneJBInput" onclick="setBareboneJB(this.checked)">
                     <p id="bareboneJB">Barebone Jailbreak Experience</p>
+                </label>
+                <label id="userlandOnlyOnJB67x" class="hidden flex items-center text-white/80">
+                    <input type="checkbox" id="userlandOnlyOnJB67xInput" onclick="updateUserlandOnlyOnJB67x(this.checked)">
+                    <p id="userlandOnlyOnJB67xText">Load userland exploit only on Jailbreak</p>
                 </label>
             </div>
             <button onclick="ipGuess()"
@@ -443,27 +523,73 @@
             </div>
             <div class="mt-6">
                 <h3 class="text-l font-bold mb-4">Select a temperature</h3>
-                <div class="flex justify-evenly gap-2 text-sm text-white/70">
-                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="60" onclick="Loadpayloads('load_FanThreshold');sessionStorage.setItem('fanTemp', this.id);">60°C</button>
-                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="70" onclick="Loadpayloads('load_FanThreshold');sessionStorage.setItem('fanTemp', this.id);">70°C</button>
-                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="80" onclick="Loadpayloads('load_FanThreshold');sessionStorage.setItem('fanTemp', this.id);">80°C</button>
-                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="85" onclick="Loadpayloads('load_FanThreshold');sessionStorage.setItem('fanTemp', this.id);">85°C</button>
+                <div class="flex justify-around gap-2 text-sm text-white/70 w-full">
+                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="60"
+                        onclick="Loadpayloads('load_FanThreshold');sessionStorage.setItem('fanTemp', this.id);">60°C</button>
+                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="70"
+                        onclick="Loadpayloads('load_FanThreshold');sessionStorage.setItem('fanTemp', this.id);">70°C</button>
+                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="80"
+                        onclick="Loadpayloads('load_FanThreshold');sessionStorage.setItem('fanTemp', this.id);">80°C</button>
+                    <button class="mt-6 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="85"
+                        onclick="Loadpayloads('load_FanThreshold');sessionStorage.setItem('fanTemp', this.id);">85°C</button>
                 </div>
             </div>
-            
+
             <div id="defaultTempDiv" class="flex justify-center gap-2 flex-col">
                 <small class="text-center">&#8593;</small>
                 <small class="text-center" id="defaultTemp">Default</small>
             </div>
             <button onclick="chooseFanThreshold()"
-                class="mt-4 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors" id="close-fanChoose">
+                class="mt-4 w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold transition-colors"
+                id="close-fanChoose">
                 Close</button>
         </div>
     </div>
 
     <script>
+        // Global Error Tracker
+        window.addEventListener('error', function (event) {
+            var reason = event.error;
+            var msg = 'Unhandled error\n';
+            if (reason) {
+                msg += reason + '\n';
+                if (reason.sourceURL) msg += reason.sourceURL;
+                if (reason.line) msg += ':' + reason.line;
+                if (reason.column) msg += ':' + reason.column;
+                if (reason.stack) msg += '\n' + reason.stack;
+            } else {
+                msg += 'No error object';
+            }
+            alert(msg);
+        });
+
+        var ua = navigator.userAgent;
+        var isPS4 = ua.indexOf("PlayStation 4") !== -1;
+        var is67x = ((ua.indexOf(" 6.70") !== -1) || (ua.indexOf(" 6.71") !== -1) || (ua.indexOf(" 6.72") !== -1));
+        window.entrypoint672_result = 0;
+        window.exploitsetup672_result = 0;
+
+        var userlandOnlyOnJB67x = localStorage.getItem("userlandOnlyOnJB67x") == "true";        
+        // Load 6.7x entrypoint if needed conditionally
+        if (isPS4 && is67x && !userlandOnlyOnJB67x) {
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'includes/js/exploits/672entrypoint.js', false);
+                xhr.send('');
+                if (xhr.status === 200) {
+                    eval.call(top.window, xhr.responseText);
+                }
+            } catch (e) {
+                // Safe non-breaking fallbacks if DOM isn't ready
+                console.error("Early entrypoint hook failed: " + e.message);
+            }
+        }
+
+        // Cache
         document.addEventListener('DOMContentLoaded', () => {
-            loadSettings();
+            if (typeof loadSettings === 'function') {
+                loadSettings();
+            }
             // check for applicationCache
             if (window.applicationCache) {
                 window.applicationCache.addEventListener("progress", DLProgress, false);
@@ -474,9 +600,15 @@
             }
         });
     </script>
-    <!-- Main JS file -->
-    <script src='./includes/js/index.js'></script>
-    <script src='./includes/js/bundle.js'></script>
+    <!-- Choose index.js or index-legacy.js for older browsers, generated with Babel -->
+    <script id="main-logic-loader">
+        (function () {
+            var isModern = 'noModule' in document.createElement('script');
+            var scriptPath = isModern ? './includes/js/index.js' : './includes/js/index-legacy.js';
+            document.write('<script src="' + scriptPath + '"><\/script>');
+        })();
+    </script>
+    <script src="./includes/payloads/payloads.js"></script>
 </body>
 
 </html>
