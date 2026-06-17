@@ -3,8 +3,7 @@ body {
     font-family: sans-serif;
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
-    background: -webkit-linear-gradient(242deg, #2d00c8 0%, #6b3a1f 100%);
-    background: linear-gradient(208deg, #2d00c8 0%, #6b3a1f 100%);
+    
 }
 
 .mainContainer {
@@ -13,11 +12,6 @@ body {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     /* smoother scrolling on touch devices */
-}
-
-#initial-screen,
-#exploit-main-screen {
-    height: 100vh;
 }
 
 
@@ -36,7 +30,7 @@ label {
 
 #ps-logo {
     /* This overrides the fill="#f72585" in your HTML */
-    fill: #f72585 !important;
+    fill: #3b82f6 !important;
 }
 
 /* Custom radio button styling for better compatibility */
@@ -53,7 +47,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked {
     border: none;
-    background: #6d28d9;
+    background: #3B82F6;
 }
 
 
@@ -61,26 +55,19 @@ input[type="radio"]:checked {
     margin-bottom: 16px;
 }
 
-#henSelection {
-    padding: 12px 0;
-    margin: 12px;
-    -webkit-box-shadow: 0px -25px 8px -20px rgba(0, 0, 0, 0.2);
-    box-shadow: 0px -25px 8px -20px rgba(0, 0, 0, 0.2);
-}
 
 .fwSelected {
     border-radius: 5px;
-    background-color: #5b21b6;
+    /* border-bottom: 2px solid #2563eb; */
+    background-color: #2563eb;
     color: white;
 }
 
 #exploitContainer {
-    display: flex;
-    flex-direction: column;    /* Stack vertically on mobile first */
-    width: 100% !important;
-    height: 100vh !important;
-    padding: 16px !important;  /* Uniform balanced spacing around the whole layout screen */
-    box-sizing: border-box !important;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .tabs {
@@ -100,7 +87,7 @@ input[type="radio"]:checked {
 
 /* Thumb of the scrollbar */
 ::-webkit-scrollbar-thumb {
-    background: #b45309;
+    background: #2563eb;
     border-radius: 10px;
 }
 
@@ -108,7 +95,7 @@ input[type="radio"]:checked {
 .category-tools {
     background-color: rgba(34, 197, 94, 0.2);
     /* 20% green */
-    color: #c4b5fd;
+    color: #4ade80;
     /* bright green */
     border: none !important;
 }
@@ -116,14 +103,14 @@ input[type="radio"]:checked {
 .category-advanced {
     background-color: rgba(246, 92, 97, 0.2);
     /* 20% red */
-    color: #fca5a5;
+    color: #fa8b96;
     /* light red */
 }
 
 .category-linux {
     background-color: rgba(139, 92, 246, 0.2);
     /* 20% purple */
-    color: #fbbf24;
+    color: #a78bfa;
     /* light purple */
     border: none !important;
 }
@@ -148,16 +135,16 @@ html {
 /* --- Utility Classes Replication --- */
 
 /* Background Colors */
-/* .bg-gray-900 {
+.bg-gray-900 {
     background-color: #111827;
-} */
+}
 
 .bg-gray-800 {
-    background-color: #231540;
+    background-color: #1f2937;
 }
 
 .bg-gray-700 {
-    background-color: #352050;
+    background-color: #374151;
 }
 
 .bg-gray-700\/60 {
@@ -186,19 +173,19 @@ html {
 
 /* 20% opacity */
 .bg-blue-600 {
-    background-color: #5b21b6;
+    background-color: #2563eb;
 }
 
 .bg-red-600 {
-    background-color: #b91c1c;
+    background-color: #dc2626;
 }
 
 .bg-red-700 {
-    background-color: #991b1b;
+    background-color: #901717;
 }
 
 .bg-gray-50 {
-    background-color: #ede9fe;
+    background-color: #f9fafb;
 }
 
 /* Used in tabs, though often overridden */
@@ -234,12 +221,12 @@ html {
 
 /* 80% opacity */
 .text-gray-600 {
-    color: #4a2e62;
+    color: #4b5563;
 }
 
 /* For hover states */
 .text-blue-500 {
-    color: #7c3aed;
+    color: #3b82f6;
 }
 
 /* For active tabs/focus */
@@ -694,7 +681,7 @@ html {
 }
 
 .border-blue-500 {
-    border-color: #7c3aed;
+    border-color: #3b82f6;
 }
 
 .border-yellow-500\/50 {
@@ -710,7 +697,7 @@ html {
 }
 
 .border-gray-700 {
-    border-color: #352050;
+    border-color: #374151;
 }
 
 
@@ -870,17 +857,11 @@ html {
     /* For Safari/iOS */
 }
 
-section {
-    /* Apply to initial-screen and exploit-main-screen */
-    min-height: 100vh;
-    /* Ensure sections fill the viewport height to enable snapping */
-}
-
 /* --- Pseudo-class Variants --- */
 
 /* Hover States */
 .hover\:bg-gray-700:hover {
-    background-color: #352050;
+    background-color: #374151;
 }
 
 .hover\:text-white:hover {
@@ -900,11 +881,11 @@ section {
 }
 
 .hover\:bg-blue-700:hover {
-    background-color: #4c1d95;
+    background-color: #1d4ed8;
 }
 
 .hover\:text-gray-600:hover {
-    color: #4a2e62;
+    color: #4b5563;
 }
 
 .hover\:border-gray-300:hover {
@@ -921,23 +902,23 @@ section {
 
 /* Focus States */
 .focus-within\:border-blue-500:focus-within {
-    border-color: #7c3aed;
+    border-color: #3b82f6;
 }
 
 .focus\:ring-2:focus {
-    box-shadow: 0 0 0 2px #a78bfa;
+    box-shadow: 0 0 0 2px #60a5fa;
 }
 
 /* Ring effect */
 .focus\:ring-blue-400:focus {
-    box-shadow: 0 0 0 2px #a78bfa;
+    box-shadow: 0 0 0 2px #60a5fa;
 }
 
 /* Ring color */
 
 /* Accent Color for Radio/Checkbox */
 .accent-blue-500 {
-    accent-color: #7c3aed;
+    accent-color: #3b82f6;
 }
 
 /* RTL Adjustments */
@@ -971,8 +952,8 @@ section {
     /* [dir="rtl"] .sm\:rtl\:gap-8 { ... } */
 }
 /* 2. Mobile configuration (Screens smaller than 768px) */
-@media (max-width: 707px) {
-    #exploit-status-panel {
+@media (max-width: 708px) {
+    #exploit-status-panel, #initial-screen {
         display: none !important; /* Completely hide exploit console on mobile */
     }
     
@@ -984,7 +965,7 @@ section {
 }
 
 /* 3. Desktop configuration (Screens 768px and up) */
-@media (min-width: 708px) {
+@media (min-width: 710px) {
     #exploitContainer {
         flex-direction: row !important; /* Side by side panels */
     }
@@ -992,27 +973,38 @@ section {
     #exploit-status-panel, 
     #payloadsSection {
         /* Force each panel to take exactly 50% minus half of the total middle gap (16px total gap) */
-        flex: 0 0 calc(50% - 8px) !important;
-        width: 100%;
+        flex: 1 !important; /* Ensures exact equal balance split */
         height: 100% !important;
     }
 
     /* Left panel spaces only to the right */
-    #exploit-status-panel {
+    html[dir="ltr"] #exploit-status-panel {
         margin-right: 8px !important;
         margin-left: 0 !important;
     }
 
     /* Right panel spaces only to the left */
-    #payloadsSection {
+    html[dir="ltr"] #payloadsSection {
         margin-left: 8px !important;
         margin-right: 0 !important;
     }
+
+    /* Same, but for rtl */
+    /* Left panel spaces only to the left */
+    html[dir="rtl"] #exploit-status-panel {
+        margin-left: 8px !important;
+        margin-right: 0 !important;
+    }
+
+    /* Right panel spaces only to the right */
+    html[dir="rtl"] #payloadsSection {
+        margin-right: 8px !important;
+        margin-left: 0 !important;
+    }
 }
 
-
 .tabs ul {
-    border-color: #352050;
+    border-color: #374151;
     /* Default border for the tab list */
     list-style: none;
 }
@@ -1026,13 +1018,13 @@ section {
 }
 
 .tabs button[aria-selected="true"] {
-    border-color: #a78bfa;
-    color: #a78bfa;
-    border-bottom: 1px solid #a78bfa;
+    border-color: #3b82f6;
+    color: #3b82f6;
+    border-bottom: 1px solid #3b82f6;
 }
 
 .tabs button:not([aria-selected="true"]):hover {
-    color: #4a2e62;
+    color: #4b5563;
     border-color: #d1d5db;
     /* Approximation for gray-300 */
 }
@@ -1059,6 +1051,7 @@ button {
 
 #ps4FwSelect {
     text-align-last: center;
+    width: 100%;
 }
 
 #default-tab-content div div {
@@ -1109,9 +1102,121 @@ button {
 
 #initial-screen header {
     gap: 5px;
+    position: initial;
+}
+
+#header2 button{
+    border: 1px #374151 solid;
+}
+
+
+
+#initial-screen header button{
+    display: block;
 }
 
 #defaultTempDiv {
     width: 75%;
     float: right;
+}
+
+/* ==========================================
+   UNIFIED DASHBOARD THEME HOOK
+   ========================================== */
+
+/* 1. Global Reset of Scrolling Blocks */
+html, body, .mainContainer {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
+    scroll-snap-type: none !important;
+}
+
+/* 2. Turn the Main Container into a 2-Row Grid */
+.mainContainer {
+    display: flex !important;
+    flex-direction: column;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+}
+
+/* 3. Transform Initial Screen into a Slim Top Header Dashboard */
+#initial-screen {
+    height: auto;
+    min-height: initial;
+    display: flex;
+    flex-direction: row-reverse;      /* Align elements horizontally */
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    border-radius: 0.75rem;    /* Matches rounded-xl */
+    position: relative;
+    margin-bottom: 12px;
+}
+
+#initial-screen #pslogo{
+    display: none;
+}
+
+/* Hide clutter elements that break a unified page concept */
+#scrollDown { /* Hides duplicate top-left settings gear */
+    display: none !important;
+}
+
+/* Shrink the massive PS Button to fit the header strip */
+#ps-logo-container {
+    padding: 6px !important;
+    border-radius: 50% !important;
+}
+#ps-logo {
+    width: 2.5rem !important;  /* Elegant small action button */
+    height: 2.5rem !important;
+}
+
+/* Clean up Firmware Message styling */
+#PS4FW {
+    margin: 0 !important;
+    font-size: 1.125rem !important; /* text-lg */
+    font-weight: 600 !important;
+}
+
+/* Make the top HEN choice box blend completely transparently into the header row */
+#choosejb-initial {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: initial !important;
+    width: auto !important;
+    display: none;
+}
+#choosejb-initial h3 {
+    display: none !important; /* Hides the extra "Choose your HEN flavor" text */
+}
+
+
+/* 4. Fit the Exploit Screens Perfectly on the Remaining Viewport Space */
+#exploit-main-screen {
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+
+/* 5. Dynamically Constraint Scrollable Sub-Elements */
+#DebugConsole {
+    flex-grow: 1 !important;
+    min-height: 100px !important;
+    margin-bottom: 8px !important;
+}
+
+#payloadsGrid {
+    flex-grow: 1 !important;
+    max-height: calc(100vh - 280px) !important; /* Locks list viewport from expanding out of boundaries */
+    overflow-y: auto !important;
+}
+
+#click-to-start-text{
+    width: 20%;
+    text-align: center;
+    margin: 0;
 }

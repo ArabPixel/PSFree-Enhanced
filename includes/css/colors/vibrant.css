@@ -1,0 +1,264 @@
+body{
+    background: -webkit-linear-gradient(242deg, #2d00c8 0%, #6b3a1f 100%);
+    background: linear-gradient(208deg, #2d00c8 0%, #6b3a1f 100%);
+}
+
+#initial-screen.compact{
+    background-color: #231540 !important;
+}
+
+#ps-logo {
+    fill: #f72585 !important;
+}
+
+input[type="radio"]:checked {
+    border: none;
+    background: #6d28d9;
+}
+
+.fwSelected {
+    border-radius: 5px;
+    background-color: #5b21b6;
+    color: white;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Thumb of the scrollbar */
+::-webkit-scrollbar-thumb {
+    background: #b45309;
+    border-radius: 10px;
+}
+
+/* Payloads categories colors */
+.category-tools {
+    background-color: rgba(34, 197, 94, 0.2);
+    /* 20% green */
+    color: #c4b5fd;
+    /* bright green */
+    border: none !important;
+}
+
+.category-advanced {
+    background-color: rgba(246, 92, 97, 0.2);
+    /* 20% red */
+    color: #fca5a5;
+    /* light red */
+}
+
+.category-linux {
+    background-color: rgba(139, 92, 246, 0.2);
+    /* 20% purple */
+    color: #fbbf24;
+    /* light purple */
+    border: none !important;
+}
+
+/* Background Colors */
+.bg-gray-900 {
+    background-color: transparent;
+}
+
+.bg-gray-800 {
+    background-color: #231540;
+}
+
+.bg-gray-700 {
+    background-color: #352050;
+}
+
+.bg-gray-700\/60 {
+    background-color: rgba(55, 65, 81, 0.6);
+}
+
+/* 60% opacity */
+.bg-black\/50 {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 50% opacity */
+.bg-white\/5 {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 5% opacity */
+.bg-white\/10 {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 10% opacity */
+.bg-yellow-600\/20 {
+    background-color: rgba(202, 138, 4, 0.2);
+}
+
+/* 20% opacity */
+.bg-blue-600 {
+    background-color: #5b21b6;
+}
+
+.bg-red-600 {
+    background-color: #b91c1c;
+}
+
+.bg-red-700 {
+    background-color: #991b1b;
+}
+
+.bg-gray-50 {
+    background-color: #ede9fe;
+}
+
+/* Text Colors */
+.text-white {
+    color: #ffffff;
+}
+
+.text-white\/70 {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 70% opacity */
+.text-white\/80 {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 80% opacity */
+.text-white\/90 {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* 90% opacity */
+.text-yellow-200 {
+    color: #fde68a;
+}
+
+.text-yellow-200\/80 {
+    color: rgba(253, 230, 138, 0.8);
+}
+
+/* 80% opacity */
+.text-gray-600 {
+    color: #4a2e62;
+}
+
+/* For hover states */
+.text-blue-500 {
+    color: #7c3aed;
+}
+
+/* Borders */
+.border {
+    border-width: 1px;
+    border-style: solid;
+    border-color: currentColor;
+}
+
+.border-2 {
+    border-width: 2px;
+    border-style: solid;
+    border-color: currentColor;
+}
+
+.border-b {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.border-white\/20 {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.border-blue-500 {
+    border-color: #7c3aed;
+}
+
+.border-yellow-500\/50 {
+    border-color: rgba(234, 179, 8, 0.5);
+}
+
+.border-transparent {
+    border-color: transparent;
+}
+
+.border-gray-200 {
+    border-color: #e5e7eb;
+}
+
+.border-gray-700 {
+    border-color: #352050;
+}
+
+/* Hover States */
+.hover\:bg-gray-700:hover {
+    background-color: #352050;
+}
+
+.hover\:text-white:hover {
+    color: #ffffff;
+}
+
+.hover\:bg-white\/10:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hover\:bg-blue-700:hover {
+    background-color: #4c1d95;
+}
+
+.hover\:text-gray-600:hover {
+    color: #4a2e62;
+}
+
+.hover\:border-gray-300:hover {
+    border-color: #d1d5db;
+}
+
+/* Focus States */
+.focus-within\:border-blue-500:focus-within {
+    border-color: #7c3aed;
+}
+
+.focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px #a78bfa;
+}
+
+/* Ring effect */
+.focus\:ring-blue-400:focus {
+    box-shadow: 0 0 0 2px #a78bfa;
+}
+
+/* Accent Color for Radio/Checkbox */
+.accent-blue-500 {
+    accent-color: #7c3aed;
+}
+
+.tabs ul{
+    border-color: #352050;
+}
+
+.tabs button {
+    font-family: sans-serif;
+    border-color: transparent;
+    /* Default for inactive tabs */
+    color: rgba(255, 255, 255, 0.8);
+    /* Default text color for inactive tabs */
+}
+
+.tabs button[aria-selected="true"] {
+    border-color: #a78bfa;
+    color: #a78bfa;
+    border-bottom: 1px solid #a78bfa;
+}
+
+.tabs button:not([aria-selected="true"]):hover {
+    color: #4a2e62;
+    border-color: #d1d5db;
+    /* Approximation for gray-300 */
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}

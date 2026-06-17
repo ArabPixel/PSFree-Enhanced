@@ -19,13 +19,7 @@ window.lang = {
     "settingsPsfreeHeader": "Ayarlar",
     "ps4FirmwareSupportedHeader": "Desteklenen PS4 Firmware sürümleri",
     "languageHeader": "Dil",
-    "warnings": {
-        "note1": "İlk kullanımdan önce önbelleği temizlemeyi unutmayın",
-        "note2": "Kararlılığı artırmak için önbellekleme tamamlanana kadar bekleyin",
-        "note3": "Jailbreak işlemi birden fazla deneme gerektirebilir",
-    },
     "secondHostBtn": "GoldHEN PayLoader ile payload yükleme – Harici bağlantı",
-    "alert": "Önemli uyarı",
     "waitingUserInput": "Kullanıcıdan yanıt bekleniyor",
     "cache": "Önbellek yükleniyor: ",
     "ghVer": "GoldHEN Versiyonları",
@@ -57,10 +51,10 @@ window.lang = {
     "customPayloadLoaded": "Custom payload yüklendi: ",
     "theme": "Tema",
     "defaultTheme": "Varsayılan",
-    "vibrantTheme": "Vibrant",
+    "vibrantColor": "Vibrant",
     "autoJbRetryText": "Jailbreak Otomatik Tekrar",
     "autoJbRetryConfirm": "Jailbreak şimdi başlatılsın mı? Başarısız olursa jailbreak işlemi başarılı olana kadar otomatik olarak tekrar denenecektir.",
-    "jailbreakCountDown": "{seconds} saniye içinde tekrar denenecek...",
+    "jailbreakCountDown": "{seconds} içinde tekrar denenecek...",
     "successRate": "Başarı Oranı: ",
     "clearStatsConfirm": "Jailbreak istatistiklerini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!"
 }

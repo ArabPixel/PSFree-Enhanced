@@ -61,7 +61,7 @@ window.lang = {
     "customPayloadLoaded": "已加载自定义 Payload：",
     "theme": "主题",
     "defaultTheme": "默认",
-    "vibrantTheme": "鲜艳",
+    "vibrantColor": "鲜艳",
     "autoJbRetryText": "自动重试越狱",
     "autoJbRetryConfirm": "现在开始越狱吗？如果失败，将自动重试直到成功。",
     "jailbreakCountDown": "{seconds} 秒后重试越狱...",

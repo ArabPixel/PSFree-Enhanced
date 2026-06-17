@@ -33,10 +33,6 @@ label {
     align-items: center;
 }
 
-#ps-logo {
-    /* This overrides the fill="#f72585" in your HTML */
-    fill: #3b82f6 !important;
-}
 
 /* Custom radio button styling for better compatibility */
 input[type="radio"] {
@@ -50,28 +46,9 @@ input[type="radio"] {
     cursor: pointer;
 }
 
-input[type="radio"]:checked {
-    border: none;
-    background: #3B82F6;
-}
-
 
 .payload {
     margin-bottom: 16px;
-}
-
-#henSelection {
-    padding: 12px 0;
-    margin: 12px;
-    -webkit-box-shadow: 0px -25px 8px -20px rgba(0, 0, 0, 0.2);
-    box-shadow: 0px -25px 8px -20px rgba(0, 0, 0, 0.2);
-}
-
-.fwSelected {
-    border-radius: 5px;
-    /* border-bottom: 2px solid #2563eb; */
-    background-color: #2563eb;
-    color: white;
 }
 
 #exploitContainer {
@@ -94,39 +71,6 @@ input[type="radio"]:checked {
     width: 10px;
 }
 
-::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-/* Thumb of the scrollbar */
-::-webkit-scrollbar-thumb {
-    background: #2563eb;
-    border-radius: 10px;
-}
-
-/* Payloads categories colors */
-.category-tools {
-    background-color: rgba(34, 197, 94, 0.2);
-    /* 20% green */
-    color: #4ade80;
-    /* bright green */
-    border: none !important;
-}
-
-.category-advanced {
-    background-color: rgba(246, 92, 97, 0.2);
-    /* 20% red */
-    color: #fa8b96;
-    /* light red */
-}
-
-.category-linux {
-    background-color: rgba(139, 92, 246, 0.2);
-    /* 20% purple */
-    color: #a78bfa;
-    /* light purple */
-    border: none !important;
-}
 
 /* AI CSS to replace tailwindcss (been lazy and I don't want to write everything from scratch)*/
 *,
@@ -141,105 +85,6 @@ html {
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
-}
-
-
-
-/* --- Utility Classes Replication --- */
-
-/* Background Colors */
-.bg-gray-900 {
-    background-color: #111827;
-}
-
-.bg-gray-800 {
-    background-color: #1f2937;
-}
-
-.bg-gray-700 {
-    background-color: #374151;
-}
-
-.bg-gray-700\/60 {
-    background-color: rgba(55, 65, 81, 0.6);
-}
-
-/* 60% opacity */
-.bg-black\/50 {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* 50% opacity */
-.bg-white\/5 {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* 5% opacity */
-.bg-white\/10 {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* 10% opacity */
-.bg-yellow-600\/20 {
-    background-color: rgba(202, 138, 4, 0.2);
-}
-
-/* 20% opacity */
-.bg-blue-600 {
-    background-color: #2563eb;
-}
-
-.bg-red-600 {
-    background-color: #dc2626;
-}
-
-.bg-red-700 {
-    background-color: #901717;
-}
-
-.bg-gray-50 {
-    background-color: #f9fafb;
-}
-
-/* Used in tabs, though often overridden */
-
-
-/* Text Colors */
-.text-white {
-    color: #ffffff;
-}
-
-.text-white\/70 {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* 70% opacity */
-.text-white\/80 {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* 80% opacity */
-.text-white\/90 {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* 90% opacity */
-.text-yellow-200 {
-    color: #fde68a;
-}
-
-.text-yellow-200\/80 {
-    color: rgba(253, 230, 138, 0.8);
-}
-
-/* 80% opacity */
-.text-gray-600 {
-    color: #4b5563;
-}
-
-/* For hover states */
-.text-blue-500 {
-    color: #3b82f6;
 }
 
 /* For active tabs/focus */
@@ -671,49 +516,6 @@ html {
     top: 0;
 }
 
-/* Borders */
-.border {
-    border-width: 1px;
-    border-style: solid;
-    border-color: currentColor;
-}
-
-.border-2 {
-    border-width: 2px;
-    border-style: solid;
-    border-color: currentColor;
-}
-
-.border-b {
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-}
-
-.border-white\/20 {
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.border-blue-500 {
-    border-color: #3b82f6;
-}
-
-.border-yellow-500\/50 {
-    border-color: rgba(234, 179, 8, 0.5);
-}
-
-.border-transparent {
-    border-color: transparent;
-}
-
-.border-gray-200 {
-    border-color: #e5e7eb;
-}
-
-.border-gray-700 {
-    border-color: #374151;
-}
-
-
 /* Rounded Corners */
 .rounded {
     border-radius: 0.25rem;
@@ -879,65 +681,12 @@ section {
 /* --- Pseudo-class Variants --- */
 
 /* Hover States */
-.hover\:bg-gray-700:hover {
-    background-color: #374151;
-}
-
-.hover\:text-white:hover {
-    color: #ffffff;
-}
-
-.hover\:bg-white\/10:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
 .hover\:scale-105:hover {
     transform: scale(1.05);
 }
 
 .hover\:scale-102:hover {
     transform: scale(1.02);
-}
-
-.hover\:bg-blue-700:hover {
-    background-color: #1d4ed8;
-}
-
-.hover\:text-gray-600:hover {
-    color: #4b5563;
-}
-
-.hover\:border-gray-300:hover {
-    border-color: #d1d5db;
-}
-
-/* Approximation for gray-300 */
-.hover\:bg-blue-500\/40:hover {
-    background-color: rgba(59, 130, 246, 0.4);
-}
-
-/* 40% opacity */
-
-
-/* Focus States */
-.focus-within\:border-blue-500:focus-within {
-    border-color: #3b82f6;
-}
-
-.focus\:ring-2:focus {
-    box-shadow: 0 0 0 2px #60a5fa;
-}
-
-/* Ring effect */
-.focus\:ring-blue-400:focus {
-    box-shadow: 0 0 0 2px #60a5fa;
-}
-
-/* Ring color */
-
-/* Accent Color for Radio/Checkbox */
-.accent-blue-500 {
-    accent-color: #3b82f6;
 }
 
 /* RTL Adjustments */
@@ -971,7 +720,7 @@ section {
     /* [dir="rtl"] .sm\:rtl\:gap-8 { ... } */
 }
 /* 2. Mobile configuration (Screens smaller than 768px) */
-@media (max-width: 707px) {
+@media (max-width: 708px) {
     #exploit-status-panel {
         display: none !important; /* Completely hide exploit console on mobile */
     }
@@ -984,7 +733,7 @@ section {
 }
 
 /* 3. Desktop configuration (Screens 768px and up) */
-@media (min-width: 708px) {
+@media (min-width: 710px) {
     #exploitContainer {
         flex-direction: row !important; /* Side by side panels */
     }
@@ -998,44 +747,36 @@ section {
     }
 
     /* Left panel spaces only to the right */
-    #exploit-status-panel {
+    html[dir="ltr"] #exploit-status-panel {
         margin-right: 8px !important;
         margin-left: 0 !important;
     }
 
     /* Right panel spaces only to the left */
-    #payloadsSection {
+    html[dir="ltr"] #payloadsSection {
         margin-left: 8px !important;
         margin-right: 0 !important;
+    }
+
+    /* Same, but for rtl */
+    /* Left panel spaces only to the left */
+    html[dir="rtl"] #exploit-status-panel {
+        margin-left: 8px !important;
+        margin-right: 0 !important;
+    }
+
+    /* Right panel spaces only to the right */
+    html[dir="rtl"] #payloadsSection {
+        margin-right: 8px !important;
+        margin-left: 0 !important;
     }
 }
 
 
 .tabs ul {
-    border-color: #374151;
-    /* Default border for the tab list */
     list-style: none;
 }
 
-.tabs button {
-    font-family: sans-serif;
-    border-color: transparent;
-    /* Default for inactive tabs */
-    color: rgba(255, 255, 255, 0.8);
-    /* Default text color for inactive tabs */
-}
-
-.tabs button[aria-selected="true"] {
-    border-color: #3b82f6;
-    color: #3b82f6;
-    border-bottom: 1px solid #3b82f6;
-}
-
-.tabs button:not([aria-selected="true"]):hover {
-    color: #4b5563;
-    border-color: #d1d5db;
-    /* Approximation for gray-300 */
-}
 
 /* Manual css */
 button {

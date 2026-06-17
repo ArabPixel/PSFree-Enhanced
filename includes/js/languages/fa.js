@@ -20,11 +20,6 @@ window.lang = {
     "ps4FirmwareSupportedHeader": "فریمورهای پشتیبانی‌شده PS4",
     "bareboneJB": "تجربه جیلبریک ساده",
     "languageHeader": "زبان",
-    "warnings": {
-        "note1": "قبل از اجرای اکسپلویت برای اولین بار، داده‌های کش را پاک کنید",
-        "note2": "برای پایداری بیشتر، اجازه دهید فرآیند کش شدن کامل شود",
-        "note3": "ممکن است برای موفقیت در جیلبریک نیاز به چندین تلاش داشته باشید"
-    },
     "secondHostBtn": "بارگذاری پیلودها با استفاده از PayLoader گلدهن - لینک خارجی",
     "alert": "اطلاعیه مهم",
     "waitingUserInput": "در انتظار اقدام کاربر",
@@ -60,15 +55,15 @@ window.lang = {
 
     "theme": "پوسته",
     "defaultTheme": "پیش‌فرض",
-    "vibrantTheme": "رنگارنگ",
+    "vibrantColor": "رنگارنگ",
 
     "autoJbRetryText": "تلاش خودکار مجدد برای جیلبریک",
     "autoJbRetryConfirm": "هم‌اکنون جیلبریک انجام شود؟ در صورت شکست، فرآیند به صورت خودکار تا موفقیت دوباره تلاش خواهد کرد.",
-    "jailbreakCountDown": "تلاش مجدد برای جیلبریک تا {seconds} ثانیه دیگر...",
+    "jailbreakCountDown": "تلاش مجدد برای جیلبریک تا {seconds} دیگر...",
     "successRate": "نرخ موفقیت: ",
     "clearStatsConfirm": "آیا مطمئن هستید که می‌خواهید آمار جیلبریک را پاک کنید؟ این عمل قابل بازگشت نیست!",
 
     "exploitChainTitle": "زنجیره اکسپلویت",
-    "defaultLapse": "PSFree Lapse پیش‌فرض",
-    "secondLapse": "PSFree Lapse فیزی61"
+    "modularLapse": "PSFree Lapse پیش‌فرض",
+    "bundleLapse": "PSFree Lapse فیزی61"
 }

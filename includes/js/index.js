@@ -9,7 +9,7 @@ var user = {
   ps4Fw: localStorage.getItem('ps4Fw'),  // Used for the case of sending the payload over the network
   clearLog: true,
   bareboneJB: localStorage.getItem('bareboneJB') === 'true',
-  secondLapse: localStorage.getItem('secondLapse') === "true", //Exploit chain method
+  lapseChain: localStorage.getItem('lapseChain') === "true", //Exploit chain method
   blockJailbreak: false,  // Prevent double jailbreak execution
 }
 var autoJbInterval;
@@ -67,270 +67,13 @@ const ui = {
   autoJbRetry: document.getElementById('autoJbRetry'),
   bareboneJbBtn: document.getElementById('bareboneJB'),
   bareboneJBInput: document.getElementById('bareboneJBInput'),
-  secondLapse: document.getElementById('secondLapse'),
   exploitChainTitle: document.getElementById('exploitChainTitle'),
   userlandOnlyOnJB67x: document.getElementById('userlandOnlyOnJB67xInput'),
 
   // Settings elements
   langRadios: document.querySelectorAll('#chooselang input[name="language"]'),
 };
-const payloadsList = [
-  {
-    id: "FTP",
-    name: "FTP",
-    author: "Scene Collective",
-    description: "Enables FTP server access for file transfers.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_FTP"
-  },
-  {
-    id: "BinLoader",
-    name: "BinLoader",
-    author: "PSFree Exploit",
-    description: "Launches BinLoader server on port 9020 to send bin payloads.",
-    specificFW: "7.00 - 9.60",
-    category: "tools",
-    funcName: "load_BinLoader"
-  },
-  {
-    id: "ElfLoader",
-    name: "ElfLoader",
-    author: "John Tornblom",
-    description: "Launches ElfLoader server on port 9021 to send elf payloads.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_Elfldr"
-  },
-  {
-    id: "WebSrv",
-    name: "PS4-Websrv",
-    author: "ArabPixel",
-    description: "Launches a web server on port 80 on the PS4 to load payloads using external devices on the fly.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_WebSrv"
-  },
-  {
-    id: "DisableUpdates",
-    name: "Disable-Updates",
-    author: "Scene Collective",
-    description: "Disables automatic system software updates.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_DisableUpdates"
-  },
-  {
-    id: "FanThreshold",
-    name: "Fan-Threshold",
-    author: "Scene Collective",
-    description: "Sets the cooling fan's profile on the PlayStation 4",
-    specificFW: "",
-    category: "tools",
-    funcName: "chooseFanThreshold"
-  },
-  {
-    id: "HistoryBlocker",
-    name: "History-Blocker",
-    author: "Stooged",
-    description: "Blocks the browser from remembering and returning to the last opened page on start. Run again to enable/disable.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_HistoryBlocker"
-  },
-  {
-    id: "NpFakeSignin",
-    name: "NP Fake Signin",
-    author: "earthonion",
-    description: "Sets PSN state to 'signed in' on PS4, use after fake activation. Useful for vue after free",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_npFakeSignin"
-  },
-  {
-    id: "OrbisToolbox",
-    name: "Orbis-Toolbox",
-    author: "OSM-Made",
-    description: "A modification of the playstation UI to help with launching and developing homebrew..",
-    specificFW: "5.05, 6.72, 7.02, 7.55, 9.00",
-    category: "tools",
-    funcName: "load_Orbis"
-  },
-  {
-    id: "BackupDB",
-    name: "Backup-DB",
-    author: "Stooged",
-    description: "Backs up your PS4's databases, licenses, and user data. Note this may not be useful if you have to reinitalize as your keys may change.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_BackupDB"
-  },
-  {
-    id: "RestoreDB",
-    name: "Restore-DB",
-    author: "Stooged",
-    description: "Restores the data saved in the 'Backup' payload.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_RestoreDB"
-  },
-  {
-    id: "ExitIDU",
-    name: "ExitIDU",
-    author: "Scene Collective",
-    description: "Exits IDU mode and restarts the console.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_ExitIDU"
-  },
-  {
-    id: "WebRTE",
-    name: "WebRTE",
-    author: "Made by golden<br>updated by EchoStretch",
-    description: "Web Realtime Trainer Engine",
-    specificFW: "5.05, 6.72, 7.00-11.00",
-    category: "tools",
-    funcName: "load_WebRTE"
-  },
-  {
-    id: "App2USB",
-    name: "App2USB",
-    author: "Stooged",
-    description: "Unofficially Moves installed applications to an external USB drive.",
-    specificFW: "",
-    category: "tools",
-    funcName: "load_App2USB"
-  },
-  {
-    id: "Linux1024mb",
-    name: "Linux Loader 1GB",
-    author: "ps4boot<br>ArabPixel, rmux",
-    description: "Linux Loader for all consoles. 1GB VRAM. Select for first install",
-    specificFW: "7.00 - 13.02",
-    category: "linux",
-    funcName: "load_Linux"
-  },
-  {
-    id: "Linux2048mb",
-    name: "Linux Loader 2GB",
-    author: "ps4boot<br>ArabPixel, rmux",
-    description: "Linux Loader for all consoles. 2GB VRAM.",
-    specificFW: "7.00 - 13.02",
-    category: "linux",
-    funcName: "load_Linux"
-  },
-  {
-    id: "Linux3072mb",
-    name: "Linux Loader 3GB",
-    author: "ps4boot<br>ArabPixel, rmux",
-    description: "Linux Loader for all consoles. 3GB VRAM.",
-    specificFW: "7.00 - 13.02",
-    category: "linux",
-    funcName: "load_Linux"
-  },
-  {
-    id: "Linux4096mb",
-    name: "Linux Loader 4GB",
-    author: "ps4boot<br>ArabPixel, rmux",
-    description: "Linux Loader for all consoles. 4GB VRAM.",
-    specificFW: "7.00 - 13.02",
-    category: "linux",
-    funcName: "load_Linux"
-  },
-  {
-    id: "Linux128mb",
-    name: "Linux Loader 128MB",
-    author: "ps4boot<br>ArabPixel, rmux",
-    description: "Linux Loader for all consoles. 128MB VRAM.",
-    specificFW: "7.00 - 13.02",
-    category: "linux",
-    funcName: "load_Linux"
-  },
-  {
-    id: "Linux256mb",
-    name: "Linux Loader 256MB",
-    author: "ps4boot<br>ArabPixel, rmux",
-    description: "Linux Loader for all consoles. 256MB VRAM.",
-    specificFW: "7.00 - 13.02",
-    category: "linux",
-    funcName: "load_Linux"
-  },
-  {
-    id: "Linux512mb",
-    name: "Linux Loader 512MB",
-    author: "ps4boot<br>ArabPixel, rmux",
-    description: "Linux Loader for all consoles. 512MB VRAM.",
-    specificFW: "7.00 - 13.02",
-    category: "linux",
-    funcName: "load_Linux"
-  }
-];
 
-const advancedPayloads = [
-  {
-    id: "PS4Debug",
-    name: "PS4-Debug",
-    author: "CTN & SiSTR0",
-    description: "Debugging tools for PS4.",
-    specificFW: "up to 12.02",
-    category: "advanced",
-    funcName: "load_PS4Debug"
-  },
-  {
-    id: "PUPDecrypt",
-    name: "PUP-Decrypt",
-    author: "andy-man",
-    description: "Payload to decrypt the contents of a firmware update file (PUP) on the PS4",
-    specificFW: "",
-    category: "advanced",
-    funcName: "load_PUPDecrypt"
-  },
-  {
-    id: "ModuleDumper",
-    name: "Module-Dumper",
-    author: "SocraticBliss",
-    description: "Dumps the decrypted modules from /system, /system_ex, /update and the root of the filesystem to a USB device.",
-    specificFW: "",
-    category: "advanced",
-    funcName: "load_ModuleDumper"
-  },
-  {
-    id: "KernelDumper",
-    name: "Kernel-Dumper",
-    author: "Eversion",
-    description: "Dumps the PS4 kernel.",
-    specificFW: "",
-    category: "advanced",
-    funcName: "load_KernelDumper"
-  },
-  {
-    id: "DisableASLR",
-    name: "Disable-ASLR",
-    author: "Scene Collective",
-    description: "Disables the ASLR (Address space layout randomization) to make working with memory easier/repeatable.",
-    specificFW: "",
-    category: "advanced",
-    funcName: "load_DisableASLR"
-  },
-  {
-    id: "PermanentUART",
-    name: "Permanent-UART",
-    author: "JTAG7371",
-    description: "Enabled hardware based UART without a kernel patch, persists though updates.",
-    specificFW: "",
-    category: "advanced",
-    funcName: "load_PermanentUART"
-  },
-  {
-    id: "RIFRenamer",
-    name: "RIF-Renamer",
-    author: "Al Azif",
-    description: "Renames 'fake' RIFs to 'free' RIFs for better HEN compatibility. Use this if your PKGs only work with Mira+HEN.",
-    specificFW: "",
-    category: "advanced",
-    funcName: "load_RIFRenamer"
-  }
-];
 // Events
 // Scroll snap for the PS4
 ui.mainContainer.addEventListener('scroll', () => {
@@ -421,7 +164,7 @@ ui.advancedPayloadsTab.addEventListener('click', () => {
     ui.customPayloadsTab.setAttribute("aria-selected", "false");
 
     ui.advancedPayloadsSection.innerHTML = '';
-    renderPayloads(advancedPayloads);
+    renderPayloads(payloadsList.filter(p => p.category === 'advanced'));
   }
   ui.payloadsList.scrollTop = 0;
   // Update lastTap
@@ -502,11 +245,11 @@ document.getElementById("close-settings").addEventListener('click', function () 
   }
 });
 
-function updateUserlandOnlyOnJB67x(checked){
+function updateUserlandOnlyOnJB67x(checked) {
   localStorage.setItem('userlandOnlyOnJB67x', checked);
 }
 
-function userlandOnlyOnJB67x(){
+function userlandOnlyOnJB67x() {
   var value = localStorage.getItem('userlandOnlyOnJB67x') == "true";
   ui.userlandOnlyOnJB67x.checked = value;
 }
@@ -547,9 +290,11 @@ async function jailbreak() {
     case (fwVersion >= 6.70 && fwVersion <= 6.72):
       log("Initializing Exploit...");
       var value = localStorage.getItem('userlandOnlyOnJB67x') == "true";
-      if (value){
+      if (value) {
+        // set userlandOnlyOnJB67x to false, on reload to load userland exploit
         localStorage.setItem('userlandOnlyOnJB67x', "false");
-        sessionStorage.setItem("jailbreakNow");
+        // set jailbreakNow to true to automatically launch jailbreak function
+        sessionStorage.setItem("jailbreakNow", 'true');
         location.reload();
       }
       badHoistJailbreak();
@@ -564,7 +309,7 @@ async function jailbreak() {
 
 async function psfreeLapse() {
   // Exploit chain method check
-  if (user.secondLapse) {
+  if (user.lapseChain) {
     try {
       await loadScript('./src/alert.mjs');
     } catch (e) {
@@ -627,7 +372,7 @@ async function badHoistJailbreak() {
 }
 
 function jailbreakSuccess() {
-  if (sessionStorage.getItem('jailbreakNow') == "true"){
+  if (sessionStorage.getItem('jailbreakNow') == "true" && user.ps4Fw >= 6.70 && user.ps4Fw <= 6.72) {
     sessionStorage.removeItem('jailbreakNow');
     localStorage.setItem("userlandOnlyOnJB67x", "false");
   }
@@ -835,7 +580,10 @@ function applyLanguage(lang) {
 
   // Main Screen Elements
   updateTitle(ui.settingsBtn, 'settingsBtnTitle');
-  updateText(ui.clickToStartText, 'clickToStart');
+  if (localStorage.getItem('theme') == "compact"){
+    updateText(ui.clickToStartText, 'title');
+  }else updateText(ui.clickToStartText, 'clickToStart');
+
   updateText(document.querySelector('#choosejb-initial h3'), 'chooseHEN');
 
   // About Us Popup
@@ -876,24 +624,15 @@ function applyLanguage(lang) {
   updateText(document.getElementById('optionsHeader'), 'optionsHeader');
   updateText(document.getElementById('theme'), 'theme');
   updateText(document.getElementById('defaultTheme'), 'defaultTheme');
-  updateText(document.getElementById('vibrantTheme'), 'vibrantTheme');
+  updateText(document.getElementById('compactTheme'), 'compactTheme');
+  updateText(document.getElementById('vibrantColor'), 'vibrantColor');
+  updateText(document.getElementById('colorWord'), 'colorWord');
+  updateText(document.getElementById('defaultColor'), 'defaultTheme');
+  updateText(document.getElementById('modularLapse'), 'modularLapse');
+  updateText(document.getElementById('bundleLapse'), 'bundleLapse');
   updateText(document.getElementById('autoJbRetryText'), 'autoJbRetryText');
   updateText(ui.exploitChainTitle, 'exploitChainTitle');
   updateText(document.getElementById('userlandOnlyOnJB67xText'), 'userlandOnlyOnJB67x')
-
-  // Warning element (Exploit section)
-  const warningHeader = document.querySelector('#warningBox p');
-  const warningNotes = document.querySelector('#warningBox ul');
-
-  if (warningNotes && strings.warnings) {
-    const items = warningNotes.querySelectorAll('li');
-    // Check both existence and length for nested properties
-    if (items[0] && strings.warnings.note1 && strings.warnings.note1.length > 0) items[0].textContent = strings.warnings.note1;
-    if (items[1] && strings.warnings.note2 && strings.warnings.note2.length > 0) items[1].textContent = strings.warnings.note2;
-    if (items[2] && strings.warnings.note3 && strings.warnings.note3.length > 0) items[2].textContent = strings.warnings.note3;
-  }
-  updateText(warningHeader, 'alert');
-
   if (isHttps()) {
     ui.secondHostBtn[1].style.display = "block";
   }
@@ -961,10 +700,12 @@ function CheckFW() {
       if (el) el.classList.add('fwSelected');
 
       // show "load userland exploit only on jailbreak" option
-      if (fwVersion >= 6.70 && fwVersion <= 6.72) 
+      if (fwVersion >= 6.70 && fwVersion <= 6.72)
         document.getElementById("userlandOnlyOnJB67x").classList.toggle('hidden');
     } else {
       ui.ps4FwStatus.style.color = 'orange';
+        document.getElementById('layouts').style.display = "none";
+        document.getElementById('theme').style.display = "none";
       if (isHttps()) {
         ui.secondHostBtn[0].style.display = "block";
         terminateCache(); // Dont cache in case no webkit and is https
@@ -1000,7 +741,7 @@ function CheckFW() {
     // For user selected firmware
     if (user.ps4Fw) ui.ps4FwSelect.value = user.ps4Fw;
     // Show only if on a local server
-    if (isLocalIP(window.location.hostname) && !devMode) {
+    if ((isLocalIP(window.location.hostname) || window.location.hostname == "localhost") && !devMode) {
       // Show IP input and firmware selector for local server users on smart devices
       ui.ps4IpInput.classList.remove('hidden');
       ui.ps4FwSelect.classList.remove('hidden');
@@ -1011,7 +752,7 @@ function CheckFW() {
 
       const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads', 'custom-tab'];
       elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
-      elementsToHide.push('initial-screen', 'henSelection', 'warningBox', 'autoJbContainer', 'successRate', 'bareboneJBOption', 'chooseExploitChain');
+      elementsToHide.push('initial-screen', 'henSelection', 'autoJbContainer', 'successRate', 'bareboneJBOption', 'chooseExploitChain', 'layouts', 'theme');
 
       // Sizing the payload's section
       // Full screen for phones, centered for desktop
@@ -1020,6 +761,8 @@ function CheckFW() {
         elementsToHide.push('exploit-status-panel');
         document.getElementById('exploitContainer').style.display = "block";
         ui.exploitScreen.style.padding = "0";
+        document.getElementById('layouts').style.display = "none";
+        document.getElementById('theme').style.display = "none";
       }
       ui.payloadsSection.style.width = "100%";
       ui.payloadsSection.style.margin = "auto";
@@ -1027,8 +770,10 @@ function CheckFW() {
       document.getElementById('header2').classList.remove('hidden', 'left-6');
       document.getElementById('header2').classList.add('flex', 'inherit');
       document.getElementById('header2').querySelectorAll('button').forEach((item) => item.classList.add('border', 'border-white/20', 'rounded-xl'))
-      ui.ps4FwStatus.style.color = 'red';
     }
+    ui.ps4FwStatus.style.color = 'red';
+    document.getElementById('PS4FW').style.width = "100%";
+    document.getElementById('PS4FW').style.textAlign = "center";
 
     // Hide elements for non supported devices unless in dev mode
     if (!devMode) {
@@ -1044,6 +789,7 @@ function CheckFW() {
 function loadSettings() {
   try {
     loadTheme();
+    loadColor();
     CheckFW();
     loadJbFlavor();
     initLanguage(user.currentLanguage);
@@ -1053,7 +799,7 @@ function loadSettings() {
     loadGoldHENVer();
     autoJailbreak();
     updateBareboneJB();
-    loadSecondLapse();
+    loadLapseChain();
     userlandOnlyOnJB67x();
   } catch (e) {
     alert("Error in loadSettings: " + e.message);
@@ -1130,7 +876,7 @@ function renderPayloads(payloads) {
 // Handling cache
 function DLProgress(e) {
   var Percent = (Math.round(e.loaded / e.total * 100));
-  document.title = window.lang.cache + " " + Percent + "%";
+  document.title = (window.lang.cache || "Caching ") + " " + Percent + "%";
 }
 function DisplayCacheProgress() {
   setTimeout(function () {
@@ -1168,7 +914,7 @@ function setAdvancedPayloads(inputState) {
   if (inputState == true) {
     // Its true, show tab and render payloads
     ui.advancedPayloadsContainer.classList.remove('hidden')
-    renderPayloads(advancedPayloads);
+    renderPayloads(payloadsList.filter(p => p.category === 'advanced'));
   } else {
     // its false, hide payloads' tab and move to tools' tab
     ui.advancedPayloadsContainer.classList.add('hidden')
@@ -1181,7 +927,7 @@ function loadAdvancedPayloads() {
     // its true, check the box, show tab and load the payloads
     ui.advancedPayloadsInput.checked = true;
     ui.advancedPayloadsContainer.classList.remove('hidden')
-    renderPayloads(advancedPayloads);
+    renderPayloads(payloadsList.filter(p => p.category === 'advanced'));
   }
 }
 
@@ -1316,8 +1062,24 @@ function setTheme(theme) {
   if (styleSheet) {
     // Ensure we don't end up with "index.css.css"
     const fileName = theme.endsWith('.css') ? theme : `${theme}.css`;
-    styleSheet.setAttribute('href', `./includes/${fileName}`);
+    styleSheet.setAttribute('href', `./includes/css/layouts/${fileName}`);
     localStorage.setItem('theme', theme);
+    if (theme == 'compact'){
+      ui.initialScreen.classList.add('compact');
+      ui.clickToStartText.innerText = window.lang.title;
+    }else {
+      ui.initialScreen.classList.remove('compact');
+      ui.clickToStartText.innerText = window.lang.clickToStart;
+    }
+  }
+}
+
+function setColors(color){
+  const styleSheet = document.getElementById('color-stylesheet');
+  if (styleSheet){
+    const fileName = color.endsWith('.css') ? color : color + '.css';
+    styleSheet.setAttribute('href', './includes/css/colors/' + fileName);
+    localStorage.setItem('color', color)
   }
 }
 
@@ -1334,6 +1096,30 @@ function loadTheme() {
     localStorage.setItem('theme', 'index');
     // Apply the CSS file
     setTheme(savedTheme);
+  }
+
+  if (radioElement.value == "compact"){
+    ui.initialScreen.classList.add('compact');
+  }else ui.initialScreen.classList.remove('compact');
+  // Update the UI radio button if it exists
+  if (radioElement) {
+    radioElement.checked = true;
+  }
+}
+
+function loadColor() {
+  let savedColor = localStorage.getItem('color') || 'default';
+
+  // Find the radio button
+  let radioElement = document.querySelector(`input[name="colorTheme"][value="${savedColor}"]`);
+
+  // Fallback if the saved theme doesn't exist or is invalid
+  if (!radioElement) {
+    savedColor = 'index';
+    radioElement = document.querySelector(`input[name="colorTheme"][value="default"]`);
+    localStorage.setItem('color', 'default');
+    // Apply the CSS file
+    setColors(savedColor);
   }
   // Update the UI radio button if it exists
   if (radioElement) {
@@ -1356,7 +1142,8 @@ function setAutoJbRetry(checked) {
 
 // When jailbreak succeds, this will be stopped
 function autoJailbreak() {
-  if (sessionStorage.getItem('jailbreakNow') == "true"){
+  // used for 6.7x jailbreak when userland is loaded on jailbreak only.
+  if (sessionStorage.getItem('jailbreakNow') == "true") {
     jailbreak();
     return;
   }
@@ -1379,6 +1166,7 @@ function autoJailbreakTimer() {
   autoJbInterval = setInterval(() => {
 
     ui.clickToStartText.textContent = window.lang.jailbreakCountDown.replace('{seconds}', timer);
+    ui.clickToStartText.style.fontSize = "15px";
     if (timer <= 0) {
       clearInterval(autoJbInterval);
       jailbreak();
@@ -1392,7 +1180,9 @@ ui.stopAutoJbBtn.addEventListener('click', () => {
   clearInterval(autoJbInterval);
   sessionStorage.setItem('autoJbRetry', false);
   ui.stopAutoJbBtn.classList.toggle('hidden');
-  ui.clickToStartText.textContent = window.lang.clickToStart;
+  if (localStorage.getItem("theme") == "compact"){
+    ui.clickToStartText.textContent = window.lang.title;
+  }else ui.clickToStartText.textContent = window.lang.clickToStart;
 });
 
 /**
@@ -1456,7 +1246,7 @@ function cleanUp() {
     'toolsSection', 'toolsTab', 'linuxSection', 'linuxTab', 'advancedPayloadsSection', 'advancedPayloadsTab',
     'advancedPayloadsContainer', 'advancedPayloadsInput', 'customPayloadsSection', 'customPayloadsTab', 'customPayloadInput',
     'sendCustomPayloadBtn', 'exploitRunBtn', 'secondHostBtn', 'aboutPopupOverlay', 'settingsPopupOverlay', 'chooseFanThresholdOverlay',
-    'exploitChainTitle', 'secondLapse'
+    'exploitChainTitle'
   ];
   toDestroy.forEach(key => {
     if (ui[key]) {
@@ -1484,6 +1274,7 @@ function updateBareboneJB() {
 function setBareboneJB(checked) {
   if (user.ps4Fw >= 6.70 && user.ps4Fw <= 6.72 && checked) {
     alert("Jailbreak now?");
+    cleanUp();
     location.replace('./exploit.html');
   }
   localStorage.setItem("bareboneJB", checked);
@@ -1492,12 +1283,12 @@ function setBareboneJB(checked) {
 }
 
 // save exploit chain method to localStorage
-function secondLapse(value) {
-  localStorage.setItem('secondLapse', value);
-  user.secondLapse = value == "true";
+function lapseChain(value) {
+  localStorage.setItem('lapseChain', value);
+  user.lapseChain = value == "true";
 }
 // load option when loading the page
-function loadSecondLapse() {
+function loadLapseChain() {
   var chainElement = document.getElementById('chooseExploitChain');
 
   if (user.ps4Fw >= 6.70 && user.ps4Fw <= 6.72) {
@@ -1508,7 +1299,7 @@ function loadSecondLapse() {
   }
 
   // Protective check
-  var radioElement = document.querySelector(`input[name="exploitChain"][value="${user.secondLapse}"]`);
+  var radioElement = document.querySelector(`input[name="exploitChain"][value="${user.lapseChain}"]`);
   if (radioElement) {
     radioElement.checked = true;
   }

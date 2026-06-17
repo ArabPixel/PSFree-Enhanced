@@ -1,14 +1,14 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-06-13 22:58:55.233295
+# Generated on 2026-06-17 15:35:50.124447
 
 CACHE:
 index.html
 exploit.html
-includes/index.css
-includes/vibrant.css
+index2.html
 includes/js/index-legacy.js
 includes/js/index.js
+includes/js/payloadsList.js
 includes/js/languages/ar.js
 includes/js/languages/en.js
 includes/js/languages/tr.js
@@ -63,6 +63,10 @@ includes/payloads/Linux/linux-32mb.elf
 includes/payloads/Linux/linux-4096mb.elf
 includes/payloads/Linux/linux-512mb.elf
 includes/payloads/Linux/linux-64mb.elf
+includes/css/layouts/compact.css
+includes/css/layouts/index.css
+includes/css/colors/default.css
+includes/css/colors/vibrant.css
 src/alert.mjs
 src/config.mjs
 src/lapse.mjs
