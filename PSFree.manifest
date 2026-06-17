@@ -1,14 +1,19 @@
 CACHE MANIFEST
 # v1
-# Generated on 2026-06-17 15:35:50.124447
+# Generated on 2026-06-17 17:21:12.775256
 
 CACHE:
 index.html
 exploit.html
-index2.html
 includes/js/index-legacy.js
 includes/js/index.js
 includes/js/payloadsList.js
+includes/js/language.js
+includes/js/events.js
+includes/js/checkFw.js
+includes/js/HENs.js
+includes/js/design.js
+includes/js/autoJbRetry.js
 includes/js/languages/ar.js
 includes/js/languages/en.js
 includes/js/languages/tr.js
