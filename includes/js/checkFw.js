@@ -31,6 +31,7 @@ function CheckFW() {
                 const toRemove = ['exploit-main-screen', 'scrollDown', 'advancedPayloads'];
                 elementsToHide = elementsToHide.filter(e => !toRemove.includes(e));
                 elementsToHide.push('initial-screen', 'exploit-status-panel', 'henSelection', 'autoJbContainer', 'successRate', 'bareboneJBOption', 'chooseExploitChain');
+                if (fwVersion < 6.70) elementsToHide.push('layouts', 'theme'); // Incompatible with Compact design..
                 document.getElementById('exploitContainer').style.display = "block";
 
                 // Sizing the payload's section
@@ -87,6 +88,8 @@ function CheckFW() {
             document.getElementById('header2').classList.remove('hidden', 'left-6');
             document.getElementById('header2').classList.add('flex', 'inherit');
             document.getElementById('header2').querySelectorAll('button').forEach((item) => item.classList.add('border', 'border-white/20', 'rounded-xl'))
+        }else{
+            elementsToHide.push('theme', 'layout');
         }
         ui.ps4FwStatus.style.color = 'red';
         document.getElementById('PS4FW').style.width = "100%";

@@ -34,7 +34,7 @@ This table indicates firmware versions for which the _current version_ of this r
 |  #            | Userland    |Kernel   |GoldHEN's PayLoader
 | :------------ | :-------- | :-------- | :--------
 | PlayStation 4 | 6.70-9.60 | 6.70-9.60 | 5.05 - latest
-* 4.74 was test and website functions work, however, anything older than 5.05 has no GoldHEN support to load payloads with.
+* 4.74 was tested and the website functions as intended, however, anything older than 5.05 has no GoldHEN support to load payloads with.
 
 ## TODO List
 

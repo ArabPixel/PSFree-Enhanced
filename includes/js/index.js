@@ -213,7 +213,7 @@ async function psfreeLapse() {
 // Taken from Feyzee61 ps4jb
 async function badHoistJailbreak() {
   if (window.entrypoint672_result < 1) {
-    log("An error occured during Bad Hoist Entrypoint\nRetrying..", "red");
+    log("An error occured during Bad Hoist Entrypoint\nRetrying..", "orange");
     await sleep(2000);
     location.reload();
     return;

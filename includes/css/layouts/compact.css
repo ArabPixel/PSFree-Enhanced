@@ -1220,3 +1220,7 @@ html, body, .mainContainer {
     text-align: center;
     margin: 0;
 }
+
+#exploitRun{
+    width: 50%;
+}

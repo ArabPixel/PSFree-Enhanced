@@ -270,7 +270,7 @@ function _badHoistJailbreak() {
             _context3.n = 2;
             break;
           }
-          log("An error occured during Bad Hoist Entrypoint\nRetrying..", "red");
+          log("An error occured during Bad Hoist Entrypoint\nRetrying..", "orange");
           _context3.n = 1;
           return sleep(2000);
         case 1:
