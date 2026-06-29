@@ -736,6 +736,7 @@ section {
 @media (min-width: 710px) {
     #exploitContainer {
         flex-direction: row !important; /* Side by side panels */
+        flex-wrap: nowrap;
     }
 
     #exploit-status-panel, 

@@ -952,7 +952,7 @@ html {
     /* [dir="rtl"] .sm\:rtl\:gap-8 { ... } */
 }
 /* 2. Mobile configuration (Screens smaller than 768px) */
-@media (max-width: 708px) {
+@media (max-width: 727px) {
     #exploit-status-panel, #initial-screen {
         display: none !important; /* Completely hide exploit console on mobile */
     }
